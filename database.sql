@@ -134,19 +134,3 @@ alter table PREFERISCE add constraint FKPRE_GEN_FK
 
 -- Index Section
 -- _____________ 
-
-create unique index ID_POST_IND
-     on POST (Username, IDPost);
-
-create unique index ID_COMMENTO_IND
-     on COMMENTO (PostUsername, IDPost, IDCommento);
-
-create index FKSCRIVE_IND
-     on COMMENTO (CommentUsername);
-
-create unique index ID_PREFERISCE_IND
-     on PREFERISCE (Username, IDGenere);
-
-create index FKPRE_GEN_IND
-     on PREFERISCE (IDGenere);
-
