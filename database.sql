@@ -21,7 +21,7 @@ use web;
 
 create table POST (
      Username varchar(50) not null,
-     IDPost int not null AUTO_INCREMENT,
+     IDPost int not null,
      LinkCanzone varchar(250) not null,
      CoverLink varchar(250) not null,
      Descrizione varchar(500),
@@ -33,13 +33,13 @@ create table POST (
 create table COMMENTO (
      PostUsername varchar(50) not null,
      IDPost int not null,
-     IDCommento int not null AUTO_INCREMENT,
+     IDCommento int not null,
      Testo varchar(250) not null,
      CommentUsername varchar(50) not null,
      constraint ID_COMMENTO_ID primary key (PostUsername, IDPost, IDCommento));
 
 create table GENERE (
-     IDGenere int not null AUTO_INCREMENT,
+     IDGenere int not null,
      Nome varchar(20) not null,
      constraint ID_GENERE primary key (IDGenere));
 
@@ -52,7 +52,7 @@ create table IMPOSTAZIONI (
 
 create table NOTIFICA (
      Username varchar(50) not null,
-     IDNotifica int not null AUTO_INCREMENT,
+     IDNotifica int not null,
      Testo varchar(100) not null,
      Lettura boolean not null,
      constraint ID_NOTIFICA primary key (Username, IDNotifica));
