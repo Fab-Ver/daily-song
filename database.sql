@@ -28,6 +28,7 @@ create table POST (
      NumLike int not null,
      NumDislike int not null,
      CommentiAttivi boolean not null,
+     DataOra date not null,
      constraint ID_POST_ID primary key (Username, IDPost));
 
 create table COMMENTO (
@@ -36,6 +37,7 @@ create table COMMENTO (
      IDCommento int not null,
      Testo varchar(250) not null,
      CommentUsername varchar(50) not null,
+     DataOra date not null,
      constraint ID_COMMENTO_ID primary key (PostUsername, IDPost, IDCommento));
 
 create table GENERE (
@@ -55,6 +57,7 @@ create table NOTIFICA (
      IDNotifica int not null,
      Testo varchar(100) not null,
      Lettura boolean not null,
+     DataOra date not null,
      constraint ID_NOTIFICA primary key (Username, IDNotifica));
 
 create table FRIEND (
