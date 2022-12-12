@@ -1,5 +1,7 @@
 <?php
 require_once 'bootstrap.php';
 
-$templateParams["titolo"] = "Nome sito - Home"
+$templateParams["title"] = "Nome sito - Home";
+
+require 'template/base.php';
 ?>
