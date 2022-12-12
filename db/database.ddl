@@ -1,14 +1,3 @@
--- *********************************************
--- * SQL MySQL generation                      
--- *--------------------------------------------
--- * DB-MAIN version: 11.0.2              
--- * Generator date: Sep 14 2021              
--- * Generation date: Mon Dec 12 11:47:52 2022 
--- * LUN file: C:\Users\fvero\Desktop\TecnologieWeb\Progetto\ProgettoWeb\db\WEB.lun 
--- * Schema: schema_logico/1-1 
--- ********************************************* 
-
-
 -- Database Section
 -- ________________ 
 
@@ -18,6 +7,12 @@ use db;
 
 -- Tables Section
 -- _____________ 
+
+create table belongs (
+     genreID int not null,
+     username varchar(50) not null,
+     postID int not null,
+     constraint ID_belongs primary key (genreID, username, postID));
 
 create table comment (
      postUsername varchar(50) not null,
@@ -38,26 +33,13 @@ create table genre (
      tag varchar(20) not null,
      constraint ID_genre primary key (genreID));
 
-create table settings (
-     username varchar(50) not null,
-     postNotification char not null,
-     commentNotification char not null,
-     followerNotification char not null,
-     constraint FKset_ID primary key (username));
-
 create table notification (
      username varchar(50) not null,
      notificationID int not null,
      text varchar(100) not null,
-     read char not null,
+     readStaus char not null,
      dateTime date not null,
      constraint ID_notification primary key (username, notificationID));
-
-create table belongs (
-     genreID int not null,
-     username varchar(50) not null,
-     postID int not null,
-     constraint ID_belongs primary key (genreID, username, postID));
 
 create table post (
      username varchar(50) not null,
@@ -76,7 +58,14 @@ create table prefers (
      username varchar(50) not null,
      constraint ID_prefers primary key (username, genreID));
 
-create table user (
+create table settings (
+     username varchar(50) not null,
+     postNotification char not null,
+     commentNotification char not null,
+     followerNotification char not null,
+     constraint FKset_ID primary key (username));
+
+create table profile (
      username varchar(50) not null,
      firstName varchar(50) not null,
      lastName varchar(50) not null,
@@ -91,30 +80,6 @@ create table user (
 -- Constraints Section
 -- ___________________ 
 
-alter table comment add constraint FKwrite
-     foreign key (commentUsername)
-     references user (username);
-
-alter table comment add constraint FKhas
-     foreign key (postUsername, postID)
-     references post (username, postID);
-
-alter table friend add constraint FKfollower
-     foreign key (followed)
-     references user (username);
-
-alter table friend add constraint FKfollowed
-     foreign key (follower)
-     references user (username);
-
-alter table settings add constraint FKset_FK
-     foreign key (username)
-     references user (username);
-
-alter table notification add constraint FKreceives
-     foreign key (username)
-     references user (username);
-
 alter table belongs add constraint FKbel_pos
      foreign key (username, postID)
      references post (username, postID);
@@ -123,6 +88,26 @@ alter table belongs add constraint FKbel_gen
      foreign key (genreID)
      references genre (genreID);
 
+alter table comment add constraint FKwrite
+     foreign key (commentUsername)
+     references profile (username);
+
+alter table comment add constraint FKhas
+     foreign key (postUsername, postID)
+     references post (username, postID);
+
+alter table friend add constraint FKfollower
+     foreign key (followed)
+     references profile (username);
+
+alter table friend add constraint FKfollowed
+     foreign key (follower)
+     references profile (username);
+
+alter table notification add constraint FKreceives
+     foreign key (username)
+     references profile (username);
+
 -- Not implemented
 -- alter table post add constraint ID_post_CHK
 --     check(exists(select * from belongs
@@ -130,15 +115,19 @@ alter table belongs add constraint FKbel_gen
 
 alter table post add constraint FKpublish
      foreign key (username)
-     references user (username);
+     references profile (username);
 
 alter table prefers add constraint FKpre_use
      foreign key (username)
-     references user (username);
+     references profile (username);
 
 alter table prefers add constraint FKpre_gen
      foreign key (genreID)
      references genre (genreID);
+
+alter table settings add constraint FKset_FK
+     foreign key (username)
+     references profile (username);
 
 
 -- Index Section
