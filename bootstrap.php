@@ -2,5 +2,6 @@
 session_start();
 define("UPLOAD_DIR", "./res/");
 require_once("db/database.php");
-$dbh = new DatabaseHelper("localhost", "root", "", "web", 3307);
+require_once("utils/functions.php");
+$dbh = new DatabaseHelper("localhost", "root", "", "db", 3306);
 ?>
