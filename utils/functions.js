@@ -6,7 +6,11 @@ function showError(element,msg,id){
     element.focus();
 }
 
-function setValid(element){
-    element.setCustomValidity("");
-    element.setAttribute("aria-invalid","false");
+function setValid(element,value){
+    if(value){
+        element.setCustomValidity("");
+        element.setAttribute("aria-invalid","false");
+    } else {
+        element.setAttribute("aria-invalid","true");
+    }
 }
