@@ -38,10 +38,8 @@ function checkLoginForm(){
     let password = document.querySelector("#login_password");
     if(email.validity.valueMissing){
         showError(email,"Enter email","login_email");
-        canSumbit = false;
     } else if(password.validity.valueMissing){
         showError(password,"Enter password","login_password");
-        canSumbit = false;
     } else {
         let form = document.querySelector("#login_form");
         login(email.value,password.value);
@@ -49,7 +47,7 @@ function checkLoginForm(){
 }
 
 function login(email,password){
-    const formData = new FormData();
+    let formData = new FormData();
     formData.append('email', email);
     formData.append('password', password);
     axios.post('authenticate.php', formData).then(response => {
@@ -59,7 +57,7 @@ function login(email,password){
             if('errorEmail' in response.data){
                 showError(document.querySelector("#login_email"),response.data["errorEmail"],"login_email");
             } else if('errorPassword' in response.data){
-                setValid(document.querySelector("#login_email"));
+                setValid(document.querySelector("#login_email"),true);
                 showError(document.querySelector("#login_password"),response.data["errorPassword"],"login_password");
             }
         }
