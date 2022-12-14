@@ -28,5 +28,19 @@ class DatabaseHelper{
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function insertUser($email,$first_name,$last_name,$birth_date,$telephone,$username,$hash,$profile_picture,$notification){
+        $query = "INSERT INTO profile (username,firstName,lastName,email,telephone,passwordHash,profilePicture,birthDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sssssssi',$username, $first_name, $last_name, $email, $telephone, $hash,$profile_picture,$birth_date);
+        $result = $stmt->execute();
+        if($result){
+            $query = "INSERT INTO settings (username,postNotification,commentNotification,followerNotification) VALUES (?, ?, ?, ?)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param('sssi',$username, $notification, $notification, $notification);
+            $stmt->execute();
+        }
+        return $result;
+    }
 }
 ?>
