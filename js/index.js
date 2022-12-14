@@ -27,7 +27,7 @@ function createLoginForm(){
 function checkEmail(){
     let email = document.querySelector("#login_email");
     if(email.validity.typeMismatch || email.validity.valueMissing){
-        showError(email,"Wrong email format","login_email");
+        showError(email,"Wrong email format");
     } else {
         setValid(email);
     }
@@ -37,9 +37,9 @@ function checkLoginForm(){
     let email = document.querySelector("#login_email");
     let password = document.querySelector("#login_password");
     if(email.validity.valueMissing){
-        showError(email,"Enter email","login_email");
+        showError(email,"Enter email");
     } else if(password.validity.valueMissing){
-        showError(password,"Enter password","login_password");
+        showError(password,"Enter password");
     } else {
         let form = document.querySelector("#login_form");
         login(email.value,password.value);
@@ -55,10 +55,10 @@ function login(email,password){
             window.location.replace("homepage.php");
         } else {
             if('errorEmail' in response.data){
-                showError(document.querySelector("#login_email"),response.data["errorEmail"],"login_email");
+                showError(document.querySelector("#login_email"),response.data["errorEmail"]);
             } else if('errorPassword' in response.data){
                 setValid(document.querySelector("#login_email"),true);
-                showError(document.querySelector("#login_password"),response.data["errorPassword"],"login_password");
+                showError(document.querySelector("#login_password"),response.data["errorPassword"]);
             }
         }
     });

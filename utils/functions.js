@@ -1,8 +1,8 @@
-function showError(element,msg,id){
+function showError(element,msg){
     element.setCustomValidity(msg);
     element.reportValidity();
     element.setAttribute("aria-invalid","true");
-    element.setAttribute("aria-describeby",id);
+    //element.setAttribute("aria-describeby",id);
     element.focus();
 }
 
