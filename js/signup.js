@@ -22,6 +22,10 @@ function createSignUpForm(){
                         <input type ="text" id="last_name" name="last_name" placeholder="Last name..." required></input>
                     </label>
                     </div>
+                    <label for="birth_date">
+                        Birth date:
+                        <input type="date" id="birth_date" name="birth_date">
+                    </label>
                     <label for="telephone">
                         Telephone:
                         <input type ="tel" id="telephone" name="telephone" placeholder="Telephone..." oninput="checkTelephone()"></input>
@@ -39,6 +43,13 @@ function createSignUpForm(){
                         Confirm password:
                         <input type ="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password..." oninput="checkConfirmPassword()" required></input>
                     </label>
+                    <label for="profile_picture">Select profile picture:
+                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*" onchange="checkFormat()">
+                    </label>
+                    <label for="notification">
+                        <input type="checkbox" id="notification" name="notification" role="switch" checked>
+                        Allow notification
+                    </label>
                 <input type="button" name="signup" value="Sign Up" onclick="checkSignUpForm()"></input>
             </form>
             <p>Already have an account? <a href="index.php">Log In</a></p
@@ -52,13 +63,13 @@ function checkSignUpEmail(){
     let email = document.querySelector("#email");
     if(!email.validity.valueMissing){
         if(email.validity.typeMismatch){
-            showError(email,"Wrong mail format","email");
+            showError(email,"Wrong mail format");
         } else {
             let formData = new FormData();
             formData.append('checkEmail',email);
             axios.post('validate.php',formData).then(response => {
                 if(response.data["errorEmail"]){
-                    showError(email,"Email already in use, try with another or log in","email");
+                    showError(email,"Email already in use, try with another or log in");
                 }
             });
         }
@@ -72,7 +83,7 @@ function checkTelephone(){
     let regex = /^\+?([0-9]{2})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{7})$/;
     if(!telephone.validity.valueMissing){
         if(!telephone.value.match(regex)){
-            showError(telephone,"Wrong telephone number format, +XX XXX XXXXXXX expected","telephone");
+            showError(telephone,"Wrong telephone number format, +XX XXX XXXXXXX expected");
         } else {
             setValid(telephone,true);
         }
@@ -87,7 +98,7 @@ function checkUsername(){
     formData.append('checkUsername',username);
     axios.post('validate.php',formData).then(response => {
         if(response.data["errorUsername"]){
-            showError(username,"Username already in use, try with another or log in","username");
+            showError(username,"Username already in use, try with another or log in");
         }
     });
 }
@@ -98,11 +109,11 @@ function checkPassword(){
     let regex =  /^(?=.*[0-9])(?=.*[- ?!@#$%^&*\/\\])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9- ?!@#$%^&*\/\\]{8,30}$/
     if(!password.validity.valueMissing){
         if(!password.value.match(regex)){
-            showError(password,"Wrong password format, should contain at least:\n- one digit\n- one upper case\n- one lower case\n- one special character - ?!@#$%^&*\/\\\nMin length: 8\nMax length: 30 ","password");
+            showError(password,"Wrong password format, should contain at least:\n- one digit\n- one upper case\n- one lower case\n- one special character - ?!@#$%^&*\/\\\nMin length: 8\nMax length: 30 ");
         } else {
             if(!confirm_password.validity.valueMissing){
                 if(password.value != confirm_password.value){
-                    showError(password,"The passwords don't match","password");
+                    showError(password,"The passwords don't match");
                 } else {
                     setValid(password,true);
                 }
@@ -121,7 +132,7 @@ function checkConfirmPassword(){
     if(!confirm_password.validity.valueMissing){
         if(!password.validity.valueMissing){
             if(password.value != confirm_password.value){
-                showError(confirm_password,"The passwords don't match","confirm_password");
+                showError(confirm_password,"The passwords don't match");
             } else {
                 setValid(confirm_password,true);
             }
@@ -131,10 +142,52 @@ function checkConfirmPassword(){
     }
 }
 
+function checkFormat(){
+    let file = document.getElementById('profile_picture');
+    let filePath = file.value;
+    let allowedExtensions =/(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    if (!allowedExtensions.exec(filePath)) {
+                showError(file,"Wrong image extension, acceoted .jpg .jpeg .png .gif")
+                file.value = '';
+    } else {
+        setValid(file,true);
+    }
+}
+
 
 
 function checkSignUpForm(){
+    errors = new Array();
+    let email = document.getElementById('email');
+    let first_name = document.getElementById('first_name');
+    let last_name = document.getElementById('last_name');
+    let birth_date = document.getElementById('birth_date');
+    let telephone = document.getElementById('telephone');
+    let username = document.getElementById('username');
+    let password = document.getElementById('password');
+    let confirm_password = document.getElementById('confirm_password');
+    let profile_picture = document.getElementById('profile_picture');
+    let notification = document.getElementById('notification');
 
+    if(errors.length == 0){
+        submitForm(email,first_name,last_name,birth_date,telephone,username,password,profile_picture,notification);
+    }
+}
+
+function submitForm(email,first_name,last_name,birth_date,telephone,username,password,profile_picture,notification){
+    let formData = new FormData();
+    formData.append('email',email);
+    formData.append('first_name',first_name);
+    formData.append('last_name',last_name);
+    formData.append('birth_date',birth_date);
+    formData.append('telephone',telephone);
+    formData.append('username',username);
+    formData.append('password',password);
+    formData.append('profile_picture',profile_picture);
+    formData.append('notification',notification);
+    axios.post('validate.php',formData).then(response => {
+
+    });
 }
 
 const main = document.querySelector("main");
