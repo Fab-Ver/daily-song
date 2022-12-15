@@ -29,4 +29,3 @@ if(!isset($_SESSION["loggedIn"]) && !isset($email) && !isset($password)){
 
 header('Content-Type: application/json');
 echo json_encode($result);
-?>
