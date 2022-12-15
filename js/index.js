@@ -1,5 +1,5 @@
-function createLoginForm(){
-    let form = `
+function createLoginForm() {
+  let form = `
         <article class="grid">
             <div>
             <hgroup>
@@ -21,57 +21,62 @@ function createLoginForm(){
             </div>
         </article>
     `;
-    return form;
+  return form;
 }
 
-function checkEmail(){
-    let email = document.querySelector("#login_email");
-    if(email.validity.typeMismatch || email.validity.valueMissing){
-        showError(email,"Wrong email format");
+function checkEmail() {
+  let email = document.querySelector("#login_email");
+  if (email.validity.typeMismatch || email.validity.valueMissing) {
+    showError(email, "Wrong email format");
+  } else {
+    setValid(email);
+  }
+}
+
+function checkLoginForm() {
+  let email = document.querySelector("#login_email");
+  let password = document.querySelector("#login_password");
+  if (email.validity.valueMissing) {
+    showError(email, "Enter email");
+  } else if (password.validity.valueMissing) {
+    showError(password, "Enter password");
+  } else {
+    let form = document.querySelector("#login_form");
+    login(email.value, password.value);
+  }
+}
+
+function login(email, password) {
+  let formData = new FormData();
+  formData.append("email", email);
+  formData.append("password", password);
+  axios.post("authenticate.php", formData).then((response) => {
+    if (response.data["loggedIn"]) {
+      window.location.replace("homepage.php");
     } else {
-        setValid(email);
+      if ("errorEmail" in response.data) {
+        showError(
+          document.querySelector("#login_email"),
+          response.data["errorEmail"]
+        );
+      } else if ("errorPassword" in response.data) {
+        setValid(document.querySelector("#login_email"), true);
+        showError(
+          document.querySelector("#login_password"),
+          response.data["errorPassword"]
+        );
+      }
     }
-}
-
-function checkLoginForm(){
-    let email = document.querySelector("#login_email");
-    let password = document.querySelector("#login_password");
-    if(email.validity.valueMissing){
-        showError(email,"Enter email");
-    } else if(password.validity.valueMissing){
-        showError(password,"Enter password");
-    } else {
-        let form = document.querySelector("#login_form");
-        login(email.value,password.value);
-    }
-}
-
-function login(email,password){
-    let formData = new FormData();
-    formData.append('email', email);
-    formData.append('password', password);
-    axios.post('authenticate.php', formData).then(response => {
-        if (response.data["loggedIn"]) {
-            window.location.replace("homepage.php");
-        } else {
-            if('errorEmail' in response.data){
-                showError(document.querySelector("#login_email"),response.data["errorEmail"]);
-            } else if('errorPassword' in response.data){
-                setValid(document.querySelector("#login_email"),true);
-                showError(document.querySelector("#login_password"),response.data["errorPassword"]);
-            }
-        }
-    });
+  });
 }
 
 const main = document.querySelector("main");
-axios.get('authenticate.php').then(response => {
-    console.log(response);
-    if (response.data["loggedIn"]) {
-        window.location.replace("homepage.php");
-    } else {
-        main.innerHTML = createLoginForm();
-        document.querySelector("#login_email").focus();
-    }
+axios.get("authenticate.php").then((response) => {
+  console.log(response);
+  if (response.data["loggedIn"]) {
+    window.location.replace("homepage.php");
+  } else {
+    main.innerHTML = createLoginForm();
+    document.querySelector("#login_email").focus();
+  }
 });
-
