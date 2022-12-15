@@ -1,43 +1,56 @@
 .container-fluid {
     padding: 0% !important; 
     height: 100vh;
-}
-
-aside {
+  }
+  
+  /*--------------------------------------------*/
+  
+  body > aside {
     float: left; 
-    width: 20%;
+    width: 15%;
     padding: 1% 2%;
     height: 100%;
     border-right: solid;
-}
+  }
+  
+  a img {
+    margin-right: 2%;
+  }
 
-div {
+  aside details {
+    margin-bottom: 140%;
+  }
+  
+  /*---------------------------------------------*/
+  
+  body > div {
     float: right; 
-    width: 80%;
+    width: 85%;
     height: 100vh;
-    
-}
-
-section {
-    padding: 2%;
-    /*margin-bottom: 0% !important;*/
-    background-color: red;
-}
-
-section > h1 {
-    float: left;
-    width: 70%;
-    /*margin-bottom: 0% !important;*/
-}
-
-section > details {
-    float: right;
-    width: 30%;
-    /*margin-bottom: 0% !important;*/
-}
-
-/*
-.notification {
+  }
+  
+  section {
+    padding: 2% 2% 0%;
+    margin-bottom: 0% !important;
+    background-color: darkslategray;
+  }
+  
+  section > h1 {
+    display: inline-block;
+    width: 85%;
+    margin: 0% !important;
+  }
+  
+  section > details {
+    display: inline-block;
+    width: 10%;
+  }
+  
+  div details ul {
+    width: 400%;
+  }
+  
+  .notification {
     padding: 15px 26px;
     position: relative;
     display: inline-block;
@@ -55,8 +68,7 @@ section > details {
     background: red;
     color: white;
   }
-*/
     
-main {
+  main {
     background-color: yellow;
-}
+  }

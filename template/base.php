@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="utf-8" />
-    <title>Title</title>   
+    <title><?php echo $templateParams["title"]; ?></title>
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,16 +12,33 @@
     <aside>
         <nav>
             <ul>
-                <li><a href="profile.php">
-                    <img src="css/aggiungi.png" alt="aggiungi" width="20%" height="20%">
-                    Profilo
-                </a></li>
-                <li><a href="homepage.php">Home</a></li>
-                <li><a href="#">New Post</a></li>
-                <li><a href="#">Search</a></li>
+                <li>
+                    <a <?php isActive("profile.php");?> href="profile.php">
+                        <img src="upload/user.png" alt="user" width="20%" height="20%">
+                        Profilo
+                    </a>
+                </li>
+                <li>
+                    <a <?php isActive("homepage.php");?> href="homepage.php">
+                        <img src="upload/home.png" alt="home" width="20%" height="20%">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a <?php isActive(".php");?> href="#">
+                        <img src="upload/add.png" alt="add" width="20%" height="20%">
+                        New Post
+                    </a>
+                </li>
+                <li>
+                    <a <?php isActive(".php");?> href="#">
+                        <img src="upload/search.png" alt="search" width="20%" height="20%">
+                        Search
+                    </a>
+                </li>
                 <li>
                     <details role="list">
-                        <summary aria-haspopup="listbox" role="link">Select music genre</summary>
+                        <summary aria-haspopup="listbox" role="link">Music genre</summary>
                         <ul role="listbox">
                             <li>
                                 <label for="switch_Rock">
@@ -50,8 +67,18 @@
                         </ul>
                     </details>
                 </li>
-                <li><a href="settings.php">Settings</a></li>
-                <li><a href="#">Logout</a></li>
+                <li class="settings">
+                    <a <?php isActive("settings.php");?> href="settings.php">
+                        <img src="upload/settings.png" alt="settings" width="20%" height="20%">
+                        Settings
+                    </a>
+                </li>
+                <li>
+                    <a <?php isActive(".php");?> href="#">
+                        <img src="upload/logout.png" alt="logout" width="20%" height="20%">
+                        Logout
+                    </a>
+                </li>
             </ul>
         </nav>
     </aside>
@@ -60,9 +87,9 @@
             <h1>Titolo</h1>
             <details role="list" dir="rtl">
                 <summary aria-haspopup="listbox" role="button" class="notification">
-                    Not
+                    <img src="upload/notify.png" alt="notify" width="30%" height="30%">
                     <span class="badge">3</span>
-                </summary>
+                    </summary>
                 <ul role="listbox">
                     <li><a href="text">Text shbyhdbsw hxcbuxusnx uhxhs</a></li>
                     <li><a href="text">Text shbyhdbsw hxcbuxusnx uhxhs</a></li>
