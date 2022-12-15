@@ -6,31 +6,32 @@ function createSignUpForm(){
                 <h1>Sign Up</h1>
                 <h2>Enter your email and other personal information to create your account</h2>
             </hgroup>
+            <div class=error tabindex="-1" hidden></div>
             <form action="#" method="post" id="signup_form">
-                    <h2>Personal data</h2>
                     <label for="email">
                         Email:
-                        <input type ="email" id="email" name="email" placeholder="Email..." onblur="checkSignUpEmail()" required></input>
+                        <input type ="email" id="email" name="email" placeholder="Email..." oninput="checkSignUpEmail()" required></input>
                     </label>
                     <div class="grid">
-                    <label for="first_name">
+                    <div><label for="first_name">
                         First Name:
-                        <input type ="text" id="first_name" name="first_name" placeholder="First name..." required></input>
-                    </label>
-                    <label for="last_name">
+                        <input type ="text" id="first_name" name="first_name" placeholder="First name..." oninput="checkFirstName()" required></input>
+                        </label> 
+                    </div>
+                    <div><label for="last_name">
                         Last Name:
-                        <input type ="text" id="last_name" name="last_name" placeholder="Last name..." required></input>
-                    </label>
+                        <input type ="text" id="last_name" name="last_name" placeholder="Last name..." oninput="checkLastName()" required></input>
+                        </label>
+                    </div>
                     </div>
                     <label for="birth_date">
                         Birth date:
-                        <input type="date" id="birth_date" name="birth_date">
+                        <input type="date" id="birth_date" name="birth_date"  onchange="checkBirthDate()" required>
                     </label>
                     <label for="telephone">
                         Telephone:
                         <input type ="tel" id="telephone" name="telephone" placeholder="Telephone..." oninput="checkTelephone()"></input>
                     </label>
-                    <h2>Account data</h2>
                     <label for="username">
                         Username:
                         <input type ="text" id="username" name="username" placeholder="Username..." onblur="checkUsername()" required></input>
@@ -44,7 +45,7 @@ function createSignUpForm(){
                         <input type ="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password..." oninput="checkConfirmPassword()" required></input>
                     </label>
                     <label for="profile_picture">Select profile picture:
-                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*" onchange="checkFormat()">
+                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*" onchange="checkImage()">
                     </label>
                     <label for="notification">
                         <input type="checkbox" id="notification" name="notification" role="switch" checked>
@@ -59,17 +60,29 @@ function createSignUpForm(){
     return form;
 }
 
+function createError(errors){
+   let result = `During sign up the following errors occurred:<ul>`
+   for(let i=0;i<errors.length;i++){
+    let li = `<li>${errors[i]}</li>`;
+    result += li;
+   }
+   result += `</ul>`;
+   return result;
+}
+
 function checkSignUpEmail(){
-    let email = document.querySelector("#email");
     if(!email.validity.valueMissing){
         if(email.validity.typeMismatch){
-            showError(email,"Wrong mail format");
+            showError(email,"Wrong mail format (example@domain.com)");
         } else {
             let formData = new FormData();
-            formData.append('checkEmail',email);
+            formData.append('checkEmail',email.value);
             axios.post('validate.php',formData).then(response => {
                 if(response.data["errorEmail"]){
                     showError(email,"Email already in use, try with another or log in");
+                    setValid(email,false);
+                } else {
+                    setValid(email,true);
                 }
             });
         }
@@ -78,42 +91,81 @@ function checkSignUpEmail(){
     }
 }
 
+function checkFirstName(){
+    if(!first_name.validity.valueMissing){
+        setValid(first_name,true);
+    } else {
+        first_name.removeAttribute("aria-invalid");
+    }
+}
+
+function checkLastName(){
+    if(!last_name.validity.valueMissing){
+        setValid(last_name,true);
+    } else {
+        last_name.removeAttribute("aria-invalid");
+    }
+}
+
+function checkBirthDate(){
+    let today = new Date();
+    let current_value = new Date(birth_date.valueAsDate);
+    let min_date = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    if(!birth_date.validity.valueMissing){
+        if(current_value.getFullYear() <= today.getFullYear() - 110 ||   current_value > min_date){
+            showError(birth_date,"You are to young or to old to subscribe to our website");
+            setValid(birth_date,false);
+        } else {
+            setValid(birth_date, true);
+        }
+    } else {
+        birth_date.removeAttribute("aria-invalid");
+    }
+}
+
 function checkTelephone(){
-    let telephone = document.querySelector("#telephone");
     let regex = /^\+?([0-9]{2})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{7})$/;
-    if(!telephone.validity.valueMissing){
+    if(telephone.value != ""){
         if(!telephone.value.match(regex)){
             showError(telephone,"Wrong telephone number format, +XX XXX XXXXXXX expected");
+            setValid(telephone,false);
         } else {
             setValid(telephone,true);
         }
     } else {
+        telephone.setCustomValidity("");
         telephone.removeAttribute("aria-invalid");
     } 
 }
 
 function checkUsername(){
-    let username = document.querySelector("#username");
-    let formData = new FormData();
-    formData.append('checkUsername',username);
-    axios.post('validate.php',formData).then(response => {
-        if(response.data["errorUsername"]){
-            showError(username,"Username already in use, try with another or log in");
-        }
-    });
+    if(!username.validity.valueMissing){
+        let formData = new FormData();
+        formData.append('checkUsername',username.value);
+        axios.post('validate.php',formData).then(response => {
+            if(response.data["errorUsername"]){
+                showError(username,"Username already in use, try with another or log in");
+                setValid(username,false);
+            } else {
+                setValid(username,true);
+            }
+        });
+    } else {
+        username.removeAttribute("aria-invalid");
+    }   
 }
 
 function checkPassword(){
-    let password = document.querySelector("#password");
-    let confirm_password = document.querySelector("#confirm_password");
     let regex =  /^(?=.*[0-9])(?=.*[- ?!@#$%^&*\/\\])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9- ?!@#$%^&*\/\\]{8,30}$/
     if(!password.validity.valueMissing){
         if(!password.value.match(regex)){
             showError(password,"Wrong password format, should contain at least:\n- one digit\n- one upper case\n- one lower case\n- one special character - ?!@#$%^&*\/\\\nMin length: 8\nMax length: 30 ");
+            setValid(password,false);
         } else {
             if(!confirm_password.validity.valueMissing){
                 if(password.value != confirm_password.value){
                     showError(password,"The passwords don't match");
+                    setValid(password,false);
                 } else {
                     setValid(password,true);
                 }
@@ -127,12 +179,11 @@ function checkPassword(){
 }
 
 function checkConfirmPassword(){
-    let password = document.querySelector("#password");
-    let confirm_password = document.querySelector("#confirm_password");
     if(!confirm_password.validity.valueMissing){
         if(!password.validity.valueMissing){
             if(password.value != confirm_password.value){
                 showError(confirm_password,"The passwords don't match");
+                setValid(confirm_password,false);
             } else {
                 setValid(confirm_password,true);
             }
@@ -142,54 +193,121 @@ function checkConfirmPassword(){
     }
 }
 
-function checkFormat(){
-    let file = document.getElementById('profile_picture');
-    let filePath = file.value;
+function checkImage(){
+    let filePath = profile_picture.value;
     let allowedExtensions =/(\.jpg|\.jpeg|\.png|\.gif)$/i;
-    if (!allowedExtensions.exec(filePath)) {
-                showError(file,"Wrong image extension, acceoted .jpg .jpeg .png .gif")
-                file.value = '';
+    if(profile_picture.value != ""){
+        if (!allowedExtensions.exec(filePath)) {
+            showError(profile_picture,"Wrong image extension, accepted .jpg .jpeg .png .gif");
+            setValid(profile_picture,false);
+        } else {
+            setValid(profile_picture,true);
+        }
     } else {
-        setValid(file,true);
+        profile_picture.removeAttribute("aria-invalid");
     }
+    
 }
-
-
 
 function checkSignUpForm(){
-    errors = new Array();
-    let email = document.getElementById('email');
-    let first_name = document.getElementById('first_name');
-    let last_name = document.getElementById('last_name');
-    let birth_date = document.getElementById('birth_date');
-    let telephone = document.getElementById('telephone');
-    let username = document.getElementById('username');
-    let password = document.getElementById('password');
-    let confirm_password = document.getElementById('confirm_password');
-    let profile_picture = document.getElementById('profile_picture');
-    let notification = document.getElementById('notification');
+    let errors = new Array();
+    let err_element = new Array();
+
+    if(email.validity.valueMissing || email.getAttribute('aria-invalid') === 'true'){
+        errors.push("Invalid mail format or email already used");
+        err_element.push(email);
+    }
+
+    if(first_name.validity.valueMissing){
+        errors.push("Enter first name");
+        err_element.push(first_name);
+    }
+
+    if(last_name.validity.valueMissing){
+        errors.push("Enter last name");
+        err_element.push(last_name);
+    }
+
+    if(birth_date.validity.valueMissing || birth_date.getAttribute('aria-invalid') === 'true'){
+        errors.push("Invalid birth date");
+        err_element.push(birth_date);
+    }
+
+    if(telephone.getAttribute('aria-invalid') === 'true'){
+        errors.push("Invalid telephone format");
+        err_element.push(telephone);
+    }
+
+    if(username.validity.valueMissing || username.getAttribute('aria-invalid') === 'true'){
+        errors.push("Username missing or already used");
+        err_element.push(username);
+    }
+
+    if(password.validity.valueMissing || password.getAttribute('aria-invalid') === 'true'){
+        errors.push("Password missing or password mismatch");
+        err_element.push(password);
+    }
+
+    if(confirm_password.validity.valueMissing || confirm_password.getAttribute('aria-invalid') === 'true'){
+        errors.push("Confirm password missing or password mismatch");
+        err_element.push(confirm_password);
+    }
+
+    if(profile_picture.getAttribute('aria-invalid') === 'true'){
+        errors.push("Invalid profile picture extension");
+        err_element.push(profile_picture);
+    }
 
     if(errors.length == 0){
-        submitForm(email,first_name,last_name,birth_date,telephone,username,password,profile_picture,notification);
+        submitForm();
+    } else {
+        err_element.forEach(element => {
+            setValid(element,false);
+        });
+        let error_div = document.querySelector("div.error");
+        error_div.innerHTML = createError(errors);
+        error_div.removeAttribute('hidden');
+        error_div.focus();
     }
 }
 
-function submitForm(email,first_name,last_name,birth_date,telephone,username,password,profile_picture,notification){
-    let formData = new FormData();
-    formData.append('email',email);
-    formData.append('first_name',first_name);
-    formData.append('last_name',last_name);
-    formData.append('birth_date',birth_date);
-    formData.append('telephone',telephone);
-    formData.append('username',username);
-    formData.append('password',password);
-    formData.append('profile_picture',profile_picture);
-    formData.append('notification',notification);
-    axios.post('validate.php',formData).then(response => {
 
+
+function submitForm(){
+    let formData = new FormData();
+    let SQL_date = birth_date.valueAsDate.toISOString().slice(0,9);
+    let notification_status = notification.checked.toString();
+    formData.append('email',email.value);
+    formData.append('first_name',first_name.value);
+    formData.append('last_name',last_name.value);
+    formData.append('birth_date',SQL_date);
+    formData.append('telephone',telephone.value);
+    formData.append('username',username.value);
+    formData.append('password',password.value);
+    formData.append('profile_picture',profile_picture.value);
+    formData.append('notification',notification_status);
+    axios.post('validate.php',formData).then(response => {
+        if(response.data["validateError"]){
+            let error_div = document.querySelector("div.error");
+            error_div.innerHTML = "An undefined error occurred, try again";
+            error_div.removeAttribute('hidden');
+            error_div.focus
+        } else {
+            window.location.replace("homepage.php");
+        }
     });
 }
 
 const main = document.querySelector("main");
 main.innerHTML = createSignUpForm();
-document.querySelector("#email").focus();
+const email = document.getElementById('email');
+const first_name = document.getElementById('first_name');
+const last_name = document.getElementById('last_name');
+const birth_date = document.getElementById('birth_date');
+const telephone = document.getElementById('telephone');
+const username = document.getElementById('username');
+const password = document.getElementById('password');
+const confirm_password = document.getElementById('confirm_password');
+const profile_picture = document.getElementById('profile_picture');
+const notification = document.getElementById('notification');
+email.focus();
