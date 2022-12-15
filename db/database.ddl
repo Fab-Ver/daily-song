@@ -19,7 +19,7 @@ create table comment (
      postID int not null,
      commentID int not null,
      text varchar(250) not null,
-     dateTime date not null,
+     dateTime datetime not null, 
      commentUsername varchar(50) not null,
      constraint ID_comment primary key (postUsername, postID, commentID));
 
@@ -30,15 +30,15 @@ create table friend (
 
 create table genre (
      genreID int not null auto_increment,
-     tag varchar(20) not null,
+     tag varchar(30) not null,
      constraint ID_genre primary key (genreID));
 
 create table notification (
      username varchar(50) not null,
      notificationID int not null,
      text varchar(100) not null,
-     readStaus char not null,
-     dateTime date not null,
+     readStaus varchar(5) not null,
+     dateTime datetime not null,
      constraint ID_notification primary key (username, notificationID));
 
 create table post (
@@ -49,8 +49,8 @@ create table post (
      description varchar(500),
      likeNum int not null,
      dislikeNum int not null,
-     activeComments char not null,
-     dateTime date not null,
+     activeComments varchar(5) not null,
+     dateTime datetime not null,
      constraint ID_post_ID primary key (username, postID));
 
 create table prefers (
@@ -60,9 +60,9 @@ create table prefers (
 
 create table settings (
      username varchar(50) not null,
-     postNotification char not null,
-     commentNotification char not null,
-     followerNotification char not null,
+     postNotification varchar(5) not null,
+     commentNotification varchar(5) not null,
+     followerNotification varchar(5) not null,
      constraint FKset_ID primary key (username));
 
 create table profile (
@@ -70,7 +70,7 @@ create table profile (
      firstName varchar(50) not null,
      lastName varchar(50) not null,
      email varchar(320) not null,
-     telephone varchar(12),
+     telephone varchar(20),
      passwordHash varchar(250) not null,
      profilePicture varchar(100),
      birthDate date not null,
@@ -82,31 +82,38 @@ create table profile (
 
 alter table belongs add constraint FKbel_pos
      foreign key (username, postID)
-     references post (username, postID);
+     references post (username, postID)
+     ON DELETE CASCADE;
 
 alter table belongs add constraint FKbel_gen
      foreign key (genreID)
-     references genre (genreID);
+     references genre (genreID)
+     ON DELETE CASCADE;
 
 alter table comment add constraint FKwrite
      foreign key (commentUsername)
-     references profile (username);
+     references profile (username)
+     ON DELETE CASCADE;
 
 alter table comment add constraint FKhas
      foreign key (postUsername, postID)
-     references post (username, postID);
+     references post (username, postID)
+     ON DELETE CASCADE;
 
 alter table friend add constraint FKfollower
      foreign key (followed)
-     references profile (username);
+     references profile (username)
+     ON DELETE CASCADE;
 
 alter table friend add constraint FKfollowed
      foreign key (follower)
-     references profile (username);
+     references profile (username)
+     ON DELETE CASCADE;
 
 alter table notification add constraint FKreceives
      foreign key (username)
-     references profile (username);
+     references profile (username)
+     ON DELETE CASCADE;
 
 -- Not implemented
 -- alter table post add constraint ID_post_CHK
@@ -115,19 +122,23 @@ alter table notification add constraint FKreceives
 
 alter table post add constraint FKpublish
      foreign key (username)
-     references profile (username);
+     references profile (username)
+     ON DELETE CASCADE;
 
 alter table prefers add constraint FKpre_use
      foreign key (username)
-     references profile (username);
+     references profile (username)
+     ON DELETE CASCADE;
 
 alter table prefers add constraint FKpre_gen
      foreign key (genreID)
-     references genre (genreID);
+     references genre (genreID)
+     ON DELETE CASCADE;
 
 alter table settings add constraint FKset_FK
      foreign key (username)
-     references profile (username);
+     references profile (username)
+     ON DELETE CASCADE;
 
 
 -- Index Section
