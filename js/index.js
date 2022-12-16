@@ -9,11 +9,11 @@ function createLoginForm() {
             <form action="#" method="post" id="login_form">
                 <label for="login_email">
                     Email:
-                    <input type ="email" id="login_email" name="login_email" placeholder="Email" onblur="checkEmail()" required></input>
+                    <input type="email" id="login_email" name="login_email" placeholder="Email" oninput="checkLoginEmail()" required></input>
                 </label>
                 <label for="login_password">
                     Password:
-                    <input type ="password" id="login_password" name="login_password" placeholder="Password" required></input>
+                    <input type ="password" id="login_password" name="login_password" placeholder="Password" oninput="checkPassword()" required></input>
                 </label>
                 <input type="button" name="login" value="Log In" onclick="checkLoginForm()"></input>
             </form>
@@ -24,47 +24,60 @@ function createLoginForm() {
   return form;
 }
 
-function checkEmail() {
+function checkLoginEmail() {
   let email = document.querySelector("#login_email");
-  if (email.validity.typeMismatch || email.validity.valueMissing) {
-    showError(email, "Wrong email format");
+  if(!email.validity.valueMissing){
+    if(!email.validity.typeMismatch){
+      let formData = new FormData();
+      formData.append('checkEmail',email.value);
+      axios.post('authenticate.php',formData).then(response => {
+        if(response.data["errorEmail"]){
+          showError(email,"Email doesn't exist, try again or sign up");
+          setValid(email,false);
+        } else {
+          setValid(email,true);
+        }
+      });
+    } else {
+      showError(email,"Wrong mail format (example@domain.com)");
+      setValid(email,false);
+    }
   } else {
-    setValid(email);
+    email.removeAttribute("aria-invalid");
   }
+}
+
+function checkPassword(){
+  let password = document.querySelector("#login_password");
+  password.removeAttribute("aria-invalid");
+  password.setCustomValidity("");
 }
 
 function checkLoginForm() {
   let email = document.querySelector("#login_email");
   let password = document.querySelector("#login_password");
-  if (email.validity.valueMissing) {
-    showError(email, "Enter email");
+  if (email.validity.valueMissing || email.getAttribute("aria-invalid") === 'true') {
+    showError(email, "Enter valid email");
+    setValid(email,false);
   } else if (password.validity.valueMissing) {
-    showError(password, "Enter password");
+    showError(password, "Enter password to login");
+    setValid(password,false);
   } else {
-    let form = document.querySelector("#login_form");
-    login(email.value, password.value);
+    login(email,password);
   }
 }
 
-function login(email, password) {
+function login(email,password) {
   let formData = new FormData();
-  formData.append("email", email);
-  formData.append("password", password);
+  formData.append("email", email.value);
+  formData.append("password", password.value);
   axios.post("authenticate.php", formData).then((response) => {
     if (response.data["loggedIn"]) {
       window.location.replace("homepage.php");
     } else {
-      if ("errorEmail" in response.data) {
-        showError(
-          document.querySelector("#login_email"),
-          response.data["errorEmail"]
-        );
-      } else if ("errorPassword" in response.data) {
-        setValid(document.querySelector("#login_email"), true);
-        showError(
-          document.querySelector("#login_password"),
-          response.data["errorPassword"]
-        );
+      if (response.data["errorPassword"]) {
+        showError(password,"Invalid password");
+        setValid(password, false);
       }
     }
   });
@@ -77,6 +90,8 @@ axios.get("authenticate.php").then((response) => {
     window.location.replace("homepage.php");
   } else {
     main.innerHTML = createLoginForm();
-    document.querySelector("#login_email").focus();
+    let email = document.querySelector("#login_email");
+    const password = document.querySelector("#login_password");
+    email.focus();
   }
 });
