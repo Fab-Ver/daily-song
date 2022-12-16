@@ -1,10 +1,10 @@
 function showProfile(result){
  let profile = `
     <div class="grid">
-        <img src="${result["profilePicture"]}" alt="" width="60%" height="60%"/>
+        <img src="${result["profilePicture"]}" alt="" width="50%"/>
         <p>@${result["username"]}<br> ${result["firstName"]} ${result["lastName"]}</p>
-        <p>${result["profileFollower"]} <br> follower</p>
-        <p>${result["profileFollowed"]} <br> followed</p>
+        <p>${result["profileFollower"]} <br> <a href="follower.php">follower</a></p>
+        <p>${result["profileFollowed"]} <br> <a href="follower.php">followed</a></p>
         <p>${result["posts"].length} <br> post</p>
     </div>
     <div class="grid" id="posts">
