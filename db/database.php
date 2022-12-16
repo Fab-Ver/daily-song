@@ -42,5 +42,65 @@ class DatabaseHelper{
         }
         return $result;
     }
+
+    public function getUserProfile($username){
+        $query = "SELECT firstName, lastName, profilePicture FROM profile WHERE username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getUserFollowed($username){
+        $query = "SELECT COUNT(*) FROM friend WHERE follower = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result;
+    }
+
+    public function getUserFollower($username){
+        $query = "SELECT COUNT(*) FROM friend WHERE followed = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result;
+    }
+
+    public function getUserPreferredGenres($username){
+        $query = "SELECT tag FROM prefers, genre WHERE username = ? AND prefers.genreId = genre.genreID";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result;
+    }
+
+    public function getUserPosts($username){
+        $query = "SELECT urlSpotify, urlImage, description, likeNum, dislikeNum, dateTime FROM post WHERE username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getPostComments($username, $postID){
+        $query = "SELECT text, dateTime, commentUsername FROM comment WHERE username = ? AND postID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>
