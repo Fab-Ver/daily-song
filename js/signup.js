@@ -74,6 +74,7 @@ function checkSignUpEmail(){
     if(!email.validity.valueMissing){
         if(email.validity.typeMismatch){
             showError(email,"Wrong mail format (example@domain.com)");
+            setValid(email,false);
         } else {
             let formData = new FormData();
             formData.append('checkEmail',email.value);
@@ -277,6 +278,12 @@ function submitForm(){
     let formData = new FormData();
     let SQL_date = birth_date.valueAsDate.toISOString().slice(0,9);
     let notification_status = notification.checked.toString();
+    let file_name = "";
+    if(profile_picture.value != ""){
+        file_name = profile_picture.value.replace(/^.*[\\\/]/, '');
+    } else {
+        file_name = "default.png";
+    }
     formData.append('email',email.value);
     formData.append('first_name',first_name.value);
     formData.append('last_name',last_name.value);
@@ -284,7 +291,7 @@ function submitForm(){
     formData.append('telephone',telephone.value);
     formData.append('username',username.value);
     formData.append('password',password.value);
-    formData.append('profile_picture',profile_picture.value);
+    formData.append('profile_picture',file_name);
     formData.append('notification',notification_status);
     axios.post('validate.php',formData).then(response => {
         if(response.data["validateError"]){
