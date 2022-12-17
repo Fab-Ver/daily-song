@@ -54,23 +54,23 @@ class DatabaseHelper{
     }
 
     public function getUserFollowed($username){
-        $query = "SELECT COUNT(*) FROM friend WHERE follower = ?";
+        $query = "SELECT username, profilePicture FROM friend, profile WHERE follower = ? AND followed = profile.username";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        return $result;
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function getUserFollower($username){
-        $query = "SELECT COUNT(*) FROM friend WHERE followed = ?";
+        $query = "SELECT username, profilePicture FROM friend, profile WHERE followed = ? AND follower = profile.username";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        return $result;
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function getUserPreferredGenres($username){
