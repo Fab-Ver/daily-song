@@ -50,11 +50,11 @@ class DatabaseHelper{
         $stmt->execute();
         $result = $stmt->get_result();
 
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $result->fetch_assoc();
     }
 
     public function getUserFollowed($username){
-        $query = "SELECT username, profilePicture FROM friend, profile WHERE follower = ? AND followed = profile.username";
+        $query = "SELECT username, profilePicture FROM friend JOIN profile ON friend.followed = profile.username WHERE follower = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();
@@ -64,7 +64,7 @@ class DatabaseHelper{
     }
 
     public function getUserFollower($username){
-        $query = "SELECT username, profilePicture FROM friend, profile WHERE followed = ? AND follower = profile.username";
+        $query = "SELECT username, profilePicture FROM friend, JOIN profile ON friend.follower = profile.username WHERE followed = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();
@@ -74,7 +74,7 @@ class DatabaseHelper{
     }
 
     public function getUserPreferredGenres($username){
-        $query = "SELECT tag FROM prefers, genre WHERE username = ? AND prefers.genreId = genre.genreID";
+        $query = "SELECT tag FROM prefers JOIN genre ON prefers.genreId = genre.genreID WHERE username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();

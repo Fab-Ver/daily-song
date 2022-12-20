@@ -1,10 +1,13 @@
 <?php
 require("bootstrap.php");
-
-$result["username"] = "saracappp"; //$_SESSION["id"];
-$result["firstName"] = "Sara"; //$dbh->getUserProfile()["firstName"];
-$result["lastName"] = "Cappelletti"; //$dbh->getUserProfile()["lastName"];
-$result["profilePicture"] = UPLOAD_DIR."profilo.jpg"; //$dbh->getUserProfile()["profilePicture"]
+$_SESSION["id"] = "saracappe";
+$result["username"] = isset($_GET["user"]) ? $_GET["user"] : $_SESSION["id"];
+$result["isMyProfile"] = $_SESSION["id"] == $result["username"];
+$result["canFollow"] =true;
+$user = $dbh->getUserProfile($result["username"]);
+$result["firstName"] = $user["firstName"];
+$result["lastName"] = $user["lastName"];
+$result["profilePicture"] = UPLOAD_DIR.$user["profilePicture"];
 $result["profileNumberOfFollowed"] = "70"; //$dbh->length(getUserFollowed($result["username"]));
 $result["profileNumberOfFollower"] = "120"; //$dbh->length(getUserFollower($result["username"]));
 //$result["preferredGenres"] = $dbh->getUserPreferredGenres($result["username"]);

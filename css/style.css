@@ -1,74 +1,80 @@
 .container-fluid {
-    padding: 0% !important; 
-    height: 100vh;
-  }
-  
-  /*--------------------------------------------*/
-  
-  body > aside {
-    float: left; 
-    width: 15%;
-    padding: 1% 2%;
-    height: 100%;
-    border-right: solid;
-  }
-  
-  a img {
-    margin-right: 2%;
-  }
+  padding: 0% !important; 
+  height: 100vh;
+}
 
-  aside details {
-    margin-bottom: 140%;
-  }
+.center-text {
+  text-align: center;
+}
+
+/*--------------------------------------------*/
+
+body > aside {
+  float: left; 
+  width: 15%;
+  padding: 1% 2%;
+  height: 100%;
+  border-right: solid;
+}
+
+a img {
+  margin-right: 2%;
+}
+
+aside details {
+  margin-bottom: 140%;
+}
+
+/*---------------------------------------------*/
+
+body > div {
+  float: right; 
+  width: 85%;
+  height: 100vh;
+}
+
+section {
+  padding: 2% 2% 0%;
+  margin-bottom: 0% !important;
+  background-color: darkslategray;
+}
+
+section > h1 {
+  display: inline-block;
+  width: 85%;
+  margin: 0% !important;
+}
+
+section > details {
+  display: inline-block;
+  width: 10%;
+}
+
+div details ul {
+  width: 400%;
+}
+
+.notification {
+  padding: 15px 26px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+  margin: 5%;
+  background-color: black;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}
   
-  /*---------------------------------------------*/
-  
-  body > div {
-    float: right; 
-    width: 85%;
-    height: 100vh;
-  }
-  
-  section {
-    padding: 2% 2% 0%;
-    margin-bottom: 0% !important;
-    background-color: darkslategray;
-  }
-  
-  section > h1 {
-    display: inline-block;
-    width: 85%;
-    margin: 0% !important;
-  }
-  
-  section > details {
-    display: inline-block;
-    width: 10%;
-  }
-  
-  div details ul {
-    width: 400%;
-  }
-  
-  .notification {
-    padding: 15px 26px;
-    position: relative;
-    display: inline-block;
-    border-radius: 2px;
-    margin: 5%;
-    background-color: black;
-  }
-  
-  .notification .badge {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    padding: 5px 10px;
-    border-radius: 50%;
-    background: red;
-    color: white;
-  }
-    
-  main {
-    background-color: yellow;
-  }
+main {
+  /*background-color: yellow;*/
+}
+
+

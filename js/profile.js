@@ -1,19 +1,3 @@
-function showProfile(result){
- let profile = `
-    <div class="grid">
-        <img src="${result["profilePicture"]}" alt="" width="50%"/>
-        <p>@${result["username"]}<br> ${result["firstName"]} ${result["lastName"]}</p>
-        <p>${result["profileNumberOfFollower"]} <br> <a href="follower.php?data=follower">follower</a></p>
-        <p>${result["profileNumberOfFollowed"]} <br> <a href="follower.php?data=followed">followed</a></p>
-        <p>${result["posts"].length} <br> post</p>
-    </div>
-    <div class="grid" id="posts">
-        
-    </div>
-    `;
- return profile;
-}
-
 function showPosts(posts){
     let result = "";
 
@@ -28,12 +12,9 @@ function showPosts(posts){
 
 axios.get('api-profile.php').then(response => {
     console.log(response.data);
-    const profile = showProfile(response.data);
     const posts = showPosts(response.data["posts"]);
     console.log(posts);
-    const main = document.querySelector("main");
-    main.innerHTML = profile;
-    const div = document.querySelector("#posts");
-    div.innerHTML = posts;
+    const content = document.querySelector('#content');
+    content.innerHTML = posts;
 });
 
