@@ -11,9 +11,9 @@ if(isset($_POST["checkEmail"])){
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    if(login_check($dbh)){
+    /*if(login_check($dbh)){
         $result["loggedIn"] = true;
-    } else {
+    } else {*/
         $user = $dbh->getUser($email);
         $hash = $user[0]["passwordHash"];
         $result["errorPassword"] = false;
@@ -30,7 +30,7 @@ if(isset($_POST["checkEmail"])){
                 $result["errorPassword"] = true;
             }
         }
-    }
+    //}
 }
 
 header('Content-Type: application/json');

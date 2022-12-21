@@ -23,10 +23,9 @@ if(isset($_POST["checkEmail"])){
         $hash = password_hash($_POST["password"],PASSWORD_DEFAULT);
         if($dbh->insertUser($_POST["email"],$_POST["first_name"],$_POST["last_name"],$_POST["birth_date"],$_POST["telephone"],$_POST["username"],$hash,$_POST["profile_picture"],$_POST["notification"])){
             $result["validateError"] = false;
-            session_regenerate_id();
             $_SESSION['loggedIn'] = true;
             $_SESSION['email'] = $_POST["email"];
-            $_SESSION['id'] = $_POST["username"];
+            $_SESSION['username'] = $_POST["username"];
         } else {
             $result["validateError"] = true;
         }         
