@@ -7,6 +7,11 @@
   text-align: center;
 }
 
+.title{
+  font-weight: bold;
+  font-size: x-large;
+}
+
 /*--------------------------------------------*/
 
 body > aside {
