@@ -4,6 +4,9 @@
 create database db;
 use db;
 
+CREATE USER 'secure_user'@'localhost' IDENTIFIED BY 'p5N3RHN9fWE5QRvxxuPcpJXZ';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `db`.* TO 'secure_user'@'localhost';
+
 
 -- Tables Section
 -- _____________ 
@@ -13,6 +16,11 @@ create table belongs (
      username varchar(50) not null,
      postID int not null,
      constraint ID_belongs primary key (genreID, username, postID));
+
+CREATE TABLE login_attempts (
+   username varchar(50) not null,
+   time VARCHAR(30) NOT NULL,
+   constraint ID_login_attempts primary key (username, time)); 
 
 create table comment (
      postUsername varchar(50) not null,
@@ -79,6 +87,11 @@ create table profile (
 
 -- Constraints Section
 -- ___________________ 
+
+alter table login_attempts add constraint FKtry
+	foreign key (username)
+	references profile (username)
+	ON DELETE CASCADE;
 
 alter table belongs add constraint FKbel_pos
      foreign key (username, postID)
