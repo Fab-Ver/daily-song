@@ -43,6 +43,28 @@ class DatabaseHelper{
         return $result;
     }
 
+    function checkbrute($username){
+        $now = time();
+        $valid_attempts = $now - (3*60*60);
+        $query="SELECT time FROM login_attempts WHERE username = ? AND time > '$valid_attempts'";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+        $stmt->store_result();
+        if($stmt->num_rows() > 5){
+            return true;
+        }
+        return false;
+    }
+
+    function insertLoginAttempts($username){
+        $now = time();
+        $query = "INSERT INTO login_attempts (username,time) VALUES (?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ss',$username,$now);
+        $stmt->execute();
+    }
+
     public function getUserProfile($username){
         $query = "SELECT firstName, lastName, profilePicture FROM profile WHERE username = ?";
         $stmt = $this->db->prepare($query);
