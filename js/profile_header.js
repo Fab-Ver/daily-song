@@ -18,26 +18,24 @@ function showProfileHeader(result){
                 <div>${result["posts"].length}</div>
                 <div><a href="profile.php?user=${result["username"]}">posts</a></div>
             </div>
-        </div>
         `;
-    return profile;
-}
-
-function follow(){
-    let result = "";
+    let button = "";
 
     if(!result["isMyProfile"]){
         if(result["canFollow"]){
-        let post = `
+        button = `
             <form><input type="button" class="outline" name="follow" value="Follow" onclick="addFollower()"></input></form>
+            </div>
         `;
         } else {
-        let post = `
+        button = `
             <form><input type="button" class="secondary outline" name="unfollow" value="Unfollow" onclick="removeFollower()"></input></form>
-         `;
+            </div>
+            `;
         }
     }
-    return result;
+    profile += button;
+    return profile;
 }
 
 function addFollower(){
@@ -48,14 +46,30 @@ function removeFollower(){
 
 }
 
+function showGenres(genresArray){
+    let result = `<p>Favourite genres: <br>`;
+    let genres = "";
+    for(let i=0; i < genresArray.length; i++){
+        if(i == genresArray.length - 1){
+            genres += genresArray[i];
+        } else{
+            genres += genresArray[i] + ", ";
+        } 
+    }
+    return result + genres + `</p>`;
+}
+
 const main = document.querySelector("main");
 main.innerHTML = `<div id="header"></div>
                   <div id="content"></div>`;
 
 axios.get('api-profile.php'+location.search).then(response => {
     console.log(response.data);
-    const followButton = follow();
-    console.log(follow);
-    document.querySelector('#header').innerHTML = showProfileHeader(response.data) + followButton;
+    const profileHeader = showProfileHeader(response.data);
+    console.log(profileHeader);
+    const header = document.querySelector('#header');
+    const genres = showGenres(response.data["preferredGenres"]);
+    console.log(genres);
+    header.innerHTML = profileHeader + genres;
 });
 

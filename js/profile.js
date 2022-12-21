@@ -1,9 +1,9 @@
 function showPosts(posts){
     let result = "";
 
-    for(let i=0; i < posts.length; i++){
+    for(let i of posts){
         let post = `
-            <img src="${posts[i]}" alt="" />
+            <img src="${i}" alt="" />
         `;
         result += post;
     }
