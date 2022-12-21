@@ -13,6 +13,15 @@ $result["profileNumberOfFollower"] = "120"; //$dbh->length(getUserFollower($resu
 $result["preferredGenres"] = ["rock", "indie", "pop", "metal", "latina", "tecno"];//$dbh->getUserPreferredGenres($result["username"]);
 $result["posts"] = [UPLOAD_DIR."post1.jpg", UPLOAD_DIR."post2.jpg", UPLOAD_DIR."post3.jpg", UPLOAD_DIR."post4.jpg"]; //$dbh->getUserPosts($result["username"]);
 
+if(isset($_POST["username"]) && isset($_POST["value"])){
+    if($_POST["value"] == "add"){
+        var_dump($_POST["username"]);
+        //$dbh->AddFollowed($result["username"], $_POST["username"]);
+    } else if($_POST["value"] == "remove"){
+        //$dbh->RemoveFollowed($result["username"], $_POST["username"]);
+    }
+}
+
 header("Content-Type: application/json");
 echo json_encode($result);
 

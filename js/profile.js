@@ -3,11 +3,16 @@ function showPosts(posts){
 
     for(let i of posts){
         let post = `
-            <img src="${i}" alt="" />
+            <img src="${i}" alt="" onClick="openPost()" />
         `;
+        
         result += post;
     }
     return result;
+}
+
+function openPost(){
+    console.log("provaaa");
 }
 
 axios.get('api-profile.php').then(response => {

@@ -24,12 +24,12 @@ function showProfileHeader(result){
     if(!result["isMyProfile"]){
         if(result["canFollow"]){
         button = `
-            <form><input type="button" class="outline" name="follow" value="Follow" onclick="addFollower()"></input></form>
+            <form><input type="button" name="follow" value="Follow" onclick="addFollowed(${result["username"]})"></input></form>
             </div>
         `;
         } else {
         button = `
-            <form><input type="button" class="secondary outline" name="unfollow" value="Unfollow" onclick="removeFollower()"></input></form>
+            <form><input type="button" class="secondary" name="unfollow" value="Unfollow" onclick="removeFollowed(${result["username"]})"></input></form>
             </div>
             `;
         }
@@ -38,12 +38,18 @@ function showProfileHeader(result){
     return profile;
 }
 
-function addFollower(){
-
+function addFollowed(user){
+    let formData = new FormData();
+    formData.append('username', user);
+    formData.append('value', "add");
+    axios.post('api-profile.php' + data);
 }
 
-function removeFollower(){
-
+function removeFollowed(user){
+    let formData = new FormData();
+    formData.append('username', user);
+    formData.append('value', "remove");
+    axios.post('api-profile.php' + data);
 }
 
 function showGenres(genresArray){
