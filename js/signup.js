@@ -47,6 +47,15 @@ function createSignUpForm(){
                     <label for="profile_picture">Select profile picture:
                         <input type="file" id="profile_picture" name="profile_picture" accept="image/*" onchange="checkImage()">
                     </label>
+                    <label for="favorite_genre">
+                        Select favorite music genres (max 5):
+                        <details id="favorite_genre" role="list">
+                            <summary aria-haspopup="listbox">Favorite music genres...</summary>
+                            <ul id="genres_list" role="listbox">
+                                <li><input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></li>
+                            </ul>
+                        </details>
+                    </label>
                     <label for="notification">
                         <input type="checkbox" id="notification" name="notification" role="switch" checked>
                         Allow notification
@@ -68,6 +77,21 @@ function createError(errors){
    }
    result += `</ul>`;
    return result;
+}
+
+function createGenres(genres){
+    let result = ``;
+    genres.forEach(element =>{
+        let item = `
+            <li id="li${element["genreID"]}">
+                <label id="label${element["genreID"]}">
+                    <input id="${element["genreID"]}"type="checkbox">
+                ${element["tag"]}
+            </label>
+            </li> `;
+        result+=item;
+    });
+    return result;
 }
 
 function checkSignUpEmail(){
@@ -210,6 +234,17 @@ function checkImage(){
     
 }
 
+function checkFavoriteGenres(){
+    let checkboxes = document.querySelectorAll('#genres_list input[type="checkbox"]');
+    let count = 0;
+    checkboxes.forEach(element => {
+        if(element.checked){
+            count++;
+        }
+    })
+    return count > 0 && count<=5
+}
+
 function checkSignUpForm(){
     let errors = new Array();
     let err_element = new Array();
@@ -257,6 +292,10 @@ function checkSignUpForm(){
     if(profile_picture.getAttribute('aria-invalid') === 'true'){
         errors.push("Invalid profile picture extension");
         err_element.push(profile_picture);
+    }
+
+    if(!checkFavoriteGenres()){
+        errors.push("Wrong number of favorite genre, too low or too high");
     }
 
     if(errors.length == 0){
@@ -318,3 +357,22 @@ const confirm_password = document.getElementById('confirm_password');
 const profile_picture = document.getElementById('profile_picture');
 const notification = document.getElementById('notification');
 email.focus();
+axios.get("genre.php").then(response => {
+    let dropdown = document.getElementById('genres_list');
+    dropdown.innerHTML += createGenres(response.data);
+});
+
+function filterGenre(){
+    let list_item = document.querySelectorAll("#genres_list label");
+    list_item.forEach(element => {
+        let elem_text = element.innerText.trim().toLowerCase();
+        let curr_search = search.value.trim().toLowerCase();
+        let id = element.id.replace("label","");
+        let li_id = "li"+id;
+        if(elem_text.includes(curr_search)){
+            document.getElementById(li_id).removeAttribute("hidden");
+        } else {
+            document.getElementById(li_id).setAttribute("hidden", "hidden");
+        }
+    });
+};
