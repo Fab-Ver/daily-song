@@ -1,7 +1,7 @@
 <?php
-session_start();
 define("UPLOAD_DIR", "./res/");
 require_once("db/database.php");
 require_once("utils/functions.php");
-$dbh = new DatabaseHelper("localhost", "root", "", "db", 3307);
+secure_session_start();
+$dbh = new DatabaseHelper("localhost", "secure_user", "p5N3RHN9fWE5QRvxxuPcpJXZ", "db", 3306);
 ?>
