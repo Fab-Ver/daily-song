@@ -5,11 +5,38 @@ function isActive($pagename){
     }
 }
 
+function secure_session_start(){
+    $session_name = 'secure_session_id';
+    $secure = true;
+    $httponly = true;
+    ini_set('session.use_only_cookies',1);
+    $cookieParams = session_get_cookie_params();
+    session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $httponly);
+    session_name($session_name);
+    session_start();
+    session_regenerate_id();
+}
 /*
 list($result, $msg) = uploadImage(UPLOAD_DIR, $_FILES["imgarticolo"]);
     if($result != 0){
         $imgarticolo = $msg;
 */
+
+function login_check($dbh){
+    if(isset($_SESSION['username'], $_SESSION['email'], $_SESSION['loggedIn'])){
+        $username = $_SESSION['username'];
+        $email = $_SESSION['email'];
+        $state = $_SESSION['loggedIn'];
+        if(count($dbh->getUser($email)) > 0){
+            if(count($dbh->checkUsername($username)) > 0){
+                if($state){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
 
 function uploadImage($path, $image){
     $imageName = basename($image["name"]);
