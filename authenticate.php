@@ -11,26 +11,27 @@ if(isset($_POST["checkEmail"])){
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    if(!isset($_SESSION["loggedIn"]) && !isset($email) && !isset($password)){
-        $result["loggedIn"] = false;
-    } else if(isset($_SESSION["loginIn"])){
+    if(login_check($dbh)){
         $result["loggedIn"] = true;
     } else {
         $user = $dbh->getUser($email);
         $hash = $user[0]["passwordHash"];
         $result["errorPassword"] = false;
-        if(password_verify($password,$hash)){
-            session_regenerate_id();
-            $_SESSION['loggedIn'] = true;
-            $_SESSION['email'] = $user[0]["email"];
-            $_SESSION['id'] = $user[0]["username"];
-            $result["loggedIn"] = true;
+        if($dbh->checkbrute($user[0]["username"])){
+            $result["brute"] = true;
         } else {
-            $result["errorPassword"] = true;
+            if(password_verify($password,$hash)){
+                $_SESSION['loggedIn'] = true;
+                $_SESSION['email'] = $user[0]["email"];
+                $_SESSION['username'] = $user[0]["username"];
+                $result["loggedIn"] = true;
+            } else {
+                $dbh->insertLoginAttempts($user[0]["username"]);
+                $result["errorPassword"] = true;
+            }
         }
     }
 }
-
 
 header('Content-Type: application/json');
 echo json_encode($result);
