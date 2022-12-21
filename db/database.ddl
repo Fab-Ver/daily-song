@@ -3,7 +3,8 @@
 
 create database db;
 use db;
-
+drop user 'secure_user'@'localhost';
+flush privileges;
 CREATE USER 'secure_user'@'localhost' IDENTIFIED BY 'p5N3RHN9fWE5QRvxxuPcpJXZ';
 GRANT SELECT, INSERT, UPDATE, DELETE ON `db`.* TO 'secure_user'@'localhost';
 
