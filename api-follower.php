@@ -4,7 +4,7 @@ require("bootstrap.php");
 if(isset($_GET["kind"])) {
     $data = $_GET["kind"];
     if($data=="follower"){
-        $result["searchResult"] = ["mario", "bigo", "fabio", "rachele"]; //$dbh->getUserFollower($result["username"]);
+        $result["searchResult"] = ["mario", "luca_bigo", "fabio", "rachele"]; //$dbh->getUserFollower($result["username"]);
         $result["typeOfSearch"] = "follower";
     }
     else if($data=="followed"){

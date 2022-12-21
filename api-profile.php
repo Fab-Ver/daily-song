@@ -1,13 +1,13 @@
 <?php
 require("bootstrap.php");
-$_SESSION["id"] = "saracappe";
-$result["username"] = isset($_GET["user"]) ? $_GET["user"] : $_SESSION["id"];
-$result["isMyProfile"] = $_SESSION["id"] == $result["username"];
+$_SESSION["username"] = "sara-capp";
+$result["username"] = isset($_GET["user"]) ? $_GET["user"] : $_SESSION["username"];
+$result["isMyProfile"] = $_SESSION["username"] == $result["username"];
 $result["canFollow"] = true;
 $user = $dbh->getUserProfile($result["username"]);
 $result["firstName"] = $user["firstName"];
 $result["lastName"] = $user["lastName"];
-$result["profilePicture"] = UPLOAD_DIR.$user["profilePicture"];
+$result["profilePicture"] = UPLOAD_DIR."profilo.jpg"; //$user["profilePicture"];
 $result["profileNumberOfFollowed"] = "70"; //$dbh->length(getUserFollowed($result["username"]));
 $result["profileNumberOfFollower"] = "120"; //$dbh->length(getUserFollower($result["username"]));
 $result["preferredGenres"] = ["rock", "indie", "pop", "metal", "latina", "tecno"];//$dbh->getUserPreferredGenres($result["username"]);
