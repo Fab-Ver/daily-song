@@ -245,6 +245,17 @@ function checkFavoriteGenres(){
     return count > 0 && count<=5
 }
 
+function getFavoriteGenresID(){
+    let ids = new Array();
+    let checkboxes = document.querySelectorAll('#genres_list input[type="checkbox"]');
+    checkboxes.forEach(element => {
+        if(element.checked){
+            ids.push(element.id);
+        }
+    });
+    return ids;
+}
+
 function checkSignUpForm(){
     let errors = new Array();
     let err_element = new Array();
@@ -311,8 +322,6 @@ function checkSignUpForm(){
     }
 }
 
-
-
 function submitForm(){
     let formData = new FormData();
     let SQL_date = birth_date.valueAsDate.toISOString().slice(0,9);
@@ -332,6 +341,7 @@ function submitForm(){
     formData.append('password',password.value);
     formData.append('profile_picture',file_name);
     formData.append('notification',notification_status);
+    formData.append('favoriteGenres',JSON.stringify(getFavoriteGenresID()));
     axios.post('validate.php',formData).then(response => {
         if(response.data["validateError"]){
             let error_div = document.querySelector("div.error");
