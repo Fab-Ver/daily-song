@@ -19,9 +19,13 @@ if(isset($_POST["checkEmail"])){
           isset($_POST["username"]) &&
           isset($_POST["password"]) &&
           isset($_POST["profile_picture"]) &&
-          isset($_POST["notification"])){
+          isset($_POST["notification"]) &&
+          isset($_POST["favoriteGenres"])){
         $hash = password_hash($_POST["password"],PASSWORD_DEFAULT);
-        if($dbh->insertUser($_POST["email"],$_POST["first_name"],$_POST["last_name"],$_POST["birth_date"],$_POST["telephone"],$_POST["username"],$hash,$_POST["profile_picture"],$_POST["notification"])){
+        if($dbh->insertUser($_POST["email"],$_POST["first_name"],$_POST["last_name"],$_POST["birth_date"],$_POST["telephone"],$_POST["username"],$hash,$_POST["profile_picture"])){
+            $dbh->insertSettings($_POST["username"],$_POST["notification"]);
+            $genresIDs = json_decode($_POST["favoriteGenres"]);
+            $dbh->insertFavoriteGenres($_POST["username"],$genresIDs);
             $result["validateError"] = false;
             $_SESSION['loggedIn'] = true;
             $_SESSION['email'] = $_POST["email"];
