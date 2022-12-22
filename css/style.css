@@ -82,4 +82,16 @@ main {
   /*background-color: yellow;*/
 }
 
+.error_form {
+  border-color: #b71c1c !important;
+  padding: 1%;
+  border: var(--border-width) solid;
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing) !important;
+}
+
+.error_form ul {
+  margin: 0%;
+}
+
 
