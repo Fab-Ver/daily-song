@@ -7,7 +7,7 @@ label[for="notification"] {
     margin-bottom: var(--spacing) !important;
 }
 
-.error {
+.error_form {
     border-color: #b71c1c !important;
     padding: 1%;
     border: var(--border-width) solid;
@@ -15,7 +15,7 @@ label[for="notification"] {
     margin-bottom: var(--spacing) !important;
 }
 
-.error ul {
+.error_form ul {
     margin: 0%;
 }
 
