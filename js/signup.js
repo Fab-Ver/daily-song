@@ -6,7 +6,7 @@ function createSignUpForm(){
                 <h1>Sign Up</h1>
                 <h2>Enter your email and other personal information to create your account</h2>
             </hgroup>
-            <div class=error tabindex="-1" hidden></div>
+            <div class="error_form" tabindex="-1" hidden></div>
             <form action="#" method="post" id="signup_form">
                     <label for="email">
                         Email:
@@ -67,31 +67,6 @@ function createSignUpForm(){
         </article>
     `;
     return form;
-}
-
-function createError(errors){
-   let result = `During sign up the following errors occurred:<ul>`
-   for(let i=0;i<errors.length;i++){
-    let li = `<li>${errors[i]}</li>`;
-    result += li;
-   }
-   result += `</ul>`;
-   return result;
-}
-
-function createGenres(genres){
-    let result = ``;
-    genres.forEach(element =>{
-        let item = `
-            <li id="li${element["genreID"]}">
-                <label id="label${element["genreID"]}">
-                    <input id="${element["genreID"]}"type="checkbox">
-                ${element["tag"]}
-            </label>
-            </li> `;
-        result+=item;
-    });
-    return result;
 }
 
 function checkSignUpEmail(){
@@ -234,28 +209,6 @@ function checkImage(){
     
 }
 
-function checkFavoriteGenres(){
-    let checkboxes = document.querySelectorAll('#genres_list input[type="checkbox"]');
-    let count = 0;
-    checkboxes.forEach(element => {
-        if(element.checked){
-            count++;
-        }
-    })
-    return count > 0 && count<=5
-}
-
-function getFavoriteGenresID(){
-    let ids = new Array();
-    let checkboxes = document.querySelectorAll('#genres_list input[type="checkbox"]');
-    checkboxes.forEach(element => {
-        if(element.checked){
-            ids.push(element.id);
-        }
-    });
-    return ids;
-}
-
 function checkSignUpForm(){
     let errors = new Array();
     let err_element = new Array();
@@ -305,8 +258,8 @@ function checkSignUpForm(){
         err_element.push(profile_picture);
     }
 
-    if(!checkFavoriteGenres()){
-        errors.push("Wrong number of favorite genre, too low or too high");
+    if(!checkGenres(0,5)){
+        errors.push("Wrong number of favorite genres, too low or too high");
     }
 
     if(errors.length == 0){
@@ -315,8 +268,8 @@ function checkSignUpForm(){
         err_element.forEach(element => {
             setValid(element,false);
         });
-        let error_div = document.querySelector("div.error");
-        error_div.innerHTML = createError(errors);
+        let error_div = document.querySelector("div.error_form");
+        error_div.innerHTML = `During sign up the following errors occurred:<ul>` + createError(errors);
         error_div.removeAttribute('hidden');
         error_div.focus();
     }
@@ -341,10 +294,10 @@ function submitForm(){
     formData.append('password',password.value);
     formData.append('profile_picture',file_name);
     formData.append('notification',notification_status);
-    formData.append('favoriteGenres',JSON.stringify(getFavoriteGenresID()));
+    formData.append('favoriteGenres',JSON.stringify(getGenresID()));
     axios.post('validate.php',formData).then(response => {
         if(response.data["validateError"]){
-            let error_div = document.querySelector("div.error");
+            let error_div = document.querySelector("div.error_form");
             error_div.innerHTML = "An undefined error occurred, try again";
             error_div.removeAttribute('hidden');
             error_div.focus
@@ -366,23 +319,9 @@ const password = document.getElementById('password');
 const confirm_password = document.getElementById('confirm_password');
 const profile_picture = document.getElementById('profile_picture');
 const notification = document.getElementById('notification');
-email.focus();
 axios.get("genre.php").then(response => {
     let dropdown = document.getElementById('genres_list');
     dropdown.innerHTML += createGenres(response.data);
 });
+email.focus();
 
-function filterGenre(){
-    let list_item = document.querySelectorAll("#genres_list label");
-    list_item.forEach(element => {
-        let elem_text = element.innerText.trim().toLowerCase();
-        let curr_search = search.value.trim().toLowerCase();
-        let id = element.id.replace("label","");
-        let li_id = "li"+id;
-        if(elem_text.includes(curr_search)){
-            document.getElementById(li_id).removeAttribute("hidden");
-        } else {
-            document.getElementById(li_id).setAttribute("hidden", "hidden");
-        }
-    });
-};
