@@ -6,6 +6,7 @@ function createLoginForm() {
                 <h1>Log In</h1>
                 <h2>Enter your email and password to access the website</h2>
             </hgroup>
+            <div class="error_form" tabindex="-1" hidden></div>
             <form action="#" method="post" id="login_form">
                 <label for="login_email">
                     Email:
@@ -74,24 +75,25 @@ function login(email,password) {
   axios.post("authenticate.php", formData).then((response) => {
     if (response.data["loggedIn"]) {
       window.location.replace("homepage.php");
-    } else {
-      if (response.data["errorPassword"]) {
+    } else if (response.data["errorPassword"]) {
         showError(password,"Invalid password");
         setValid(password, false);
-      }
+    } else if (response.data["checkBrute"]){
+      let error_div = document.querySelector("div.error_form");
+      error_div.innerHTML = `Too much failed login attempts, try later`;
+      error_div.removeAttribute('hidden');
+      error_div.focus();
     }
   });
 }
 
 const main = document.querySelector("main");
 axios.get("authenticate.php").then((response) => {
-  console.log(response);
   if (response.data["loggedIn"]) {
     window.location.replace("homepage.php");
   } else {
     main.innerHTML = createLoginForm();
     let email = document.querySelector("#login_email");
-    const password = document.querySelector("#login_password");
     email.focus();
   }
 });
