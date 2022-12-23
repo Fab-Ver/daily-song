@@ -22,20 +22,13 @@ list($result, $msg) = uploadImage(UPLOAD_DIR, $_FILES["imgarticolo"]);
         $imgarticolo = $msg;
 */
 
-function login_check($dbh){
-    if(isset($_SESSION['username'], $_SESSION['email'], $_SESSION['loggedIn'])){
-        $username = $_SESSION['username'];
-        $email = $_SESSION['email'];
-        $state = $_SESSION['loggedIn'];
-        if(count($dbh->getUser($email)) > 0){
-            if(count($dbh->checkUsername($username)) > 0){
-                if($state){
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
+function isUserLoggedIn(){
+    return !empty($_SESSION['username']);
+}
+
+function registerLoggedUser($username,$email){
+    $_SESSION['username'] = $username;
+    $_SESSION['email'] = $email;
 }
 
 function uploadImage($path, $image){
