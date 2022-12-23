@@ -1,69 +1,75 @@
+
 -- Database Section
 -- ________________ 
 
-create database db;
-use db;
-drop user 'secure_user'@'localhost';
+create database progetto_web;
+use progetto_web;
+
+-- drop user 'secure_user'@'localhost';
 flush privileges;
 CREATE USER 'secure_user'@'localhost' IDENTIFIED BY 'p5N3RHN9fWE5QRvxxuPcpJXZ';
-GRANT SELECT, INSERT, UPDATE, DELETE ON `db`.* TO 'secure_user'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `progetto_web`.* TO 'secure_user'@'localhost';
 
 
 -- Tables Section
 -- _____________ 
 
-create table belongs (
-     genreID int not null,
+create table comment (
+     commentID int not null auto_increment,
+     text varchar(250) not null,
+     dateTime datetime not null,
      username varchar(50) not null,
      postID int not null,
-     constraint ID_belongs primary key (genreID, username, postID));
+     constraint ID_comment primary key (commentID));
 
-CREATE TABLE login_attempts (
-   username varchar(50) not null,
-   time VARCHAR(30) NOT NULL,
-   constraint ID_login_attempts primary key (username, time)); 
-
-create table comment (
-     postUsername varchar(50) not null,
-     postID int not null,
-     commentID int not null,
-     text varchar(250) not null,
-     dateTime datetime not null, 
-     commentUsername varchar(50) not null,
-     constraint ID_comment primary key (postUsername, postID, commentID));
+create table track (
+     trackID varchar(30) not null,
+     urlSpotify varchar(250) not null,
+     urlImage varchar(250) not null,
+     urlPreview varchar(250) not null,
+     title varchar(100) not null,
+     artists varchar(150) not null,
+     albumName varchar(100) not null,
+     constraint ID_track primary key (trackID));
 
 create table friend (
-     follower varchar(50) not null,
      followed varchar(50) not null,
-     constraint ID_friend primary key (followed, follower));
+     follower varchar(50) not null,
+     constraint ID_friend primary key (follower, followed));
 
 create table genre (
      genreID int not null auto_increment,
      tag varchar(30) not null,
      constraint ID_genre primary key (genreID));
 
-create table notification (
+create table belongs (
+     genreID int not null,
+     postID int not null,
+     constraint ID_belongs primary key (genreID, postID));
+
+create table login_attempts (
      username varchar(50) not null,
-     notificationID int not null,
+     time varchar(30) not null,
+     constraint ID_login_attempts primary key (username, time));
+
+create table notification (
+     notificationID int not null auto_increment,
      text varchar(100) not null,
-     readStaus varchar(5) not null,
+     readStatus varchar(5) not null,
      dateTime datetime not null,
-     constraint ID_notification primary key (username, notificationID));
+     username varchar(50) not null,
+     constraint ID_notification primary key (notificationID));
 
 create table post (
-     username varchar(50) not null,
-     postID int not null,
-     urlSpotify varchar(250) not null,
-     urlImage varchar(250) not null,
-     urlPreview varchar(250) not null,
-     trackTitle varchar(100) not null,
-     trackArtist varchar(100) not null,
+     postID int not null auto_increment,
      description varchar(500),
      likeNum int not null,
      dislikeNum int not null,
      activeComments varchar(5) not null,
-     dateTime datetime not null,
-     constraint ID_post_ID primary key (username, postID));
+     dateTime date not null,
+     trackID varchar(30) not null,
+     username varchar(50) not null,
+     constraint ID_post primary key (postID));
 
 create table prefers (
      genreID int not null,
@@ -86,20 +92,35 @@ create table profile (
      passwordHash varchar(250) not null,
      profilePicture varchar(100),
      birthDate date not null,
-     constraint ID_user primary key (username));
+     constraint ID_profile primary key (username));
 
 
 -- Constraints Section
 -- ___________________ 
 
-alter table login_attempts add constraint FKtry
-	foreign key (username)
-	references profile (username)
-	ON DELETE CASCADE;
+alter table comment add constraint FKwrite
+     foreign key (username)
+     references profile (username)
+     ON DELETE CASCADE;
+
+alter table comment add constraint FKhas
+     foreign key (postID)
+     references post (postID)
+     ON DELETE CASCADE;
+
+alter table friend add constraint FKfollower
+     foreign key (follower)
+     references profile (username)
+     ON DELETE CASCADE;
+
+alter table friend add constraint FKfollowed
+     foreign key (followed)
+     references profile (username)
+     ON DELETE CASCADE;
 
 alter table belongs add constraint FKbel_pos
-     foreign key (username, postID)
-     references post (username, postID)
+     foreign key (postID)
+     references post (postID)
      ON DELETE CASCADE;
 
 alter table belongs add constraint FKbel_gen
@@ -107,23 +128,8 @@ alter table belongs add constraint FKbel_gen
      references genre (genreID)
      ON DELETE CASCADE;
 
-alter table comment add constraint FKwrite
-     foreign key (commentUsername)
-     references profile (username)
-     ON DELETE CASCADE;
-
-alter table comment add constraint FKhas
-     foreign key (postUsername, postID)
-     references post (username, postID)
-     ON DELETE CASCADE;
-
-alter table friend add constraint FKfollower
-     foreign key (followed)
-     references profile (username)
-     ON DELETE CASCADE;
-
-alter table friend add constraint FKfollowed
-     foreign key (follower)
+alter table login_attempts add constraint FKmake
+     foreign key (username)
      references profile (username)
      ON DELETE CASCADE;
 
@@ -132,10 +138,10 @@ alter table notification add constraint FKreceives
      references profile (username)
      ON DELETE CASCADE;
 
--- Not implemented
--- alter table post add constraint ID_post_CHK
---     check(exists(select * from belongs
---                  where belongs.username = username and belongs.postID = postID)); 
+alter table post add constraint FKrefers
+     foreign key (trackID)
+     references track (trackID)
+     ON DELETE CASCADE;
 
 alter table post add constraint FKpublish
      foreign key (username)

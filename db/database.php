@@ -53,7 +53,7 @@ class DatabaseHelper{
         }   
     }
 
-    function checkbrute($username){
+    function checkBrute($username){
         $now = time();
         $valid_attempts = $now - (3*60*60);
         $query="SELECT time FROM login_attempts WHERE username = ? AND time > '$valid_attempts'";

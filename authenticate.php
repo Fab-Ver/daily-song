@@ -17,7 +17,7 @@ if(isset($_POST["checkEmail"])){
         $user = $dbh->getUser($email);
         $hash = $user[0]["passwordHash"];
         $result["errorPassword"] = false;
-        if($dbh->checkbrute($user[0]["username"])){
+        if($dbh->checkBrute($user[0]["username"])){
             $result["brute"] = true;
         } else {
             if(password_verify($password,$hash)){
