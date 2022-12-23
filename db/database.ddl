@@ -66,7 +66,7 @@ create table post (
      likeNum int not null,
      dislikeNum int not null,
      activeComments varchar(5) not null,
-     dateTime date not null,
+     dateTime datetime not null,
      trackID varchar(30) not null,
      username varchar(50) not null,
      constraint ID_post primary key (postID));
