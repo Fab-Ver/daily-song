@@ -142,5 +142,22 @@ class DatabaseHelper{
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    function checkTrack($trackID){
+        $query = "SELECT trackID FROM track WHERE trackID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$trackID);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return count($result) > 0;
+    }
+
+    function insertTrack($trackID, $urlSpotify, $urlImage, $urlPreview, $title, $artists, $albumName){
+        $query = "INSERT INTO track (trackID, urlSpotify, urlImage, urlPreview, title, artists, albumName) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sssssss',$trackID, $urlSpotify, $urlImage, $urlPreview, $title, $artists, $albumName);
+        $stmt->execute();
+        //return $result;
+    }
 }
 ?>
