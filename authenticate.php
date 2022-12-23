@@ -1,36 +1,35 @@
 <?php
 require_once 'bootstrap.php';
-$result["loggedIn"] = false;
+secure_session_start();
+$result['loggedIn'] = false;
+$result["errorPassword"] = false;
+$result["checkBrute"] = false;
 
-if(isset($_POST["checkEmail"])){
-    $result["errorEmail"] = false;
-    if(count($dbh->getUser($_POST["checkEmail"])) == 0){
-        $result["errorEmail"] = true;
-    }
-} else {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-
-    /*if(login_check($dbh)){
-        $result["loggedIn"] = true;
-    } else {*/
+if(!isUserLoggedIn()){
+    if(isset($_POST["checkEmail"])){
+        $result["errorEmail"] = false;
+        if(count($dbh->getUser($_POST["checkEmail"])) == 0){
+            $result["errorEmail"] = true;
+        }
+    } else if (isset($_POST["email"]) && isset($_POST["password"])){
+        $email = $_POST["email"];
+        $password = $_POST["password"];
         $user = $dbh->getUser($email);
         $hash = $user[0]["passwordHash"];
-        $result["errorPassword"] = false;
         if($dbh->checkBrute($user[0]["username"])){
-            $result["brute"] = true;
+            $result["checkBrute"] = true;
         } else {
             if(password_verify($password,$hash)){
-                $_SESSION['loggedIn'] = true;
-                $_SESSION['email'] = $user[0]["email"];
-                $_SESSION['username'] = $user[0]["username"];
+                registerLoggedUser($user[0]['username'],$user[0]['email']);
                 $result["loggedIn"] = true;
             } else {
                 $dbh->insertLoginAttempts($user[0]["username"]);
                 $result["errorPassword"] = true;
             }
         }
-    //}
+    }
+} else {
+    $result["loggedIn"] = true;
 }
 
 header('Content-Type: application/json');
