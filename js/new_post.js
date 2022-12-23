@@ -92,52 +92,31 @@ function checkNewPostForm(){
     }
 }
 
-const getToken = () => {
-    let client_id = config.ClientID;
-    let client_secret = config.ClientSecret;
-    return axios({
-        url: 'https://accounts.spotify.com/api/token',
-        method: 'post',
-        data: {
-          grant_type: 'client_credentials'
-        },
-        headers: {
-          'Accept':'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        auth: {
-          username: client_id,
-          password: client_secret
-        }
-    }).then((response) => {
-          return response.data.access_token;
-    });
- };
-
 function submitNewPostForm(){
-    let formData = new FormData();
-    console.log(description.value);
-    console.log(url_box.value);
-    console.log(comments.checked);
-    console.log(getGenresID());
+    let formID = new FormData();
     let track_id = url_box.value.match(regex)[2];
-    console.log(track_id);
-    let request_url = 'https://api.spotify.com/v1/tracks/' + track_id;
-    console.log(request_url);
-    getToken().then(token => {
-        const config = {
-            method: 'get',
-            url: request_url,
-            headers: {
-                'Accept' : 'application/json',
-                'Content-Type' : 'application/json',
-                'Authorization' : 'Bearer '+ token
-            }
-        };
+    formID.append('checkTrackID',track_id);
+    
+    axios.post('api-track.php',formID).then(response => {
+        if(!response.data.checkTrackID){
+            retrieveData(track_id).then(track_data => {
+                let formNewTrack = new FormData();
+                let artists = track_data.artists;
+                let artists_names = new Array();
+                artists.forEach(a => {
+                    artists_names.push(a.name);
+                });
+                formNewTrack.append('trackID', track_id);
+                formNewTrack.append('urlSpotify',track_data.external_urls.spotify);
+                formNewTrack.append('urlImage', track_data.album.images[1].url);
+                formNewTrack.append('urlPreview',track_data.preview_url);
+                formNewTrack.append('title',track_data.name);
+                formNewTrack.append('artist',artists_names.toString());
+                formNewTrack.append('albumName',track_data.album.name);
+                axios.post('api-track.php',formNewTrack) //Aggiungere una gestione dell'errore se la traccia non è giusta ??
+            })
+        }
+    })
 
-        axios(config).then(response => {
-            console.log(response.data.name);
-            console.log(response.data.preview_url);
-        });
-    });
+    
 }

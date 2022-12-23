@@ -74,3 +74,44 @@ function createError(errors){
     result += `</ul>`;
     return result;
  }
+
+ const getToken = () => {
+    let client_id = config.ClientID;
+    let client_secret = config.ClientSecret;
+    return axios({
+        url: 'https://accounts.spotify.com/api/token',
+        method: 'post',
+        data: {
+          grant_type: 'client_credentials'
+        },
+        headers: {
+          'Accept':'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        auth: {
+          username: client_id,
+          password: client_secret
+        }
+    }).then((response) => {
+          return response.data.access_token;
+    });
+ };
+
+ const retrieveData = (track_id) => {
+    let request_url = 'https://api.spotify.com/v1/tracks/' + track_id;
+    return getToken().then(token => {
+        const config = {
+            method: 'get',
+            url: request_url,
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json',
+                'Authorization' : 'Bearer '+ token
+            }
+        };
+
+        return axios(config).then(response => {
+            return response.data;
+        });
+    });
+ };
