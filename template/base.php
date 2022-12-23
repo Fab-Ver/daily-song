@@ -25,7 +25,7 @@
                     </a>
                 </li>
                 <li>
-                    <a <?php isActive(".php");?> href="#">
+                    <a <?php isActive("new_post.php");?> href="new_post.php">
                         <img src="upload/add.png" alt="add" width="20%" height="20%">
                         New Post
                     </a>
@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li>
-                    <a <?php isActive(".php");?> href="#">
+                    <a <?php isActive("logout.php");?> href="logout.php">
                         <img src="upload/logout.png" alt="logout" width="20%" height="20%">
                         Logout
                     </a>
