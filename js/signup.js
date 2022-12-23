@@ -295,13 +295,14 @@ function submitForm(){
     formData.append('profile_picture',file_name);
     formData.append('notification',notification_status);
     formData.append('favoriteGenres',JSON.stringify(getGenresID()));
+
     axios.post('validate.php',formData).then(response => {
         if(response.data["validateError"]){
             let error_div = document.querySelector("div.error_form");
             error_div.innerHTML = "An undefined error occurred, try again";
             error_div.removeAttribute('hidden');
             error_div.focus
-        } else {
+        } else if(response.data['loggedIn']) {
             window.location.replace("homepage.php");
         }
     });
