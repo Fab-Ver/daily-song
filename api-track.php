@@ -8,7 +8,7 @@ if(isUserLoggedIn()){
     if(isset($_POST["checkTrackID"])){
         $result["checkTrackID"] = $dbh->checkTrack($_POST["checkTrackID"]);
     } else if (isset($_POST["trackID"],$_POST["urlSpotify"],$_POST["urlImage"],$_POST["urlPreview"],$_POST["title"],$_POST["artist"],$_POST["albumName"])){
-        $dbh->insertTrack($_POST["trackID"], $_POST["urlSpotify"], $_POST["urlImage"], $_POST["urlPreview"], $_POST["title"], $_POST["artist"], $_POST["albumName"]);
+        $result["insertTrack"]=$dbh->insertTrack($_POST["trackID"], $_POST["urlSpotify"], $_POST["urlImage"], $_POST["urlPreview"], $_POST["title"], $_POST["artist"], $_POST["albumName"]);
     }
 } else {
     $result['loggedIn'] = false;
