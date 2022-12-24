@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta neme="decription" content="is a digital music social that gives you the possibility to share a day song with your friends"/>
 </head>
-<body class="container-fluid">
+<body>
     <aside>
         <nav>
             <ul>
@@ -38,36 +38,20 @@
                 </li>
                 <li>
                     <details role="list">
-                        <summary aria-haspopup="listbox" role="link">Music genre</summary>
+                        <summary aria-haspopup="listbox" role="link" class="music_genre">Music genre</summary>
                         <ul role="listbox">
+                            <?php foreach($genres as $genre): ?>
                             <li>
-                                <label for="switch_Rock">
-                                    <input type="checkbox" id="switch_Rock" name="switch_Rock" role="switch">
-                                    Rock
+                                <label for="switch <?php echo $genre["tag"]; ?>">
+                                    <input type="checkbox" id="switch<?php echo $genre["genreID"]; ?>" role="switch">
+                                    <?php echo $genre["tag"]; ?>
                                 </label>
                             </li>
-                            <li>
-                                <label for="switch_Metal">
-                                    <input type="checkbox" id="switch_Metal" name="switch_Metal" role="switch">
-                                    Metal
-                                </label>
-                            </li>
-                            <li>
-                                <label for="switch_Pop">
-                                    <input type="checkbox" id="switch_Pop" name="switch_Pop" role="switch">
-                                    Pop
-                                </label>
-                            </li>
-                            <li>
-                                <label for="switch_Indie">
-                                    <input type="checkbox" id="switch_Indie" name="switch_Indie" role="switch">
-                                    Indie
-                                </label>
-                            </li>
+                            <?php endforeach; ?>
                         </ul>
                     </details>
                 </li>
-                <li class="settings">
+                <li>
                     <a <?php isActive("settings.php");?> href="settings.php">
                         <img src="upload/settings.png" alt="settings" width="20%" height="20%">
                         Settings
@@ -88,27 +72,25 @@
             <details role="list" dir="rtl">
                 <summary aria-haspopup="listbox" role="button" class="notification">
                     <img src="upload/notify.png" alt="notify" width="30%" height="30%">
-                    <span class="badge">3</span>
-                    </summary>
+                    3 <!--TO GET -->
+                </summary>
                 <ul role="listbox">
-                    <li><a href="text">Text shbyhdbsw hxcbuxusnx uhxhs</a></li>
-                    <li><a href="text">Text shbyhdbsw hxcbuxusnx uhxhs</a></li>
+                    <li>Text shbyhdbsw hxcbuxusnx uhxhs<input type="checkbox"></li>
+                    <li>Text shbyhdbsw hxcbuxusnx uhxhs<input type="checkbox"></li>
                 </ul>
             </details>
         </section>
-
         <main>
-            <p>main</p>
+            <?php
+            if(isset($templateParams["js"])):
+                foreach($templateParams["js"] as $script):
+            ?>
+                <script src="<?php echo $script; ?>"></script>
+            <?php
+                endforeach;
+            endif;
+            ?>
         </main>
     </div>
-    <?php
-    if(isset($templateParams["js"])):
-        foreach($templateParams["js"] as $script):
-    ?>
-        <script src="<?php echo $script; ?>"></script>
-    <?php
-        endforeach;
-    endif;
-    ?>
 </body>
 </html>

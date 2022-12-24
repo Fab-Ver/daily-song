@@ -12,75 +12,81 @@
   font-size: x-large;
 }
 
-/*--------------------------------------------*/
+/*-body--------------------------------------------*/
+
+body {
+  overflow: hidden;
+}
 
 body > aside {
   float: left; 
   width: 15%;
   padding: 1% 2%;
-  height: 100%;
+  height: 100vh;
   border-right: solid;
 }
-
-a img {
-  margin-right: 2%;
-}
-
-aside details {
-  margin-bottom: 140%;
-}
-
-/*---------------------------------------------*/
 
 body > div {
   float: right; 
   width: 85%;
   height: 100vh;
+  overflow: auto;
 }
 
+/*-nav-------------------------------------------*/
+
+aside a img{
+  margin-right: 2%;
+}
+
+aside details ul {
+  height: 40vh;
+  overflow-y: auto;
+}
+
+/*-section--------------------------------------------*/
+
 section {
-  padding: 2% 2% 0%;
+  display: inline-block;
+  width: 100%;
+  padding: 1% 2%;
   margin-bottom: 0% !important;
-  background-color: darkslategray;
+  border-bottom: solid;
 }
 
 section > h1 {
-  display: inline-block;
+  float: left;
   width: 85%;
   margin: 0% !important;
+  font-style: italic;
+  font-size: 300%;
 }
 
 section > details {
-  display: inline-block;
+  float: right;
   width: 10%;
+  margin: 0% !important;
+}
+
+summary.notification {
+  text-align: center !important;
+  background-image:linear-gradient(to bottom, rgb(25, 93, 240) 0%, rgb(63, 206, 250) 100%);
+  font-size: 2vw;
+}
+
+summary.notification::after {
+  display: none !important;
 }
 
 div details ul {
-  width: 400%;
+  width: 40vw;
 }
 
-.notification {
-  padding: 15px 26px;
-  position: relative;
-  display: inline-block;
-  border-radius: 2px;
-  margin: 5%;
-  background-color: black;
+div details ul li{
+  text-align: center;
 }
 
-.notification .badge {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  padding: 5px 10px;
-  border-radius: 50%;
-  background: red;
-  color: white;
-}
-  
-main {
-  /*background-color: yellow;*/
-}
+/*------------------------------*/
 
 .error_form {
   border-color: #b71c1c !important;
