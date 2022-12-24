@@ -156,8 +156,43 @@ class DatabaseHelper{
         $query = "INSERT INTO track (trackID, urlSpotify, urlImage, urlPreview, title, artists, albumName) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sssssss',$trackID, $urlSpotify, $urlImage, $urlPreview, $title, $artists, $albumName);
-        $stmt->execute();
-        //return $result;
+        $result=$stmt->execute();
+        return $result;
     }
+
+    function getMaxPostID(){
+        $stmt = $this->db->prepare("SELECT MAX(postID) AS max FROM post");
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        if(count($result) == 0){
+            return 1;
+        }
+        return $result["0"]["max"]+1;
+    }
+
+    function insertPost($description,$activeComments,$datetime,$trackID,$username){
+        $postID = $this->getMaxPostID();
+        $likeNum = 0;
+        $dislikeNum = 0;
+        $query = "INSERT INTO post (postID,description,likeNum,dislikeNum,activeComments,datetime,trackID,username) VALUES (?,?,?,?,?,?,?,?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('isiissss',$postID,$description,$likeNum,$dislikeNum,$activeComments,$datetime,$trackID,$username);
+        $result = $stmt->execute();
+        if($result){
+            return $postID;
+        }
+        return -1;
+    }
+
+    function insertPostGenres($postID,$genresIDs){
+        foreach($genresIDs as $id){
+            $query = "INSERT INTO belongs (genreID,postID) VALUES (?, ?)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param('ss',$id,$postID);
+            $stmt->execute();
+        }   
+    }
+
+    
 }
 ?>
