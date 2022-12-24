@@ -35,7 +35,7 @@ function createNewPostForm(){
             </label>
             <label for="description">
                 Post description:
-                <textarea id="description" name="description" placeHolder="Insert here post description..."></textarea>
+                <textarea id="description" name="description" placeHolder="Insert here post description..." maxlength="500"></textarea>
             </label>
             <label for="comments">
                 <input type="checkbox" id="comments" name="comments" role="switch" checked>
@@ -98,25 +98,64 @@ function submitNewPostForm(){
     formID.append('checkTrackID',track_id);
     
     axios.post('api-track.php',formID).then(response => {
-        if(!response.data.checkTrackID){
-            retrieveData(track_id).then(track_data => {
-                let formNewTrack = new FormData();
-                let artists = track_data.artists;
-                let artists_names = new Array();
-                artists.forEach(a => {
-                    artists_names.push(a.name);
-                });
-                formNewTrack.append('trackID', track_id);
-                formNewTrack.append('urlSpotify',track_data.external_urls.spotify);
-                formNewTrack.append('urlImage', track_data.album.images[1].url);
-                formNewTrack.append('urlPreview',track_data.preview_url);
-                formNewTrack.append('title',track_data.name);
-                formNewTrack.append('artist',artists_names.toString());
-                formNewTrack.append('albumName',track_data.album.name);
-                axios.post('api-track.php',formNewTrack) //Aggiungere una gestione dell'errore se la traccia non è giusta ??
-            })
-        }
-    })
+        if(response.data.loggedIn){
+            if(!response.data.checkTrackID){
+                retrieveData(track_id).then(track_data => {
+                    let formNewTrack = new FormData();
+                    let artists = track_data.artists;
+                    let artists_names = new Array();
+                    artists.forEach(a => {
+                        artists_names.push(a.name);
+                    });
+                    formNewTrack.append('trackID', track_id);
+                    formNewTrack.append('urlSpotify',track_data.external_urls.spotify);
+                    formNewTrack.append('urlImage', track_data.album.images[1].url);
+                    formNewTrack.append('urlPreview',track_data.preview_url);
+                    formNewTrack.append('title',track_data.name);
+                    formNewTrack.append('artist',artists_names.toString());
+                    formNewTrack.append('albumName',track_data.album.name);
+                    axios.post('api-track.php',formNewTrack).then(new_track_response => {
+                        if(new_track_response.data.loggedIn){
+                            if(new_track_response.data.insertTrack){
+                                createPost(track_id);
+                            } else {
+                                let error_div = document.querySelector("div.error_form");
+                                error_div.innerHTML = `Undefined error while retrieving track data, try later.`;
+                                error_div.removeAttribute('hidden');
+                                error_div.focus();
+                            }
+                        } else {
+                            window.location.replace("index.php");
+                        }
+                    });
+                })
+            } else {
+                createPost(track_id);
+            }
+        } else {
+            window.location.replace("index.php");
+        } 
+    });
+}
 
-    
+function createPost(track_id){
+    let formPost = new FormData();
+    formPost.append('description',description.value);
+    formPost.append('activeComments',comments.checked.toString());
+    formPost.append('trackID',track_id);
+    formPost.append('genresID',JSON.stringify(getGenresID()));
+    formPost.append('dateTime',new Date().toISOString().slice(0, 19).replace('T', ' '));
+    axios.post('api-new-post.php',formPost).then(response => {
+        if(response.data.loggedIn){
+            if(!response.data.errorNewPost){
+                window.location.replace("homepage.php");
+            } else {
+                error_div.innerHTML = `Undefined error while creating a new post, try later.`;
+                error_div.removeAttribute('hidden');
+                error_div.focus();
+            }
+        } else {
+             window.location.replace("index.php");
+        }
+    });
 }
