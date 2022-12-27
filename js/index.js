@@ -13,12 +13,19 @@ function createLoginForm() {
                     <input type="email" id="login_email" name="login_email" placeholder="Email" oninput="checkLoginEmail()" required></input>
                 </label>
                 <label for="login_password">
-                    Password:
+                    <div class="grid">
+                      <div>
+                        Password:
+                      </div>
+                      <div class="right_elem">
+                      <a href="forgot_password.php" >Forgot password?</a>
+                      </div>
+                    </div>
                     <input type ="password" id="login_password" name="login_password" placeholder="Password" oninput="checkPassword()" required></input>
                 </label>
                 <input type="button" name="login" value="Log In" onclick="checkLoginForm()"></input>
             </form>
-            <p>Don't have an account? <a href="signup.php">Sign Up</a></p
+            <p class="center_elem">Don't have an account? <a href="signup.php">Sign Up</a></p>
             </div>
         </article>
     `;

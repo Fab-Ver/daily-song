@@ -62,7 +62,7 @@ function createSignUpForm(){
                     </label>
                 <input type="button" name="signup" value="Sign Up" onclick="checkSignUpForm()"></input>
             </form>
-            <p>Already have an account? <a href="index.php">Log In</a></p
+            <p>Already have an account? <a href="index.php">Log In</a></p>
             </div>
         </article>
     `;
