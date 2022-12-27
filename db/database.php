@@ -193,6 +193,13 @@ class DatabaseHelper{
         }   
     }
 
+    function insertResetRequest($email,$key,$expDate){
+        $query = "INSERT INTO password_reset (email,resetKey,expDate) VALUES (?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sss',$email, $key, $expDate);
+        $result=$stmt->execute();
+        return !$result;
+    }
     
 }
 ?>
