@@ -22,6 +22,12 @@ create table comment (
      postID int not null,
      constraint ID_comment primary key (commentID));
 
+create table password_reset (
+     email varchar(250) not null,
+     resetKey varchar(250) not null,
+     expDate datetime not null,
+     constraint ID_password_reset_ID primary key (email, resetKey));
+
 create table track (
      trackID varchar(30) not null,
      urlSpotify varchar(250) not null,
@@ -87,7 +93,7 @@ create table profile (
      username varchar(50) not null,
      firstName varchar(50) not null,
      lastName varchar(50) not null,
-     email varchar(320) not null,
+     email varchar(320) not null unique,
      telephone varchar(20),
      passwordHash varchar(250) not null,
      profilePicture varchar(100),
@@ -106,6 +112,11 @@ alter table comment add constraint FKwrite
 alter table comment add constraint FKhas
      foreign key (postID)
      references post (postID)
+     ON DELETE CASCADE;
+
+alter table password_reset add constraint FKrequest_FK
+     foreign key (email)
+     references profile (email)
      ON DELETE CASCADE;
 
 alter table friend add constraint FKfollower
@@ -164,7 +175,7 @@ alter table settings add constraint FKset_FK
      ON DELETE CASCADE;
 
 INSERT INTO `profile` (`username`, `firstName`, `lastName`, `email`, `telephone`, `passwordHash`, `profilePicture`, `birthDate`) VALUES
-('fabio_veroli', 'Fabio', 'Veroli', 'fabio.veroli@studio.unibo.it', '+393664093267', '$2y$10$ron4rsdO2YDyiuFLkhRax.nynIRGBr9u6zCRTRA1BUjA9Uz9MDyD.', 'default.png', '2001-04-02'),
+('fabio_veroli', 'Fabio', 'Veroli', 'fabio.veroli@studio.unibo.it', '+393665869789', '$2y$10$ron4rsdO2YDyiuFLkhRax.nynIRGBr9u6zCRTRA1BUjA9Uz9MDyD.', 'default.png', '2001-04-02'),
 ('luca_bigo', 'Luca', 'Bighini', 'luca.bighini@studio.unibo.it', '362726323283', '$2y$10$j.oF.Q2fLu7IS3.CNpjd7.4HKaczWC0K2dFkWw8bD2iy0SmQ9oL5u', 'default.png', '2001-12-02'),
 ('sara-capp', 'Sara', 'Cappelletti', 'sara.cappelletti@studio.unibo.it', '333333438333', '$2y$10$GxtLJsYJ6AcWzrfxn/sS3uuMELY0gB4.c/s9XyLqaxt1CepcEumZy', 'default.png', '2001-10-01'),
 ('test_user', 'test', 'test', 'test@test', '121212121212', '$2y$10$6M9ldnhaLie1M69LhjSIO.P0gDKFZL7zJEuHgTmwaLYhadTBMGzjG', 'default.png', '0000-00-00');
