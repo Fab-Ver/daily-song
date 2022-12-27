@@ -80,17 +80,16 @@
                 </ul>
             </details>
         </section>
-        <main>
-            <?php
-            if(isset($templateParams["js"])):
-                foreach($templateParams["js"] as $script):
-            ?>
-                <script src="<?php echo $script; ?>"></script>
-            <?php
-                endforeach;
-            endif;
-            ?>
-        </main>
+        <main></main>
+        <?php
+        if(isset($templateParams["js"])):
+            foreach($templateParams["js"] as $script):
+        ?>
+            <script src="<?php echo $script; ?>"></script>
+        <?php
+            endforeach;
+        endif;
+        ?>
     </div>
 </body>
 </html>
