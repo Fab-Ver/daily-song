@@ -86,6 +86,39 @@ div details ul li{
   text-align: center;
 }
 
+/*-main-----------------------------*/
+
+section .current_post {
+  float: left;
+  width: 80%;
+}
+
+section .button_prev {
+  float: left;
+  width: 10%;
+}
+
+section .button_next {
+  float: right;
+  width: 10%;
+}
+
+.grid {
+  align-items: center;
+  border-bottom: solid;
+}
+
+.grid article {
+  margin: 0%;
+  padding: 5%;
+  text-align: center;
+}
+
+.grid .current_post {
+  font-size: 150%;
+}
+
+
 /*------------------------------*/
 
 .error_form {
