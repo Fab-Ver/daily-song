@@ -1,6 +1,10 @@
 
-main article p{
+.center_elem{
     text-align: center;
+}
+
+.right_elem{
+    text-align: right;
 }
 
 label[for="notification"] {
