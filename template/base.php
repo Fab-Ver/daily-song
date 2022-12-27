@@ -38,7 +38,10 @@
                 </li>
                 <li>
                     <details role="list">
-                        <summary aria-haspopup="listbox" role="link" class="music_genre">Music genre</summary>
+                        <summary aria-haspopup="listbox" role="link" class="music_genre">
+                        <img src="upload/songs-folder.png" alt="songs_folder" width="30%" height="30%">    
+                        <label for="Music genre">Music genre</label> 
+                        </summary>
                         <ul role="listbox">
                             <?php foreach($genres as $genre): ?>
                             <li>
