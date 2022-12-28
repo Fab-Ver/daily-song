@@ -301,7 +301,7 @@ function submitForm(){
             let error_div = document.querySelector("div.error_form");
             error_div.innerHTML = "An undefined error occurred, try again";
             error_div.removeAttribute('hidden');
-            error_div.focus
+            error_div.focus();
         } else if(response.data['loggedIn']) {
             window.location.replace("homepage.php");
         }
