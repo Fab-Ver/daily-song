@@ -10,10 +10,19 @@
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
 </head>
 <body>
-    <header>
-        <h1>Nome sito</h1>
-    </header>
+    <?php
+        if(!isset($templateParams["error"])){
+            echo '<header>
+                <h1>Nome sito</h1>
+            </header>';
+        }
+    ?>
     <main class="container">
+    <?php
+    if(isset($templateParams["error"])){
+        echo $templateParams["error"];
+    }
+    ?>
     </main>
     <?php
     if(isset($templateParams["js"])):
