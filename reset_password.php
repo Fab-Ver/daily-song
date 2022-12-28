@@ -9,12 +9,7 @@ if(isset($_POST["password"])){
     $result["errorReset"] = false;
     $request = $dbh->getResetRequest($_SESSION["token"]);
     if(count($request)!=0){
-        $currDate = date_create(date("Y-m-d H:i:s"));
-        $expDate = date_create($request[0]["expDate"]);
-        $diff=date_diff($currDate,$expDate);
-        $hours = $diff->h;
-        $hours = $hours + ($diff->days*24);
-        if($hours < 24){
+        if(hours_date_diff(date("Y-m-d H:i:s"),$request[0]["expDate"]) < 24){
             $email = $request[0]["email"];
             $password = password_hash($_POST["password"],PASSWORD_DEFAULT);
             $res = $dbh->resetPassword($email,$password);
@@ -37,12 +32,7 @@ if(isset($_POST["password"])){
         if(isset($_GET["token"])){
             $request = $dbh->getResetRequest($_GET["token"]);
             if(count($request)!=0){
-                $currDate = date_create(date("Y-m-d H:i:s"));
-                $expDate = date_create($request[0]["expDate"]);
-                $diff=date_diff($currDate,$expDate);
-                $hours = $diff->h;
-                $hours = $hours + ($diff->days*24);
-                if($hours < 24){
+                if(hours_date_diff(date("Y-m-d H:i:s"),$request[0]["expDate"]) < 24){
                     $_SESSION["token"] = $_GET["token"];
                     $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","utils/functions.js","js/reset_password.js");
                     require 'template/empty-base.php';
