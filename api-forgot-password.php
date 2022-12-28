@@ -14,14 +14,14 @@ if(!isUserLoggedIn()){
     if(isset($_POST['email'])){
         if(count($dbh->getUser($_POST['email'])) != 0){
             $mail = new PHPMailer(true);
-            $key = bin2hex(random_bytes(50));
+            $token = bin2hex(random_bytes(50));
             $email = $_POST['email'];
             $expDate = date("Y-m-d H:i:s");
-            $result["serverError"]=$dbh->insertResetRequest($email,$key,$expDate);
+            $result["serverError"]=$dbh->insertResetRequest($email,$token,$expDate);
             if(!$result["serverError"]){
                 $body='<p>Please click on the following link to reset your password.</p>';
                 $body.='<p>-------------------------------------------------------------</p>';
-                $body.='<p><a href="http://localhost/progetto_web/reset_password.php?key='.$key.'&email='.$email.'">"http://localhost/progetto_web/reset_password.php?key='.$key.'&email='.$email.'"</a></p>';		
+                $body.='<p><a href="http://localhost/progetto_web/reset_password.php?token='.$token.'">"http://localhost/progetto_web/reset_password.php?token='.$token.'"</a></p>';		
                 $body.='<p>-------------------------------------------------------------</p>';
                 $body.='<p>The link will expire after 1 day for security reason.</p>';
                 $body.='<p>If you did not request this forgotten password email, no action 
