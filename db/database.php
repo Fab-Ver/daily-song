@@ -116,7 +116,7 @@ class DatabaseHelper{
     }
 
     public function getUserPosts($username){
-        $query = "SELECT urlSpotify, urlImage, description, likeNum, dislikeNum, dateTime FROM post WHERE username = ?";
+        $query = "SELECT  postID, description, likeNum, dislikeNum, activeComments, dateTime, trackID, username FROM post WHERE username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();
