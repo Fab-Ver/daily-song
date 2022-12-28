@@ -88,4 +88,13 @@ function canFollow($user1, $user2follower){
     return true;
 }
 
+function hours_date_diff($dateString1,$dateString2){
+    $date1 = date_create($dateString1);
+    $date2 = date_create($dateString2);
+    $diff=date_diff($date1,$date2);
+    $hours = $diff->h;
+    $hours = $hours + ($diff->days*24);
+    return $hours;
+}
+
 ?>
