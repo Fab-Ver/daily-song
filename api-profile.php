@@ -18,12 +18,11 @@ if(isset($_POST["username"]) && isset($_POST["value"])){
     $result["firstName"] = $user["firstName"];
     $result["lastName"] = $user["lastName"];
     $result["profilePicture"] = UPLOAD_DIR.$user["profilePicture"];
-    $result["profileNumberOfFollowed"] = "70"; //$dbh->length(getUserFollowed($result["username"]));
-    $result["profileNumberOfFollower"] = "120"; //$dbh->length(getUserFollower($result["username"]));
-    $result["preferredGenres"] = ["rock", "indie", "pop", "metal", "latina", "tecno"];//$dbh->getUserPreferredGenres($result["username"]);
+    $result["profileNumberOfFollowed"] = count($dbh->getUserFollowed($result["username"]));
+    $result["profileNumberOfFollower"] = count($dbh->getUserFollower($result["username"]));
+    $result["preferredGenres"] = $dbh->getUserPreferredGenres($result["username"]);
     $result["posts"] = [UPLOAD_DIR."post1.jpg", UPLOAD_DIR."post2.jpg", UPLOAD_DIR."post3.jpg", UPLOAD_DIR."post4.jpg"]; //$dbh->getUserPosts($result["username"]);
 }
-
 
 header("Content-Type: application/json");
 echo json_encode($result);

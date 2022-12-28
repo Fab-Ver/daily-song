@@ -3,9 +3,9 @@ function showGenres(genresArray){
   let genres = "";
   for(let i=0; i < genresArray.length; i++){
       if(i == genresArray.length - 1){
-          genres += genresArray[i];
+          genres += genresArray[i]["tag"];
       } else{
-          genres += genresArray[i] + ", ";
+          genres += genresArray[i]["tag"] + ", ";
       } 
   }
   return result + genres;
@@ -42,7 +42,7 @@ function showPosts(posts){
     return result;
 }
 
-axios.get('api-profile.php').then(response => {
+axios.get('api-profile.php'+location.search).then(response => {
     console.log(response.data);
     const posts = showPosts(response.data["posts"]);
     const genres = showGenres(response.data["preferredGenres"]);
