@@ -53,21 +53,21 @@ async function submitForgotPassword(){
     let email = document.querySelector("#email");
     let formData = new FormData();
     formData.append('email',email.value);
-    const res = await axios.post('api-forgot-password.php',formData).then(response => {
+    axios.post('api-forgot-password.php',formData).then(response => {
         let error_div = document.querySelector("div.error_form");
         if(response.data.serverError){
             error_div.innerHTML = "An undefined error occurred, try again";
             error_div.removeAttribute('hidden');
-            error_div.focus
+            error_div.focus();
         }  else if(response.data.sent){
             error_div.innerHTML = "An email has been sent to you with instructions on how to reset your password.";
             error_div.removeAttribute('hidden');
             error_div.style.setProperty("border-color", "#2e7d32", "important");
-            error_div.focus
+            error_div.focus();
         } else if(!response.data.sent){
             error_div.innerHTML = "Message could not be sent, try later";
             error_div.removeAttribute('hidden');
-            error_div.focus
+            error_div.focus();
         }
     });
 }
