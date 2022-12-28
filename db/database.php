@@ -193,10 +193,10 @@ class DatabaseHelper{
         }   
     }
 
-    function insertResetRequest($email,$key,$expDate){
-        $query = "INSERT INTO password_reset (email,resetKey,expDate) VALUES (?, ?, ?)";
+    function insertResetRequest($email,$token,$expDate){
+        $query = "INSERT INTO password_reset (email,token,expDate) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sss',$email, $key, $expDate);
+        $stmt->bind_param('sss',$email, $token, $expDate);
         $result=$stmt->execute();
         return !$result;
     }
@@ -215,6 +215,30 @@ class DatabaseHelper{
         $stmt->bind_param('ss', $followed, $me);
         $result=$stmt->execute();
         return $result;
+    }
+
+    function getResetRequest($token){
+        $query = "SELECT email,token,expDate FROM password_reset WHERE token = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $token);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    function resetPassword($email,$password){
+        $query = "UPDATE `profile` SET `passwordHash` = ? WHERE `profile`.`email` = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ss', $password, $email);
+        $result = $stmt->execute();
+        return $result;
+    }
+
+    function removeToken($token){
+        $query = "DELETE FROM password_reset WHERE `password_reset`.`token` = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $token);
+        $stmt->execute();
     }
     
 }
