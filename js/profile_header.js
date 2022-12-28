@@ -8,11 +8,11 @@ function showProfileHeader(result){
             </div>
             <div class="center-text">
                 <div>${result["profileNumberOfFollower"]}</div>
-                <div><a href="follower.php?kind=follower">follower</a></div>
+                <div><a href="follower.php?user=${result["username"]}&kind=follower">follower</a></div>
             </div>
             <div class="center-text">
                 <div>${result["profileNumberOfFollowed"]}</div>
-                <div><a href="follower.php?kind=followed">followed</a></div>
+                <div><a href="follower.php?user=${result["username"]}&kind=followed">followed</a></button></div>
             </div>
             <div class="center-text">
                 <div>${result["posts"].length}</div>
@@ -36,7 +36,7 @@ function showProfileHeader(result){
     }
     profile += button;
     return profile;
-}
+}  
 
 function insertFollowed(){
     let formData = new FormData();

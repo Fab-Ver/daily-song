@@ -1,15 +1,23 @@
 <?php
 require("bootstrap.php");
 
+$_SESSION["username"] = "sara-capp";
+$result["username"] = isset($_GET["user"]) ? $_GET["user"] : $_SESSION["username"];
+
 if(isset($_GET["kind"])) {
     $data = $_GET["kind"];
     if($data=="follower"){
-        $result["searchResult"] = ["mario", "luca_bigo", "fabio", "rachele"]; //$dbh->getUserFollower($result["username"]);
+        $result["OldSearchResult"] = $dbh->getUserFollower($result["username"]);
         $result["typeOfSearch"] = "follower";
     }
     else if($data=="followed"){
-        $result["searchResult"] = ["gianni", "arianna", "luca_bigo", "michele"]; //$dbh->getUserFollowed($result["username"]);
+        $result["OldSearchResult"] = $dbh->getUserFollowed($result["username"]);
         $result["typeOfSearch"] = "followed";
+    }
+    $result["searchResult"] = array();
+    foreach($result["OldSearchResult"] as $user){
+        $newUser = array("username" => $user["username"],"profilePicture" => UPLOAD_DIR.$user["profilePicture"]);
+        array_push($result["searchResult"], $newUser);
     }
 }
 
