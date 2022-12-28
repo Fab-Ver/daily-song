@@ -23,10 +23,11 @@ create table comment (
      constraint ID_comment primary key (commentID));
 
 create table password_reset (
+     requestID int not null auto_increment,
      email varchar(250) not null,
-     resetKey varchar(250) not null,
+     token varchar(250) not null unique,
      expDate datetime not null,
-     constraint ID_password_reset_ID primary key (email, resetKey));
+     constraint ID_password_reset_ID primary key (requestID));
 
 create table track (
      trackID varchar(30) not null,
