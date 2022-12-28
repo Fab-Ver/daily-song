@@ -2,7 +2,7 @@ function showSearchResult(searchResult){
     let result = "";
     for (let user of searchResult) {
         let profile = `
-        <div><a href="profile.php?user=${user}">@${user}</a></div>
+        <div><a href="profile.php?user=${user}">${user}</a></div>
         `;
         //<img src="${searchResult[i]["profilePicture"]}" alt="" width="50%"/>
         //<p>@${user["username"]}</p>

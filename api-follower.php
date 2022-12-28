@@ -8,7 +8,7 @@ if(isset($_GET["kind"])) {
         $result["typeOfSearch"] = "follower";
     }
     else if($data=="followed"){
-        $result["searchResult"] = ["gianni", "arianna", "michele"]; //$dbh->getUserFollowed($result["username"]);
+        $result["searchResult"] = ["gianni", "arianna", "luca_bigo", "michele"]; //$dbh->getUserFollowed($result["username"]);
         $result["typeOfSearch"] = "followed";
     }
 }

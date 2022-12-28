@@ -96,7 +96,7 @@ class DatabaseHelper{
     }
 
     public function getUserFollower($username){
-        $query = "SELECT username, profilePicture FROM friend, JOIN profile ON friend.follower = profile.username WHERE followed = ?";
+        $query = "SELECT username, profilePicture FROM friend JOIN profile ON friend.follower = profile.username WHERE followed = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();
@@ -199,6 +199,22 @@ class DatabaseHelper{
         $stmt->bind_param('sss',$email, $key, $expDate);
         $result=$stmt->execute();
         return !$result;
+    }
+
+    function insertFollowed($followed, $me){
+        $query = "INSERT INTO friend (followed, follower) VALUES (?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ss', $followed, $me);
+        $result=$stmt->execute();
+        return $result;
+    }
+
+    function removeFollowed($followed, $me){
+        $query = "DELETE FROM friend WHERE followed = ? AND follower = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ss', $followed, $me);
+        $result=$stmt->execute();
+        return $result;
     }
     
 }

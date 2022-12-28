@@ -3,7 +3,7 @@ function showProfileHeader(result){
         <div class="grid">
             <img src="${result["profilePicture"]}" alt="" width="50%"/>
             <div class="center-text">
-                <div>@${result["username"]}</div>
+                <div id="username2">${result["username"]}</div>
                 <div>${result["firstName"]} ${result["lastName"]}</div>
             </div>
             <div class="center-text">
@@ -24,12 +24,12 @@ function showProfileHeader(result){
     if(!result["isMyProfile"]){
         if(result["canFollow"]){
         button = `
-            <form><input type="button" name="follow" value="Follow" onclick="addFollowed(${result["username"]})"></input></form>
+            <form id="followButton"><input type="button" name="follow" value="Follow" onclick="insertFollowed()"></input></form>
             </div>
         `;
         } else {
         button = `
-            <form><input type="button" class="secondary" name="unfollow" value="Unfollow" onclick="removeFollowed(${result["username"]})"></input></form>
+            <form id="followButton"><input type="button" class="secondary" name="unfollow" value="Unfollow" onclick="removeFollowed()"></input></form>
             </div>
             `;
         }
@@ -38,44 +38,50 @@ function showProfileHeader(result){
     return profile;
 }
 
-function addFollowed(user){
+function insertFollowed(){
     let formData = new FormData();
-    formData.append('username', user);
+    username = document.getElementById("username2").innerText;
+    formData.append('username', username);
     formData.append('value', "add");
-    axios.post('api-profile.php' + data);
+    axios.post('api-profile.php', formData).then(response => {
+        console.log(response.data);
+        if(response.data["followButton"]){
+            updateButton(false);
+        }
+    });
 }
 
-function removeFollowed(user){
-    let formData = new FormData();
-    formData.append('username', user);
+function removeFollowed(){
+    let formData= new FormData();
+    username = document.getElementById("username2").innerText;
+    formData.append('username', username);
     formData.append('value', "remove");
-    axios.post('api-profile.php' + data);
+    axios.post('api-profile.php', formData).then(response => {
+        console.log(response.data);
+        if(response.data["followButton"]){
+            updateButton(true);
+        }
+    });
 }
 
-function showGenres(genresArray){
-    let result = `<p>Favourite genres: <br>`;
-    let genres = "";
-    for(let i=0; i < genresArray.length; i++){
-        if(i == genresArray.length - 1){
-            genres += genresArray[i];
-        } else{
-            genres += genresArray[i] + ", ";
-        } 
+function updateButton(canFollow){
+    let button = document.getElementById("followButton");
+    if(canFollow){
+        button.innerHTML = `<input type="button" name="follow" value="Follow" onclick="insertFollowed()"></input>`;
+    } else {
+        button.innerHTML = `<input type="button" class="secondary" name="unfollow" value="Unfollow" onclick="removeFollowed()"></input>`;
     }
-    return result + genres + `</p>`;
 }
 
 const main = document.querySelector("main");
 main.innerHTML = `<div id="header"></div>
+                  <p id="genres"></p>
                   <div id="content"></div>`;
 
 axios.get('api-profile.php'+location.search).then(response => {
     console.log(response.data);
     const profileHeader = showProfileHeader(response.data);
-    console.log(profileHeader);
     const header = document.querySelector('#header');
-    const genres = showGenres(response.data["preferredGenres"]);
-    console.log(genres);
-    header.innerHTML = profileHeader + genres;
+    header.innerHTML = profileHeader;
 });
 

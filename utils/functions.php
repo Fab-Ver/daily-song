@@ -79,4 +79,13 @@ function uploadImage($path, $image){
     return array($result, $msg);
 }
 
+function canFollow($user1, $user2follower){
+    foreach($user2follower as $u){
+        if($u["username"] == $user1){
+            return false;
+        }
+    }
+    return true;
+}
+
 ?>

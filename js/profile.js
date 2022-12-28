@@ -1,3 +1,16 @@
+function showGenres(genresArray){
+  let result = `Favourite genres: <br>`;
+  let genres = "";
+  for(let i=0; i < genresArray.length; i++){
+      if(i == genresArray.length - 1){
+          genres += genresArray[i];
+      } else{
+          genres += genresArray[i] + ", ";
+      } 
+  }
+  return result + genres;
+}
+
 function showPosts(posts){
     let result = "";
 
@@ -32,9 +45,11 @@ function showPosts(posts){
 axios.get('api-profile.php').then(response => {
     console.log(response.data);
     const posts = showPosts(response.data["posts"]);
-    console.log(posts);
+    const genres = showGenres(response.data["preferredGenres"]);
+    const paragraph = document.querySelector('#genres');
     const content = document.querySelector('#content');
     content.innerHTML = posts;
+    paragraph.innerHTML = genres;
 });
 
 /*
