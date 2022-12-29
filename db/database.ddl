@@ -101,6 +101,14 @@ create table profile (
      birthDate date not null,
      constraint ID_profile primary key (username));
 
+create table user_tokens (
+     tokenID int not null auto_increment,
+     selector varchar(255) not null,
+     hashed_validator varchar(255) not null,
+     expiry datetime not null,
+     username varchar(50) not null,
+     constraint ID_user_tokens_ID primary key (tokenID));
+
 
 -- Constraints Section
 -- ___________________ 
@@ -171,6 +179,11 @@ alter table prefers add constraint FKpre_gen
      ON DELETE CASCADE;
 
 alter table settings add constraint FKset_FK
+     foreign key (username)
+     references profile (username)
+     ON DELETE CASCADE;
+
+alter table user_tokens add constraint FKhave_FK
      foreign key (username)
      references profile (username)
      ON DELETE CASCADE;
