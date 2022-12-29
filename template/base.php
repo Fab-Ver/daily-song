@@ -11,43 +11,8 @@
 <body>
     <aside class="menu">
         <nav class="container-fluid">
-            <ul>
-                <li class="li-profile">
-                    <a <?php isActive("profile.php");?> href="profile.php">
-                        <img src="upload/user.png" alt="user">
-                        <label for="profile">Profile</label>
-                    </a>
-                </li>
-                <li class="li-home">
-                    <a <?php isActive("homepage.php");?> href="homepage.php">
-                        <img src="upload/home.png" alt="home"><label for="home">Home</label>
-                    </a>
-                </li>
-                <li class="li-new-post">
-                    <a <?php isActive("new_post.php");?> href="new_post.php">
-                        <img src="upload/add.png" alt="add">
-                        <label for="new post">New Post</label>
-                    </a>
-                </li>
-                <li class="li-search">
-                    <a <?php isActive(".php");?> href="#">
-                        <img src="upload/search.png" alt="search">
-                        <label for="search">Search</label>
-                    </a>
-                </li>
-                <li class="li-settings">
-                    <a <?php isActive("settings.php");?> href="settings.php">
-                        <img src="upload/settings.png" alt="settings">
-                        <label for="settings">Settings</label>
-                    </a>
-                </li>
-                <li class="li-logout">
-                    <a <?php isActive("logout.php");?> href="logout.php">
-                        <img src="upload/logout.png" alt="logout">
-                        <label for="logout">Logout</label>
-                    </a>
-                </li>
-            </ul>
+            <ul></ul>
+            <script src="js/base.js" type="text/javascript"></script>
         </nav>
     </aside>
     <div class="main-div">
@@ -75,6 +40,7 @@
             </details>
         </nav>
         <main></main>
+
         <?php
         if(isset($templateParams["js"])):
             foreach($templateParams["js"] as $script):
@@ -87,6 +53,7 @@
             echo $templateParams["error"];
         endif;
         ?>
+        
     </div>
 </body>
 </html>

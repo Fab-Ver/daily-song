@@ -14,6 +14,7 @@
 
 /*---------------------------------------------*/
 
+
 .main-div h1 {
   font-style: italic;
   text-align: center;
@@ -22,7 +23,6 @@
 }
 
 .main-div nav details {
-  display: inline-block;
   font-weight: bold;
   padding: 0% 3%;
 }
@@ -35,7 +35,6 @@
   overflow-y: scroll !important;
   height: 50vh;
   width: 50vw;
-  max-width: fit-content;
 }
 
 .main-div nav .notification ul {
@@ -47,19 +46,22 @@
 .menu {
   position: fixed;
   bottom: 0;
-  background-color: lightgray;
+  background-color: white;
   width: 100%;
-  padding-left: 1%;
+  padding-left: 4%;
 }
 
 .menu li {
   float: left;
-  width: 14%;
-  margin: 0% 1vw;
+  width: 16%;
   align-items: center;
 }
 
-.menu a label {
+.menu figure {
+  margin: 0 !important;
+}
+
+.menu a figcaption {
   display: none;
 }
 
@@ -121,8 +123,20 @@ main .grid .current_post article {
     background-color: transparent;
   }
 
+  .menu nav {
+    margin-top: 5%;
+  }
+
   .menu li{
-    width: 8vw;
+    float: none;
+    width: 80% !important;
+    padding: 2% !important;
+    margin: 0% 10% !important;
+  }
+
+  .menu figure {
+    margin: 0% !important;
+    padding: 15% !important;
   }
 
   .main-div {
@@ -131,12 +145,8 @@ main .grid .current_post article {
     overflow: auto;
   }
 
-  .main-div nav summary::after {
-    display: inline;
-  }
-
   .main-div nav .music-genre ul {
-    left: 20% !important;
+    left: 10% !important;
   }
 
   main {
@@ -157,16 +167,23 @@ main .grid .current_post article {
 
   .menu li{
     width: 100%;
-    align-items: left;
+    vertical-align: middle;
+    margin-left: 9% !important;
+    padding: 0% !important;
+
   }
 
   .menu a {
     width: 100%;
-    padding: 5% 0%;
-    margin: 0%;
+    padding: 0% !important;
+    margin: 0% !important;
   }
 
-  .menu a label {
+  .menu figure {
+    padding: 10% 5% !important;
+  }
+
+  .menu a figcaption {
     display: inline-block;
     margin-left: 2%;
   }
