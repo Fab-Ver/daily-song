@@ -23,4 +23,9 @@ label[for="notification"],label[for="remember_me"] {
     margin: 0%;
 }
 
+header h1{
+    margin-bottom: 0 !important;
+    text-align: center;
+}
+
 
