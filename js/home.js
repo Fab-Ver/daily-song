@@ -1,19 +1,19 @@
 function viewHome(){
     let post = `
-        <section>
-            <button class="button_prev">p</button>
-            <article class="current_post">post</article>
-            <button class="button_next">d</button>
-        </section>
-        <div class="grid">
-            <div><article>prima 3</article></div>
-            <div><article>prima 2</article></div>
-            <div><article>prima 1</article></div>
-            <div class="current_post"><article>post</article></div>
-            <div><article>dopo 1</article></div>
-            <div><article>dopo 2</article></div>
-            <div><article>dopo 3</article></div>
-        </div>
+    <section class="post_section">
+        <button class="button_prev">p</button>
+        <article class="current_post">post</article>
+        <button class="button_next">d</button>
+    </section>
+    <div class="grid">
+        <div><article>prima 3</article></div>
+        <div><article>prima 2</article></div>
+        <div><article>prima 1</article></div>
+        <div class="current_post"><article>post</article></div>
+        <div><article>dopo 1</article></div>
+        <div><article>dopo 2</article></div>
+        <div><article>dopo 3</article></div>
+    </div>
     `;
     return post;
 }

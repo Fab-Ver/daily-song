@@ -65,9 +65,49 @@
 
 main {
   border-top: solid;
+  padding: 1% !important;
+  margin-bottom: 12%;
 }
 
 /*---------------------------------------------*/
+
+.error_form {
+  border-color: #b71c1c !important;
+  padding: 1%;
+  border: var(--border-width) solid;
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing) !important;
+}
+
+.error_form ul {
+  margin: 0%;
+}
+
+/*-main home----------------------------------*/
+
+.post_section {
+  display: none;
+}
+
+.post_section article, .grid article {
+  margin: 3% 1%;
+}
+
+main .grid {
+  align-items: center;
+  margin: 2% 1%;
+}
+
+main .grid article {
+  padding: 2%;
+  text-align: center;
+}
+
+main .grid .current_post article {
+  font-size: 200%;
+}
+
+/*------------------------------------------*/
 
 @media screen and (min-width: 768px) {
 
@@ -77,7 +117,8 @@ main {
     width: 15%;
     height: 100vh;
     border: solid;
-    padding: 2% 1%;
+    padding: 0% 1%;
+    background-color: transparent;
   }
 
   .menu li{
@@ -98,9 +139,13 @@ main {
     left: 20% !important;
   }
 
+  main {
+    margin-bottom: 0%;
+  }
+
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 992px) {
   
   .menu {
     padding: 0%;
@@ -113,7 +158,6 @@ main {
   .menu li{
     width: 100%;
     align-items: left;
-    vertical-align: middle;
   }
 
   .menu a {
@@ -131,20 +175,21 @@ main {
     max-height: 3vw;
   }
 
+  .post_section {
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    height: 60vh;
+    text-align: center;
+    margin: 0%;
+  }
+  
+  .post_section button {
+    margin: 0%;
+    background-color: transparent;
+  }
+  
+  .post_section button:hover {
+    background-color: black;
+  }
+
 }
-
-/*------------------------------*/
-
-.error_form {
-  border-color: #b71c1c !important;
-  padding: 1%;
-  border: var(--border-width) solid;
-  border-radius: var(--border-radius);
-  margin-bottom: var(--spacing) !important;
-}
-
-.error_form ul {
-  margin: 0%;
-}
-
-

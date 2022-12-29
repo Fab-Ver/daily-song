@@ -9,41 +9,6 @@
     <meta name="decription" content="is a digital music social that gives you the possibility to share a day song with your friends"/>
 </head>
 <body>
-    <div class="main-div">
-        <h1>Title</h1>
-        <nav class="container">
-            <details role="list" class="music-genre">
-                <summary aria-haspopup="listbox" role="link">Music genre</summary>
-                <ul role="listbox">
-                    <?php foreach($genres as $genre): ?>
-                    <li>
-                        <label for="switch <?php echo $genre["tag"]; ?>">
-                            <input type="checkbox" id="switch<?php echo $genre["genreID"]; ?>" role="switch">
-                            <?php echo $genre["tag"]; ?>
-                        </label>
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
-            </details>
-            <details role="list" class="notification">
-                <summary aria-haspopup="listbox" role="link">3 Notification</summary>
-                <ul role="listbox">
-                    <li>Text shbyhdbsw hxcbuxusnx uhxhs</p></li>
-                    <li>Text shbyhdbsw hxcbuxusnx uhxhs</li>
-                </ul>
-            </details>
-        </nav>
-        <main></main>
-        <?php
-        if(isset($templateParams["js"])):
-            foreach($templateParams["js"] as $script):
-        ?>
-            <script src="<?php echo $script; ?>"></script>
-        <?php
-            endforeach;
-        endif;
-        ?>
-    </div>
     <aside class="menu">
         <nav class="container-fluid">
             <ul>
@@ -85,5 +50,43 @@
             </ul>
         </nav>
     </aside>
+    <div class="main-div">
+        <h1>Title</h1>
+        <nav class="container">
+            <details role="list" class="music-genre">
+                <summary aria-haspopup="listbox" role="link">Music genre</summary>
+                <ul role="listbox">
+                    <?php foreach($genres as $genre): ?>
+                    <li>
+                        <label for="switch <?php echo $genre["tag"]; ?>">
+                            <input type="checkbox" id="switch<?php echo $genre["genreID"]; ?>" role="switch">
+                            <?php echo $genre["tag"]; ?>
+                        </label>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+            </details>
+            <details role="list" class="notification">
+                <summary aria-haspopup="listbox" role="link">3 Notification</summary>
+                <ul role="listbox">
+                    <li>Text shbyhdbsw hxcbuxusnx uhxhs</p></li>
+                    <li>Text shbyhdbsw hxcbuxusnx uhxhs</li>
+                </ul>
+            </details>
+        </nav>
+        <main></main>
+        <?php
+        if(isset($templateParams["js"])):
+            foreach($templateParams["js"] as $script):
+        ?>
+            <script src="<?php echo $script; ?>"></script>
+        <?php
+            endforeach;
+        endif;
+        if(isset($templateParams["error"])):
+            echo $templateParams["error"];
+        endif;
+        ?>
+    </div>
 </body>
 </html>
