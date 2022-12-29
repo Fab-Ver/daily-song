@@ -1,4 +1,6 @@
 <?php
+require_once 'remember.php';
+
 function isActive($pagename){
     if(basename($_SERVER['PHP_SELF'])==$pagename){
         echo " class='active' ";
@@ -8,27 +10,40 @@ function isActive($pagename){
 function secure_session_start(){
     $session_name = 'secure_session_id';
     $secure = true;
-    $httponly = true;
+    $http_only = true;
     ini_set('session.use_only_cookies',1);
     $cookieParams = session_get_cookie_params();
-    session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $httponly);
+    session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $http_only);
     session_name($session_name);
     session_start();
     session_regenerate_id();
 }
-/*
-list($result, $msg) = uploadImage(UPLOAD_DIR, $_FILES["imgarticolo"]);
-    if($result != 0){
-        $imgarticolo = $msg;
-*/
 
-function isUserLoggedIn(){
-    return !empty($_SESSION['username']);
+function isUserLoggedIn() : bool{
+    global $dbh;
+    if(isset($_SESSION['username'])){
+        return true;
+    }
+
+    $token = filter_input(INPUT_COOKIE, 'remember_me', FILTER_UNSAFE_RAW);
+
+    if($token && token_is_valid($token)){
+        $user = $dbh->findUserByToken($token);
+        if($user){
+            $user_data = $dbh->findUserByUsername($user['username']);
+            return registerLoggedUser($user_data['username'],$user_data['email']);
+        }
+    }
+    return false;
 }
 
-function registerLoggedUser($username,$email){
-    $_SESSION['username'] = $username;
-    $_SESSION['email'] = $email;
+function registerLoggedUser($username,$email) : bool{
+    if(session_regenerate_id()){
+        $_SESSION['username'] = $username;
+        $_SESSION['email'] = $email;
+        return true;
+    }
+    return false;
 }
 
 function uploadImage($path, $image){
@@ -95,6 +110,53 @@ function hours_date_diff($dateString1,$dateString2){
     $hours = $diff->h;
     $hours = $hours + ($diff->days*24);
     return $hours;
+}
+
+/**
+ * Log the user in the website, return true if the user is logged in false otherwise. 
+ */
+function login(string $username, string $password, bool $remember) : bool {
+    global $dbh;
+    $user = $dbh->findUserByUsername($username);
+    if(count($user) != 0 && password_verify($password,$user[0]['passwordHash'])){
+        registerLoggedUser($user[0]['username'],$user[0]['email']);
+        if($remember){
+            remember_me($user[0]['username']);
+        }
+        return true;
+    } else {
+        $dbh->insertFailedLoginAttempts($user[0]['username']);
+    }
+    return false;
+}
+
+/**
+ * Saves the login for a specified number of days. 
+ * By default, it remembers the login for 30 days.
+ */
+function remember_me(string $username, int $day = 30){
+    global $dbh;
+    [$selector,$validator,$token] = generate_tokens();
+
+    /*Remove all the existing token associated with username*/
+    $dbh->deleteUserToken($username);
+
+    $expired_seconds = time() + 60 * 60 * 24 * $day;
+
+    $hash_validator = password_hash($validator,PASSWORD_DEFAULT);
+    $expiry = date('Y-m-d H:i:s', $expired_seconds);
+
+    /*Insert new token */
+    if($dbh->insertUserToken($username,$selector,$hash_validator,$expiry)){
+        setcookie('remember_me', $token, $expired_seconds);
+    }
+}
+
+/**
+ * Check if email is valid and not empty.
+ */
+function validateEmail(string $email) : bool {
+    return !empty($email) && filter_var($email,FILTER_VALIDATE_EMAIL);
 }
 
 ?>
