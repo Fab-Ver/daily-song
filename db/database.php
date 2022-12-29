@@ -9,8 +9,8 @@ class DatabaseHelper{
         }        
     }
 
-    public function getUser($email){
-        $query = "SELECT username, email, passwordHash FROM profile WHERE email = ?";
+    public function findUsernameByEmail($email){
+        $query = "SELECT username FROM profile WHERE email = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$email);
         $stmt->execute();
@@ -19,8 +19,8 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function checkUsername($username){
-        $query = "SELECT username FROM profile WHERE username = ?";
+    public function findUserByUsername($username){
+        $query = "SELECT username, passwordHash, email FROM profile WHERE username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();
@@ -53,7 +53,7 @@ class DatabaseHelper{
         }   
     }
 
-    function checkBrute($username){
+    function isUserActive(string $username) : bool{
         $now = time();
         $valid_attempts = $now - (3*60*60);
         $query="SELECT time FROM login_attempts WHERE username = ? AND time > '$valid_attempts'";
@@ -62,12 +62,12 @@ class DatabaseHelper{
         $stmt->execute();
         $stmt->store_result();
         if($stmt->num_rows() > 5){
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
-    function insertLoginAttempts($username){
+    function insertFailedLoginAttempts(string $username){
         $now = time();
         $query = "INSERT INTO login_attempts (username,time) VALUES (?, ?)";
         $stmt = $this->db->prepare($query);
@@ -239,6 +239,42 @@ class DatabaseHelper{
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $token);
         $stmt->execute();
+    }
+
+    function insertUserToken(string $username, string $selector, string $hashed_validator, string $expiry) : bool {
+        $query = "INSERT INTO user_tokens (selector,hashed_validator,username,expiry) VALUES (?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ssss',$selector, $hashed_validator, $username, $expiry);
+        return $stmt->execute();
+    }
+
+    public function findUserTokenBySelector(string $selector){
+        $query = "SELECT tokenID, selector, hashed_validator, username, expiry FROM user_tokens WHERE selector = ? AND expiry >= now() LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $selector);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    function deleteUserToken(string $username) : bool {
+        $query = "DELETE FROM user_tokens WHERE username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $username);
+        return $stmt->execute();
+    }
+
+    function findUserByToken(string $token){
+        $tokens = parse_token($token);
+        if(!$tokens){
+            return null;
+        }
+        $query = "SELECT username FROM user_tokens WHERE selector = ? AND expiry > now() LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $tokens[0]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
     
 }
