@@ -10,7 +10,7 @@ function createLoginForm() {
             <form action="#" method="post" id="login_form">
                 <label for="login_email">
                     Email:
-                    <input type="email" id="login_email" name="login_email" placeholder="Email" oninput="checkLoginEmail()" required></input>
+                    <input type="email" id="login_email" name="login_email" placeholder="Email" onblur="checkLoginEmail()" required></input>
                 </label>
                 <label for="login_password">
                     <div class="grid">
@@ -23,6 +23,10 @@ function createLoginForm() {
                     </div>
                     <input type ="password" id="login_password" name="login_password" placeholder="Password" oninput="checkPassword()" required></input>
                 </label>
+                <label for="remember_me">
+                  <input type="checkbox" id="remember_me" name="remember_me" role="switch">
+                  Remember me
+                </label>
                 <input type="button" name="login" value="Log In" onclick="checkLoginForm()"></input>
             </form>
             <p class="center_elem">Don't have an account? <a href="signup.php">Sign Up</a></p>
@@ -32,22 +36,29 @@ function createLoginForm() {
   return form;
 }
 
+function clearForm(){
+  let email = document.getElementById('login_email');
+  let password = document.getElementById('login_password');
+  email.removeAttribute("aria-invalid");
+  password.removeAttribute("aria-invalid");
+}
+
 function checkLoginEmail() {
-  let email = document.querySelector("#login_email");
+  let email = document.getElementById('login_email');
   if(!email.validity.valueMissing){
     if(!email.validity.typeMismatch){
       let formData = new FormData();
       formData.append('checkEmail',email.value);
       axios.post('authenticate.php',formData).then(response => {
-        if(response.data["errorEmail"]){
-          showError(email,"Email doesn't exist, try again or sign up");
+        if(response.data.errorMsg !== ""){
+          showError(email,response.data.errorMsg);
           setValid(email,false);
         } else {
           setValid(email,true);
         }
       });
     } else {
-      showError(email,"Wrong mail format (example@domain.com)");
+      showError(email,"Invalid email format expected example@domain.com");
       setValid(email,false);
     }
   } else {
@@ -56,19 +67,19 @@ function checkLoginEmail() {
 }
 
 function checkPassword(){
-  let password = document.querySelector("#login_password");
+  let password = document.getElementById('login_password');
   password.removeAttribute("aria-invalid");
   password.setCustomValidity("");
 }
 
 function checkLoginForm() {
-  let email = document.querySelector("#login_email");
-  let password = document.querySelector("#login_password");
+  let email = document.getElementById('login_email');
+  let password = document.getElementById('login_password');
   if (email.validity.valueMissing || email.getAttribute("aria-invalid") === 'true') {
-    showError(email, "Enter valid email");
+    showError(email, "Email required, enter valid email to continue");
     setValid(email,false);
   } else if (password.validity.valueMissing) {
-    showError(password, "Enter password to login");
+    showError(password, "Password required, enter valid password to continue");
     setValid(password,false);
   } else {
     login(email,password);
@@ -76,31 +87,30 @@ function checkLoginForm() {
 }
 
 function login(email,password) {
+  let remember_me = document.getElementById('remember_me');
   let formData = new FormData();
-  formData.append("email", email.value);
-  formData.append("password", password.value);
-  axios.post("authenticate.php", formData).then((response) => {
-    if (response.data["loggedIn"]) {
-      window.location.replace("homepage.php");
-    } else if (response.data["errorPassword"]) {
-        showError(password,"Invalid password");
-        setValid(password, false);
-    } else if (response.data["checkBrute"]){
-      let error_div = document.querySelector("div.error_form");
-      error_div.innerHTML = `Too much failed login attempts, try later`;
-      error_div.removeAttribute('hidden');
-      error_div.focus();
-    }
+  formData.append('email', email.value);
+  formData.append('password', password.value);
+  formData.append('remember_me',remember_me.checked);
+  axios.post('authenticate.php', formData).then(response => {
+      let error_div = document.querySelector('div.error_form');
+      if(response.data.errorMsg !== ""){
+        clearForm();
+        error_div.innerHTML = response.data.errorMsg;
+        error_div.removeAttribute('hidden');
+        error_div.focus();
+        if(response.data.elemID !== ""){
+          setValid(document.getElementById(response.data.elemID),false);
+        }
+      } else if(response.data.loggedIn){
+        window.location.replace('homepage.php');
+      }
   });
 }
 
-const main = document.querySelector("main");
-axios.get("authenticate.php").then((response) => {
-  if (response.data["loggedIn"]) {
-    window.location.replace("homepage.php");
-  } else {
+const main = document.querySelector('main');
+axios.get('authenticate.php').then(response => {
     main.innerHTML = createLoginForm();
-    let email = document.querySelector("#login_email");
+    let email = document.getElementById('login_email');
     email.focus();
-  }
 });
