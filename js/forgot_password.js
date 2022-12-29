@@ -7,7 +7,7 @@ function createForgotPasswordForm(){
         <div>
         <hgroup>
             <h1>Forgot Password</h1>
-            <h2>An email will be sent to this email if an account is registered under it</h2>
+            <h2>An email will be sent to the specified address if an account is registered under it</h2>
         </hgroup>
         <div class="error_form" tabindex="-1" hidden></div>
         <form action="#" method="post" id="forgot_password_form">
@@ -26,12 +26,12 @@ function createForgotPasswordForm(){
 }
 
 function checkEmail() {
-    let email = document.querySelector("#email");
+    let email = document.getElementById('email');
     if(!email.validity.valueMissing){
       if(!email.validity.typeMismatch){
         setValid(email,true);
       } else {
-        showError(email,"Wrong mail format (example@domain.com)");
+        showError(email,"Invalid email format expected example@domain.com");
         setValid(email,false);
       }
     } else {
@@ -40,33 +40,29 @@ function checkEmail() {
 }
 
 function checkForm(){
-    let email = document.querySelector("#email");
+    let email = document.getElementById('email');
     if(email.validity.valueMissing || email.getAttribute("aria-invalid") === 'true'){
-        showError(email, "Enter valid email");
+        showError(email, "Email required, enter valid email to continue");
         setValid(email,false);
     } else {
         submitForgotPassword();
     }
 }   
 
-async function submitForgotPassword(){
-    let email = document.querySelector("#email");
+function submitForgotPassword(){
+    let email = document.getElementById('email');
     let formData = new FormData();
     formData.append('email',email.value);
     axios.post('api-forgot-password.php',formData).then(response => {
-        let error_div = document.querySelector("div.error_form");
-        if(response.data.serverError){
-            error_div.innerHTML = "An undefined error occurred, try again";
+        let error_div = document.querySelector('div.error_form');
+        if(response.data.errorMsg !== ""){
+            error_div.innerHTML = response.data.errorMsg;
             error_div.removeAttribute('hidden');
             error_div.focus();
-        }  else if(response.data.sent){
+        } else {
             error_div.innerHTML = "An email has been sent to you with instructions on how to reset your password.";
             error_div.removeAttribute('hidden');
             error_div.style.setProperty("border-color", "#2e7d32", "important");
-            error_div.focus();
-        } else if(!response.data.sent){
-            error_div.innerHTML = "Message could not be sent, try later";
-            error_div.removeAttribute('hidden');
             error_div.focus();
         }
     });
