@@ -2,10 +2,15 @@ function viewHome(){
     let post = `
     <section class="post_section">
         <button class="button_prev">p</button>
-        <article class="current_post">post</article>
+        <article class="current_post"></article>
         <button class="button_next">d</button>
     </section>
-    <div class="grid">
+    `;
+    return post;
+}
+
+/*
+    <div class="list">
         <div><article>prima 3</article></div>
         <div><article>prima 2</article></div>
         <div><article>prima 1</article></div>
@@ -14,9 +19,7 @@ function viewHome(){
         <div><article>dopo 2</article></div>
         <div><article>dopo 3</article></div>
     </div>
-    `;
-    return post;
-}
+*/
 
 const main = document.querySelector("main");
 main.innerHTML = viewHome();

@@ -95,18 +95,75 @@ main {
   margin: 3% 1%;
 }
 
-main .grid {
+main .list {
   align-items: center;
   margin: 2% 1%;
 }
 
-main .grid article {
-  padding: 2%;
-  text-align: center;
-}
-
 main .grid .current_post article {
   font-size: 200%;
+}
+
+/*---------------------------------------------*/
+
+article.current_post{
+  margin: 0% !important;
+  padding: 2% 2% 3%;
+  text-align: left;
+}
+
+article.post_body div.grid {
+  grid-template-columns: 25% 75% !important;
+  margin-bottom: 2% !important;
+}
+
+section {
+  margin-bottom: 0% !important;
+}
+
+section.post_text {
+  padding-left: 5% !important;
+}
+
+section.post_text .song, section.post_text a, section.post_text p {
+  margin: 3% 0% !important;
+}
+
+section.post_text p img, section.post_text p label {
+  display: inline-block;
+  width: 5vw;
+  max-width: 40px;
+  margin: 0% 1%;
+}
+
+section.post_text p .dislike {
+  transform: rotate(180deg);
+}
+
+section.post_text label {
+  font-size: 130%;
+}
+
+section.comments input {
+  float: left;
+  width: 80% !important;
+}
+
+section.comments button {
+  float: right;
+  width: 20%;
+  background: transparent;
+}
+
+details {
+  clear: both;
+  padding: 0% 2% !important;
+  margin: 0% !important;
+}
+
+details article {
+  margin: 0% !important;
+  background-color: black;
 }
 
 /*------------------------------------------*/
@@ -195,7 +252,6 @@ main .grid .current_post article {
   .post_section {
     display: grid;
     grid-template-columns: 10% 80% 10%;
-    height: 60vh;
     text-align: center;
     margin: 0%;
   }
