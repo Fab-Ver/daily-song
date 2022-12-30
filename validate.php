@@ -22,7 +22,7 @@ if(!isUserLoggedIn()){
                 $dbh->insertSettings($_POST["username"],$_POST["notification"]);
                 $genresIDs = json_decode($_POST["favoriteGenres"]);
                 $dbh->insertFavoriteGenres($_POST["username"],$genresIDs);
-                registerLoggedUser($_POST["username"],$_POST["email"]);
+                registerLoggedUser($_POST["username"],$_POST["email"],$hash);
                 $result['loggedIn'] = true;
             } else {
                 $result["validateError"] = true;
