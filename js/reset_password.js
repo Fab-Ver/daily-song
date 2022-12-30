@@ -30,10 +30,10 @@ function createResetPasswordForm(){
 function checkPassword(){
     let password = document.getElementById('password');
     let confirm_password = document.getElementById('confirm_password');
-    let regex =  /^(?=.*[0-9])(?=.*[- ?!@#$%^&*\/\\])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9- ?!@#$%^&*\/\\]{8,30}$/
+    let regex =  /^(?=.*[0-9])(?=.*[\'^£$%&*()}{@#~?><>,|=_+¬-])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9\'^£$%&*()}{@#~?><>,|=_+¬-]{8,30}$/
     if(!password.validity.valueMissing){
         if(!password.value.match(regex)){
-            showError(password,"Wrong password format, should contain at least:\n- one digit\n- one upper case\n- one lower case\n- one special character - ?!@#$%^&*\/\\\nMin length: 8\nMax length: 30 ");
+            showError(password,"Wrong password format, should contain at least:\n- one digit\n- one upper case\n- one lower case\n- one special character \'^£$%&*()}{@#~?><>,|=_+¬-\nMin length: 8\nMax length: 30 ");
             setValid(password,false);
         } else {
             if(!confirm_password.validity.valueMissing){
@@ -77,48 +77,45 @@ function checkResetPassword(){
     let err_element = new Array();
 
     if(password.validity.valueMissing || password.getAttribute('aria-invalid') === 'true'){
-        errors.push("Password missing or password mismatch");
+        errors.push("Password invalid/missing or password mismatch");
         err_element.push(password);
     }
 
     if(confirm_password.validity.valueMissing || confirm_password.getAttribute('aria-invalid') === 'true'){
-        errors.push("Confirm password missing or password mismatch");
+        errors.push("Confirm invalid/password missing or password mismatch");
         err_element.push(confirm_password);
     }
 
     if(errors.length == 0){
-        resetPassword(password.value);
+        resetPassword(password.value,confirm_password.value);
     } else {
         err_element.forEach(element => {
             setValid(element,false);
         });
-        let error_div = document.querySelector("div.error_form");
+        let error_div = document.querySelector('div.error_form');
         error_div.innerHTML = `The following errors occurred:<ul>` + createError(errors);
         error_div.removeAttribute('hidden');
         error_div.focus();
     }
 }
 
-function resetPassword(password){
+function resetPassword(password,confirm_password){
     let formData = new FormData();
     formData.append('password',password);
+    formData.append('confirmPassword',confirm_password);
     axios.post('reset_password.php',formData).then(response => {
-        let error_div = document.querySelector("div.error_form");
-        if(response.data.tokenError){
-            error_div.innerHTML = `Expired/Invalid token`;
-            error_div.removeAttribute('hidden');
-            error_div.focus();
-            document.getElementById("reset_password").disabled = true;
-        } else if(response.data.errorReset){
-            error_div.innerHTML = `An undefined server error occurred, try later`;
+        let error_div = document.querySelector('div.error_form');
+        if(response.data.errorMsg !== ""){
+            error_div.innerHTML = response.data.errorMsg;
+            error_div.style.setProperty("border-color", "#b71c1c", "important");
             error_div.removeAttribute('hidden');
             error_div.focus();
         } else {
-            error_div.innerHTML = "Your password has been updated successfully";
+            error_div.innerHTML = 'Your password has been updated successfully';
             error_div.removeAttribute('hidden');
             error_div.style.setProperty("border-color", "#2e7d32", "important");
             error_div.focus();
-            document.getElementById("reset_password").disabled = true;
+            document.getElementById('reset_password').disabled = true;
         }
     });
 }
