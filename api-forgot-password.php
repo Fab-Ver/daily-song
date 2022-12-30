@@ -7,8 +7,8 @@ secure_session_start();
 if(!isUserLoggedIn()){
     if(isset($_POST['email'])){
         $result['errorMsg'] = "";
-        $email = $_POST['email'];
-        if(validateEmail($email)){
+        $email = Input::filter_string($_POST['email']);
+        if(Input::validate_email($email)){
             if(count($dbh->findUsernameByEmail($email)) != 0){
                 $token = bin2hex(random_bytes(50));
                 $expDate = date("Y-m-d H:i:s");
