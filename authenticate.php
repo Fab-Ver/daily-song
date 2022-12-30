@@ -7,8 +7,8 @@ if(!isUserLoggedIn()){
     $result['errorMsg'] = "";
     $result['elemID'] = "";
     if(isset($_POST["checkEmail"])){
-        $email = $_POST['checkEmail'];
-        if(validateEmail($email)){
+        $email = Input::filter_string($_POST['checkEmail']);
+        if(Input::validate_email($email)){
             if(count($dbh->findUsernameByEmail($email)) == 0){
                 $result['errorMsg'] = NO_USER;
             }
@@ -16,11 +16,11 @@ if(!isUserLoggedIn()){
             $result['errorMsg'] = INVALID_EMAIL;
         }
     } else if (isset($_POST['email'], $_POST['password'], $_POST['remember_me'])){
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $remember_me = filter_var($_POST['remember_me'], FILTER_VALIDATE_BOOLEAN);
+        $email = Input::filter_string($_POST['email']);
+        $password = Input::filter_string($_POST['password']);
+        $remember_me = Input::validate_boolean($_POST['remember_me']);
 
-        if(validateEmail($email)){
+        if(Input::validate_email($email)){
             $user = $dbh->findUsernameByEmail($email);
             if(count($user) != 0){
                 $username = $user[0]['username'];
