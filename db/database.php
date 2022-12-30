@@ -216,7 +216,7 @@ class DatabaseHelper{
         return $result;
     }
 
-    function getResetRequest($token){
+    function getResetRequest(string $token){
         $query = "SELECT email,token,expDate FROM password_reset WHERE token = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $token);
@@ -225,18 +225,17 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    function resetPassword($email,$password){
-        $query = "UPDATE `profile` SET `passwordHash` = ? WHERE `profile`.`email` = ?";
+    function resetPassword(string $email, string $password) : bool{
+        $query = "UPDATE profile SET passwordHash = ? WHERE profile.email = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ss', $password, $email);
-        $result = $stmt->execute();
-        return $result;
+        return $stmt->execute();
     }
 
-    function removeToken($token){
-        $query = "DELETE FROM password_reset WHERE `password_reset`.`token` = ?";
+    function removeTokens(string $email){
+        $query = "DELETE FROM password_reset WHERE password_reset.email = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s', $token);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
     }
 
