@@ -29,18 +29,17 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function insertUser($email,$first_name,$last_name,$birth_date,$telephone,$username,$hash,$profile_picture){
+    public function insertUser(string $email, string $first_name, string $last_name, string $birth_date, string $telephone, string $username, string $hash, string $profile_picture) : bool{
         $query = "INSERT INTO profile (username,firstName,lastName,email,telephone,passwordHash,profilePicture,birthDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ssssssss',$username, $first_name, $last_name, $email, $telephone, $hash,$profile_picture,$birth_date);
-        $result = $stmt->execute();
-        return $result;
+        return $stmt->execute();
     }
 
-    public function insertSettings($username,$notification){
+    public function insertSettings(string $username, string $notification){
         $query = "INSERT INTO settings (username,postNotification,commentNotification,followerNotification) VALUES (?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ssss',$username, $notification, $notification, $notification);
+        $stmt->bind_param('siii',$username, (int)$notification, (int)$notification, (int)$notification);
         $stmt->execute();
     }
 
@@ -270,6 +269,15 @@ class DatabaseHelper{
         $query = "SELECT username FROM user_tokens WHERE selector = ? AND expiry > now() LIMIT 1";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $tokens[0]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    function getGenresByID(int $genreID){
+        $query = "SELECT genreID,tag FROM genre WHERE genreID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $genreID);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
