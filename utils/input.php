@@ -63,5 +63,65 @@
             }
             
         }
+
+        /**
+         * Check first name and last name validity
+         */
+        static function validate_name(string $name) : bool{
+            return !empty($name) && ctype_alpha($name);
+        }
+
+        /**
+         * Check if date string is valid (YYYY-MM-DD)
+         */
+        static function validate_date(string $date) : bool {
+            if(!empty($date)){
+                $components = explode('-',$date);
+                if(count($components) == 3){
+                    if(checkdate($components[1],$components[2],$components[0])){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Check if birth date is valid
+         */
+        static function validate_birth_date(string $birth_date) : bool {
+            $date = DateTime::createFromFormat('Y-m-d',$birth_date);
+            $minInterval = DateInterval::createFromDateString('18 years');
+            $maxInterval = DateInterval::createFromDateString('120 years');
+            $minDobLimit = ( new DateTime() )->sub($minInterval);
+            $maxDobLimit = ( new DateTime() )->sub($maxInterval);
+            if($date <= $maxDobLimit || $date >= $minDobLimit){
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * Check if phone number is valid, format +XX.XXX.XXXXXXX
+         */
+        static function validate_phone_number(string $phone_number) : bool {
+            return preg_match('/^\+?([0-9]{2})\)?[-.]?([0-9]{3})[-.]?([0-9]{7})$/',$phone_number);
+        }
+
+        /**
+         * Check if genres ID its valid and exits in database
+         */
+        static function validate_genresID(array $genresID) : bool {
+            global $dbh;
+            foreach($genresID as $id){
+                if(!is_numeric($id)) {
+                    return false;
+                }
+                if(count($dbh->getGenresByID($id)) == 0){
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 ?>
