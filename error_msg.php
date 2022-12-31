@@ -24,4 +24,13 @@
     define('LOWER_PASSWORD',"must contain at Least 1 Lowercase Letter !"."<br>");
     define('SPECIAL_PASSWORD',"must contain at least 1 Special Character"."<br>");
     define('PASSWORD_MISMATCH',"Passwords do not match");
+    define('EMAIL_IN_USE','An account is already registered with your email.');
+    define('USERNAME_REQUIRED','Username required, enter username to continue');
+    define('USERNAME_IN_USE','An account is already registered with this username.');
+    define('NAME','Name required, enter no numeric name to continue');
+    define('INVALID_DATE','Invalid date format expected YYYY-MM-DD');
+    define('WRONG_DATE','You are to young or to old to subscribe to our website');
+    define('INVALID_TELEPHONE','Invalid telephone format, expected +XX.XXX.XXXXXXX');
+    define('GENRES_ID_NUM','Wrong number of selected genresID, please select between 1 and 5 genres');
+    define('INVALID_GENRES_ID','Invalid genresID format, the selected genresID do not match any music genre');
 ?>
