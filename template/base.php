@@ -12,35 +12,43 @@
     <aside class="menu">
         <nav class="container-fluid">
             <ul></ul>
-            <script src="js/base.js" type="text/javascript"></script>
         </nav>
     </aside>
     <div class="main-div">
-        <h1>Title</h1>
-        <nav class="container">
-            <details role="list" class="music-genre">
-                <summary aria-haspopup="listbox" role="link">Music genre</summary>
-                <ul role="listbox">
-                    <?php foreach($genres as $genre): ?>
-                    <li>
-                        <label for="switch <?php echo $genre["tag"]; ?>">
-                            <input type="checkbox" id="switch<?php echo $genre["genreID"]; ?>" role="switch">
-                            <?php echo $genre["tag"]; ?>
-                        </label>
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
-            </details>
-            <details role="list" class="notification">
-                <summary aria-haspopup="listbox" role="link">3 Notification</summary>
-                <ul role="listbox">
-                    <li>Text shbyhdbsw hxcbuxusnx uhxhs</p></li>
-                    <li>Text shbyhdbsw hxcbuxusnx uhxhs</li>
-                </ul>
-            </details>
-        </nav>
+        <section class="grid">
+            <h1>Title</h1>
+            <nav class="title_nav">
+                <details id="track_genres" role="list" class="track_genres">
+                    <summary aria-haspopup="listbox">Select music genres</summary>
+                    <ul id="genres_list" role="listbox">
+                        <li>
+                            <input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()">
+                        </li>
+                        <?php foreach($genres as $genre): ?>
+                        <li>
+                            <label for="switch <?php echo $genre["tag"]; ?>">
+                                <input type="checkbox" id="switch<?php echo $genre["genreID"]; ?>" role="switch">
+                                <?php echo $genre["tag"]; ?>
+                            </label>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </details>
+                <label for="date">
+                    <input type="date" id="date" name="date">
+                </label>
+                <details id="notification" role="list" class="notification">
+                    <summary aria-haspopup="listbox">3 Notification</summary>
+                    <ul id="notification_list" role="listbox">
+                        <li>Text shbyhdbsw hxcbuxusnx uhxhs</p></li>
+                        <li>Text shbyhdbsw hxcbuxusnx uhxhs</li>
+                    </ul>
+                </details>
+            </nav>
+        </section>
         <main></main>
 
+        <script src="js/base.js" type="text/javascript"></script>
         <?php
         if(isset($templateParams["js"])):
             foreach($templateParams["js"] as $script):

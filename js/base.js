@@ -30,12 +30,12 @@ const datiMenu = [{
     "Name": "Logout"
 }]
 
-const nav = document.querySelector("ul");
+const ul_menu = document.querySelector("aside").querySelector("nav").querySelector("ul");
 
 for(let i=0; i<datiMenu.length; i++) {
     const li = `
     <li class="li-profile">
-    <a role="button" class="contrast" href="${datiMenu[i].Link}">
+        <a role="button" class="contrast" href="${datiMenu[i].Link}">
             <figure>
                 <img src="${datiMenu[i].Immagine}" alt="${datiMenu[i].Alt}">
                 <figcaption>${datiMenu[i].Name}</figcaption>
@@ -43,5 +43,9 @@ for(let i=0; i<datiMenu.length; i++) {
         </a>
     </li>
     `;
-    nav.innerHTML = nav.innerHTML + li;
+    ul_menu.innerHTML = ul_menu.innerHTML + li;
 }
+
+
+const ul_genre = document.querySelector("div").querySelector(".track_genres").querySelector("ul");
+

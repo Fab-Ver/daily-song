@@ -14,31 +14,51 @@
 
 /*---------------------------------------------*/
 
+body {
+  min-width: 345px;
+}
 
 .main-div h1 {
   font-style: italic;
-  text-align: center;
   margin: 0% !important;
-  padding-top: 1%;
+  text-align: center;
 }
 
-.main-div nav details {
-  font-weight: bold;
-  padding: 0% 3%;
+.main-div > section nav{
+  justify-content: center;
+  padding: 0% 5% !important;
 }
 
-.main-div nav summary::after {
+.main-div > section label {
+  width: 50%;
+}
+
+.main-div > section label input {
+  margin: 0%;
+}
+
+.main-div > section summary {
+  margin-top: 5%;
+  text-align: center;
+  border: none !important;
+}
+
+.main-div > section summary::after {
   display: none !important;
 }
 
-.main-div nav ul {
-  overflow-y: scroll !important;
-  height: 50vh;
-  width: 50vw;
+.main-div > section nav ul {
+  overflow-y: scroll;
+  height: 60vh;
 }
 
-.main-div nav .notification ul {
-  left: -40vw !important;
+.main-div > section details:last-child ul {
+  left: -50vw;
+  top: 10vh;
+}
+
+.main-div > section label {
+  margin-top: 1vh;
 }
 
 /*----------------------------------------*/
@@ -176,12 +196,8 @@ details article {
     width: 15%;
     height: 100vh;
     border: solid;
-    padding: 0% 1%;
+    padding: 1%;
     background-color: transparent;
-  }
-
-  .menu nav {
-    margin-top: 5%;
   }
 
   .menu li{
@@ -198,24 +214,31 @@ details article {
 
   .main-div {
     float: right;
+    height: 100vh;
     width: 85%;
     overflow: auto;
   }
 
-  .main-div nav .music-genre ul {
-    left: 10% !important;
-  }
-
-  main {
-    margin-bottom: 0%;
+  .main-div > section details:last-child ul {
+    left: -40vw;
+    top: 10vh;
   }
 
 }
 
 @media screen and (min-width: 992px) {
+
+  .main-div h1 {
+    text-align: left;
+    padding: 2%;
+  }
+
+}
+
+@media screen and (min-width: 1024px) {
   
   .menu {
-    padding: 0%;
+    padding: 1% 0%;
   }
 
   .menu nav {
