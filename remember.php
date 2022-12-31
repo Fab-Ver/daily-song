@@ -33,6 +33,6 @@
             return false;
         }
 
-        return password_verify($validator,$tokens['hashed_validator']);
+        return password_verify($validator,$tokens[0]['hashed_validator']);
     }
 ?>

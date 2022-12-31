@@ -43,8 +43,8 @@ function isUserLoggedIn() : bool{
     if($token && token_is_valid($token)){
         $user = $dbh->findUserByToken($token);
         if($user){
-            $user_data = $dbh->findUserByUsername($user['username']);
-            return registerLoggedUser($user_data['username'],$user_data['email'],$user_data['passwordHash']);
+            $user_data = $dbh->findUserByUsername($user[0]['username']);
+            return registerLoggedUser($user_data[0]['username'],$user_data[0]['email'],$user_data[0]['passwordHash']);
         }
     }
     return false;
