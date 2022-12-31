@@ -77,7 +77,7 @@ function checkSignUpEmail(){
         } else {
             let formData = new FormData();
             formData.append('checkEmail',email.value);
-            axios.post('validate.php',formData).then(response => {
+            axios.post('registration.php',formData).then(response => {
                 if(response.data["errorEmail"]){
                     showError(email,"Email already in use, try with another or log in");
                     setValid(email,false);
@@ -112,7 +112,7 @@ function checkBirthDate(){
     let current_value = new Date(birth_date.valueAsDate);
     let min_date = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
     if(!birth_date.validity.valueMissing){
-        if(current_value.getFullYear() <= today.getFullYear() - 110 ||   current_value > min_date){
+        if(current_value.getFullYear() <= today.getFullYear() - 120 ||   current_value > min_date){
             showError(birth_date,"You are to young or to old to subscribe to our website");
             setValid(birth_date,false);
         } else {
@@ -124,7 +124,7 @@ function checkBirthDate(){
 }
 
 function checkTelephone(){
-    let regex = /^\+?([0-9]{2})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{7})$/;
+    let regex = /^\+?([0-9]{2})\)?[-.]?([0-9]{3})[-.]?([0-9]{7})$/;
     if(telephone.value != ""){
         if(!telephone.value.match(regex)){
             showError(telephone,"Wrong telephone number format, +XX XXX XXXXXXX expected");
@@ -292,11 +292,12 @@ function submitForm(){
     formData.append('telephone',telephone.value);
     formData.append('username',username.value);
     formData.append('password',password.value);
+    formData.append('confirmPassword',confirm_password.value);
     formData.append('profile_picture',file_name);
     formData.append('notification',notification_status);
     formData.append('favoriteGenres',JSON.stringify(getGenresID()));
 
-    axios.post('validate.php',formData).then(response => {
+    axios.post('registration.php',formData).then(response => {
         if(response.data["validateError"]){
             let error_div = document.querySelector("div.error_form");
             error_div.innerHTML = "An undefined error occurred, try again";
