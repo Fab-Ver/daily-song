@@ -64,14 +64,19 @@
 }
 
 .like-button {
-  fill: #1db954;
-  max-width:40px;
+  display: inline;
+  background: transparent;
+  border: transparent;
+  max-width: 3em;
+  padding: 0;
 }
 
-.dislike-button {
-  fill: #1db954;
+.like-button > img {
+  max-width: 2em;
+}
+
+.dislike-button > img {
   transform: rotate(180deg);
-  max-width:40px;
 }
 
 /*---------------------------------------------*/

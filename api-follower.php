@@ -13,18 +13,16 @@ if(isset($_POST["username"]) && isset($_POST["value"])){
 } else if (isset($_GET["kind"])) {
     $data = $_GET["kind"];
     if($data=="follower"){
-        $result["OldSearchResult"] = $dbh->getUserFollower($result["username"]);
+        $result["searchResult"] = $dbh->getUserFollower($result["username"]);
         $result["typeOfSearch"] = "follower";
     }
     else if($data=="followed"){
-        $result["OldSearchResult"] = $dbh->getUserFollowed($result["username"]);
+        $result["searchResult"] = $dbh->getUserFollowed($result["username"]);
         $result["typeOfSearch"] = "followed";
     }
-    $result["searchResult"] = array();
-    foreach($result["OldSearchResult"] as $user){
-        $newUser = array("username" => $user["username"],"profilePicture" => UPLOAD_DIR.$user["profilePicture"], 
-                         "canFollow" => canFollow($user["username"], $dbh->getUserFollowed($_SESSION["username"])));
-        array_push($result["searchResult"], $newUser);
+    foreach($result["searchResult"] as &$user){
+        $user["profilePicture"] = UPLOAD_DIR.$user["profilePicture"];
+        $user["canFollow"] = canFollow($user["username"], $dbh->getUserFollowed($_SESSION["username"]));
     }
 }
 

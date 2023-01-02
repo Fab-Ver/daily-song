@@ -22,6 +22,11 @@ if(isset($_POST["username"]) && isset($_POST["value"])){
     $result["profileNumberOfFollower"] = count($dbh->getUserFollower($result["username"]));
     $result["preferredGenres"] = $dbh->getUserPreferredGenres($result["username"]);
     $result["posts"] = $dbh->getUserPosts($result["username"]);
+    foreach($result["posts"] as &$post){
+        $reactions = $dbh->getReactions($post["postID"]);
+        $post["numLike"] = count(array_filter($reactions, function($p) { return $p["likes"]; }));
+        $post["numDislike"] = count(array_filter($reactions, function($p) { return !$p["likes"]; }));
+    }
 }
 
 header("Content-Type: application/json");

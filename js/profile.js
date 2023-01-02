@@ -29,13 +29,16 @@ function showPosts(posts){
                     <p>${i["description"]}</p>
                     <p><a href="${i["urlSpotify"]}"> Link Spotify</a></p>
                     <img src="${i["urlImage"]}" alt=""/>
-                    <!--<div class="grid">
-                      <p id="like">${i["likeNum"]}</p>
-                      <img class="like-button" src="upload/like.svg" onClick="updateLike(true, ${i["postID"]})" alt=""/>
-                      <p id="dislike">${i["dislikeNum"]}</p>
-                      <p>Prova${result["posts"]['2']["likeNum"]}</p>
-                      <img class="dislike-button" src="upload/like.svg" onClick="updateLike(false, ${i["postID"]})" alt=""/>
-                    </div>-->
+                    <div>
+                      ${i["numLike"]}
+                      <button class="like-button" onclick="console.log()">
+                        <img src="upload/like.svg" alt="Like">
+                      </button>
+                      ${i["numDislike"]}
+                      <button class="like-button dislike-button">
+                        <img src="upload/like.svg" alt="Dislike">
+                      </button>
+                    </div>
                     <footer>
                       <figure>
                       <figcaption class="left-text">Song preview:</figcaption>
@@ -62,11 +65,18 @@ function generateLike(isLike, newValue) {
 function updateLike(isLike, postID){
   let formData = new FormData();
   formData.append('postID', postID);
-  formData.append('isLike', isLike ? "like" : "dislike");
+  formData.append('isLike', isLike);
   axios.post('api-post.php', formData).then(response => {
     console.log(response.data);
     if(response.data["updateLike"]){
-      document.getElementById(isLike ? "like ": "dislike").outerHTML = generateLike(isLike, isLike ? response.data["posts"][postID]["likeNum"] : response.data["posts"][postID]["dislikeNum"]);
+      let post = [];
+      for(let i of response.data["posts"]){
+        if(i["postID"] == postID){
+          post = i;
+        }
+      }
+      document.getElementById(isLike ? "like ": "dislike").outerHTML = 
+        generateLike(isLike, isLike ? result[postID]["likeNum"] : response.data["posts"][postID]["dislikeNum"]);
     }
 });
 }

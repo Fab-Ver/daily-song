@@ -77,7 +77,7 @@ class DatabaseHelper{
     public function getUserProfile($username){
         $query = "SELECT firstName, lastName, profilePicture FROM profile WHERE username = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s',$username);
+        $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -87,7 +87,7 @@ class DatabaseHelper{
     public function getUserFollowed($username){
         $query = "SELECT username, profilePicture FROM friend JOIN profile ON friend.followed = profile.username WHERE follower = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s',$username);
+        $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -97,7 +97,7 @@ class DatabaseHelper{
     public function getUserFollower($username){
         $query = "SELECT username, profilePicture FROM friend JOIN profile ON friend.follower = profile.username WHERE followed = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s',$username);
+        $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -107,27 +107,37 @@ class DatabaseHelper{
     public function getUserPreferredGenres($username){
         $query = "SELECT tag FROM prefers JOIN genre ON prefers.genreId = genre.genreID WHERE username = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s',$username);
+        $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getUserPosts($username){
+    public function getUserPosts(string $username){
         $query = "SELECT  postID, description, activeComments, dateTime, urlSpotify, urlImage, urlPreview, title, artists, albumName FROM post JOIN track ON post.trackID = track.trackID WHERE username = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s',$username);
+        $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPostComments($username, $postID){
-        $query = "SELECT text, dateTime, commentUsername FROM comment WHERE username = ? AND postID = ?";
+    public function getPostComments(int $postID){
+        $query = "SELECT text, dateTime, commentUsername FROM comment WHERE postID = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s',$username);
+        $stmt->bind_param('i', $postID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getReactions(int $postID){
+        $query = "SELECT username, likes FROM reaction WHERE postID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $postID);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -281,22 +291,13 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    function insertLike(int $postID, string $username){
-        $query = "UPDATE post SET likeNum = (SELECT likeNum FROM post WHERE postID = 1) + 1 WHERE postID = ? AND username = ?";
+    function insertLike(int $postID, string $username, bool $likes){
+        /*$query = "UPDATE post SET likeNum = (SELECT likeNum FROM post WHERE postID = 1) + 1 WHERE postID = ? AND username = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('is', $postID, $username);
+        $stmt->bind_param('isb', $postID, $username, $likes);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result;
-    }
-
-    function insertDislike(int $postID, string $username){
-        $query = "UPDATE post SET dislikeNum = (SELECT dislikeNum FROM post WHERE postID = 1) + 1 WHERE postID = ? AND username = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('is', $postID, $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result;
+        return $result;*/
     }
     
 }
