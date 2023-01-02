@@ -14,7 +14,7 @@
             <ul></ul>
         </nav>
     </aside>
-    <!--<div class="main-div">
+    <div class="main-div">
         <section class="grid">
             <h1>Title</h1>
             <section class="grid">
@@ -35,7 +35,7 @@
                     </ul>
                 </details>
             </section>
-        </section>-->
+        </section>
         <main></main>
 
         <script src="js/base.js" type="text/javascript"></script>
