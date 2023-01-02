@@ -17,26 +17,16 @@
     <div class="main-div">
         <section class="grid">
             <h1>Title</h1>
-            <nav class="title_nav">
+            <section class="grid">
                 <details id="track_genres" role="list" class="track_genres">
                     <summary aria-haspopup="listbox">Select music genres</summary>
                     <ul id="genres_list" role="listbox">
                         <li>
                             <input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()">
                         </li>
-                        <?php foreach($genres as $genre): ?>
-                        <li>
-                            <label for="switch <?php echo $genre["tag"]; ?>">
-                                <input type="checkbox" id="switch<?php echo $genre["genreID"]; ?>" role="switch">
-                                <?php echo $genre["tag"]; ?>
-                            </label>
-                        </li>
-                        <?php endforeach; ?>
                     </ul>
                 </details>
-                <label for="date">
-                    <input type="date" id="date" name="date">
-                </label>
+                <input type="date" id="date" name="date">
                 <details id="notification" role="list" class="notification">
                     <summary aria-haspopup="listbox">3 Notification</summary>
                     <ul id="notification_list" role="listbox">
@@ -44,7 +34,7 @@
                         <li>Text shbyhdbsw hxcbuxusnx uhxhs</li>
                     </ul>
                 </details>
-            </nav>
+            </section>
         </section>
         <main></main>
 

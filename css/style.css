@@ -66,50 +66,47 @@
 /*---------------------------------------------*/
 
 body {
-  min-width: 345px;
+  min-width: 355px;
 }
 
-.main-div h1 {
+.main-div > section h1 {
   font-style: italic;
   margin: 0% !important;
   text-align: center;
 }
 
-.main-div > section nav{
-  justify-content: center;
-  padding: 0% 5% !important;
+.main-div > section > section {
+  column-gap: 1%;
+  grid-template-columns: 40% 20% 40%;
 }
 
-.main-div > section label {
-  width: 50%;
-}
-
-.main-div > section label input {
-  margin: 0%;
-}
-
-.main-div > section summary {
-  margin-top: 5%;
+.main-div > section > section details {
   text-align: center;
+}
+
+.main-div > section > section input {
+  margin-bottom: 0%;
+  border: none;
+}
+
+.main-div > section > section details summary {
+  padding-left: 1% !important;
+  padding-right: 1% !important;
   border: none !important;
 }
 
-.main-div > section summary::after {
+.main-div > section > section details summary::after{
   display: none !important;
 }
 
-.main-div > section nav ul {
+.main-div > section > section ul {
   overflow-y: scroll;
   height: 60vh;
 }
 
-.main-div > section details:last-child ul {
+.main-div > section > section details:last-child ul {
   left: -50vw;
   top: 10vh;
-}
-
-.main-div > section label {
-  margin-top: 1vh;
 }
 
 /*----------------------------------------*/
@@ -129,7 +126,7 @@ body {
 }
 
 .menu figure {
-  margin: 0 !important;
+  margin: 0% !important;
 }
 
 .menu a figcaption {
@@ -158,9 +155,11 @@ main {
 
 /*-main home----------------------------------*/
 
+/*
 .post_section {
   display: none;
 }
+*/
 
 .post_section article, .grid article {
   margin: 3% 1%;
@@ -170,6 +169,7 @@ main .list {
   align-items: center;
   margin: 2% 1%;
 }
+
 
 main .grid .current_post article {
   font-size: 200%;
@@ -193,26 +193,53 @@ section {
 }
 
 section.post_text {
-  padding-left: 5% !important;
+  padding-left: 5%;
 }
 
-section.post_text .song, section.post_text a, section.post_text p {
-  margin: 3% 0% !important;
+section.post_text hgroup {
+  margin-bottom: 3%;
 }
 
-section.post_text p img, section.post_text p label {
-  display: inline-block;
-  width: 5vw;
-  max-width: 40px;
-  margin: 0% 1%;
+section.post_text section {
+  width: 80%;
+  align-items: center;
+  margin: 0% !important;
 }
 
-section.post_text p .dislike {
+section.post_text section a {
+  float: left;
+  margin-right: 10%;
+}
+
+section.post_text section div.grid {
+  float: left;
+  width: 20%;
+  grid-template-columns: 30% 15% 30% 15% !important;
+  align-items: center;
+  margin: 0% !important;
+}
+
+section.post_text .dislike {
   transform: rotate(180deg);
 }
 
-section.post_text label {
-  font-size: 130%;
+section.post_text hgroup p {
+  font-size: 100%;
+  margin: 0%;
+}
+
+section.post_text p.description {
+  clear: both;
+  width: 80%;
+  font-size: 60%;
+  padding: 2% 0%;
+  margin: 0%;
+}
+
+section.post_text p.time_ago {
+  width: 80%;
+  font-size: 60%;
+  margin: 0%;
 }
 
 section.comments input {
@@ -224,11 +251,17 @@ section.comments button {
   float: right;
   width: 20%;
   background: transparent;
+  padding-left: 0%;
+  padding-right: 0%;
+}
+
+section.comments p {
+  clear: both;
+  display: none;
 }
 
 details {
   clear: both;
-  padding: 0% 2% !important;
   margin: 0% !important;
 }
 
@@ -270,9 +303,12 @@ details article {
     overflow: auto;
   }
 
-  .main-div > section details:last-child ul {
-    left: -40vw;
-    top: 10vh;
+  .main-div > section {
+    grid-template-columns: 40% 60%;
+  }
+
+  .main-div > section > section {
+    grid-template-columns: 39% 19% 37%;
   }
 
 }
@@ -282,6 +318,10 @@ details article {
   .main-div h1 {
     text-align: left;
     padding: 2%;
+  }
+
+  .main-div > section > section {
+    margin-top: 1%;
   }
 
 }
