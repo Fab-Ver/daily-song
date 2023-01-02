@@ -6,22 +6,27 @@ function getArticles() {
         </aside>
         <section class="post_text">
             <hgroup class="song">
-                <h2>Titolo canzone</h2>
-                <h3>Autore: ___ - Album: ____</h3>
+                <h2>Song Title</h2>
+                <h3><p>Author: ____ - Album: ____ - Genres: ___</p></h3>
             </hgroup>
-            <a href="#">Link Canzone</a>
-            <p>
-                <img src="./upload/like.png" alt="like" class="like"><label for="like">5</label>
-                <img src="./upload/like.png" alt="dislike" class="dislike"><label for="dislike">5</label>
-            </p>
+            <section>
+                <a href="#">Song Link</a>
+                <div class="grid">
+                    <img src="./upload/like.png" alt="like" class="like"><label>5</label>
+                    <img src="./upload/like.png" alt="dislike" class="dislike"><label>5</label>
+                </div>
+            </section>
+            <p class="description">Descrption: </p>
+            <p class="time_ago">3h ago </p>
         </section>
     </div>
     <section class="comments">
-        <input type="text" id="comment" name="comment" placeholder="Comments post" required>
-        <button>pubblica</button>
+        <input type="text" id="comment" name="comment" placeholder="Add comment" required>
+        <button>Publish</button>
+        <p>when clik publich show current comment</p>
     </section>
     <details>
-        <summary aria-haspopup="listbox">mostra tutti i commenti</summary>
+        <summary aria-haspopup="listbox">Show all comments</summary>
         <ul role="listbox">
             <li>
                 <head>Intestazione</head>
@@ -34,11 +39,9 @@ function getArticles() {
         </ul>
     </details>
     `;
-    console.log("article");
     return article;
 }
 
 const articles = document.querySelector("article");
-console.log("articles");
 articles.classList.add("post_body");
 articles.innerHTML = getArticles();
