@@ -70,8 +70,6 @@ create table notification (
 create table post (
      postID int not null auto_increment,
      description varchar(500),
-     likeNum int not null,
-     dislikeNum int not null,
      activeComments boolean not null,
      dateTime datetime not null,
      trackID varchar(30) not null,
@@ -109,6 +107,11 @@ create table user_tokens (
      username varchar(50) not null,
      constraint ID_user_tokens_ID primary key (tokenID));
 
+create table reaction (
+     postID int not null,
+     username varchar(50) not null,
+     likes boolean not null,
+     constraint ID_reaction_ID primary key (postID, username));
 
 -- Constraints Section
 -- ___________________ 
@@ -186,6 +189,16 @@ alter table settings add constraint FKset_FK
 alter table user_tokens add constraint FKhave_FK
      foreign key (username)
      references profile (username)
+     ON DELETE CASCADE;
+
+alter table reaction add constraint FKmake_reaction_FK
+     foreign key (username)
+     references profile (username)
+     ON DELETE CASCADE;
+
+alter table reaction add constraint FKhas_reaction
+     foreign key (postID)
+     references post (postID)
      ON DELETE CASCADE;
 
 INSERT INTO `profile` (`username`, `firstName`, `lastName`, `email`, `telephone`, `passwordHash`, `profilePicture`, `birthDate`) VALUES
