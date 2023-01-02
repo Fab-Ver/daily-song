@@ -1,4 +1,4 @@
-function getArticles() {
+function getPost() {
     let article = `
     <div class="grid">
         <aside>
@@ -21,7 +21,7 @@ function getArticles() {
         </section>
     </div>
     <section class="comments">
-        <input type="text" id="comment" name="comment" placeholder="Add comment" required>
+        <textarea id="comment" name="comment" placeholder="Add comment"></textarea>
         <button>Publish</button>
         <p>when clik publich show current comment</p>
     </section>
@@ -42,6 +42,6 @@ function getArticles() {
     return article;
 }
 
-const articles = document.querySelector("article");
+let articles = document.querySelectorAll("article");
 articles.classList.add("post_body");
-articles.innerHTML = getArticles();
+articles.innerHTML += getPost();
