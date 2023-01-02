@@ -171,11 +171,9 @@ class DatabaseHelper{
 
     function insertPost($description,$activeComments,$datetime,$trackID,$username){
         $postID = $this->getMaxPostID();
-        $likeNum = 0;
-        $dislikeNum = 0;
-        $query = "INSERT INTO post (postID,description,likeNum,dislikeNum,activeComments,datetime,trackID,username) VALUES (?,?,?,?,?,?,?,?)";
+        $query = "INSERT INTO post (postID,description,activeComments,datetime,trackID,username) VALUES (?,?,?,?,?,?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('isiissss',$postID,$description,$likeNum,$dislikeNum,$activeComments,$datetime,$trackID,$username);
+        $stmt->bind_param('isssss',$postID,$description,$activeComments,$datetime,$trackID,$username);
         $result = $stmt->execute();
         if($result){
             return $postID;
