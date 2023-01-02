@@ -358,3 +358,10 @@ INSERT INTO `prefers` (`genreID`, `username`) VALUES
 (11, 'test_user'),
 (23, 'test_user'),
 (67, 'test_user');
+
+INSERT INTO `post` (`postID`, `description`, `activeComments`, `dateTime`, `trackID`, `username`) VALUES
+(1, 'ciao\r\n\r\n.\r\nproivjhvgyh ygtfcrtgyhjn', 0, '2023-01-02 16:08:00', '5USVtbBrftHgHASbNYqtOV', 'sara-capp'),
+(2, 'A\r\nf\r\nbgfefgf\r\n.\r\nprova su più righe', 0, '2023-01-02 16:45:19', '6Qs4SXO9dwPj5GKvVOv8Ki', 'sara-capp'),
+(3, 'gfdfg grfr3tgr Perchè nj', 0, '2023-01-02 16:45:44', '2svcZXmmAYPo1JKr7KFbK7', 'sara-capp'),
+(4, 'PRova\r\nciao \r\nsi iokjhgfrdeswasedfghjkml,kmjhgfrdesrtyuijkmnjbhvgcxdsert6y7u', 0, '2023-01-02 16:46:15', '08Hacl2rWl6GD6TKUyaKIy', 'sara-capp'),
+(5, 'Mi piace Rhove', 0, '2023-01-02 16:47:12', '4EC028SvtlC25iHQSG2OIa', 'fabio_veroli');
