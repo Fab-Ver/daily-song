@@ -23,10 +23,11 @@ create table comment (
      constraint ID_comment primary key (commentID));
 
 create table password_reset (
+     requestID int not null auto_increment,
      email varchar(250) not null,
-     resetKey varchar(250) not null,
+     token varchar(250) not null unique,
      expDate datetime not null,
-     constraint ID_password_reset_ID primary key (email, resetKey));
+     constraint ID_password_reset_ID primary key (requestID));
 
 create table track (
      trackID varchar(30) not null,
@@ -61,7 +62,7 @@ create table login_attempts (
 create table notification (
      notificationID int not null auto_increment,
      text varchar(100) not null,
-     readStatus varchar(5) not null,
+     readStatus boolean not null,
      dateTime datetime not null,
      username varchar(50) not null,
      constraint ID_notification primary key (notificationID));
@@ -71,7 +72,7 @@ create table post (
      description varchar(500),
      likeNum int not null,
      dislikeNum int not null,
-     activeComments varchar(5) not null,
+     activeComments boolean not null,
      dateTime datetime not null,
      trackID varchar(30) not null,
      username varchar(50) not null,
@@ -84,9 +85,9 @@ create table prefers (
 
 create table settings (
      username varchar(50) not null,
-     postNotification varchar(5) not null,
-     commentNotification varchar(5) not null,
-     followerNotification varchar(5) not null,
+     postNotification boolean not null,
+     commentNotification boolean not null,
+     followerNotification boolean not null,
      constraint FKset_ID primary key (username));
 
 create table profile (
@@ -96,9 +97,17 @@ create table profile (
      email varchar(320) not null unique,
      telephone varchar(20),
      passwordHash varchar(250) not null,
-     profilePicture varchar(100),
+     profilePicture varchar(100) DEFAULT 'default.png',
      birthDate date not null,
      constraint ID_profile primary key (username));
+
+create table user_tokens (
+     tokenID int not null auto_increment,
+     selector varchar(255) not null,
+     hashed_validator varchar(255) not null,
+     expiry datetime not null,
+     username varchar(50) not null,
+     constraint ID_user_tokens_ID primary key (tokenID));
 
 
 -- Constraints Section
@@ -170,6 +179,11 @@ alter table prefers add constraint FKpre_gen
      ON DELETE CASCADE;
 
 alter table settings add constraint FKset_FK
+     foreign key (username)
+     references profile (username)
+     ON DELETE CASCADE;
+
+alter table user_tokens add constraint FKhave_FK
      foreign key (username)
      references profile (username)
      ON DELETE CASCADE;

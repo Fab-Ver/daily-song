@@ -9,8 +9,8 @@ class DatabaseHelper{
         }        
     }
 
-    public function getUser($email){
-        $query = "SELECT username, email, passwordHash FROM profile WHERE email = ?";
+    public function findUsernameByEmail($email){
+        $query = "SELECT username FROM profile WHERE email = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$email);
         $stmt->execute();
@@ -19,8 +19,8 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function checkUsername($username){
-        $query = "SELECT username FROM profile WHERE username = ?";
+    public function findUserByUsername($username){
+        $query = "SELECT username, passwordHash, email FROM profile WHERE username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();
@@ -29,18 +29,17 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function insertUser($email,$first_name,$last_name,$birth_date,$telephone,$username,$hash,$profile_picture){
+    public function insertUser(string $email, string $first_name, string $last_name, string $birth_date, string $telephone, string $username, string $hash, string $profile_picture) : bool{
         $query = "INSERT INTO profile (username,firstName,lastName,email,telephone,passwordHash,profilePicture,birthDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ssssssss',$username, $first_name, $last_name, $email, $telephone, $hash,$profile_picture,$birth_date);
-        $result = $stmt->execute();
-        return $result;
+        return $stmt->execute();
     }
 
-    public function insertSettings($username,$notification){
+    public function insertSettings(string $username, string $notification){
         $query = "INSERT INTO settings (username,postNotification,commentNotification,followerNotification) VALUES (?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ssss',$username, $notification, $notification, $notification);
+        $stmt->bind_param('siii',$username, (int)$notification, (int)$notification, (int)$notification);
         $stmt->execute();
     }
 
@@ -53,7 +52,7 @@ class DatabaseHelper{
         }   
     }
 
-    function checkBrute($username){
+    function isUserActive(string $username) : bool{
         $now = time();
         $valid_attempts = $now - (3*60*60);
         $query="SELECT time FROM login_attempts WHERE username = ? AND time > '$valid_attempts'";
@@ -62,12 +61,12 @@ class DatabaseHelper{
         $stmt->execute();
         $stmt->store_result();
         if($stmt->num_rows() > 5){
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
-    function insertLoginAttempts($username){
+    function insertFailedLoginAttempts(string $username){
         $now = time();
         $query = "INSERT INTO login_attempts (username,time) VALUES (?, ?)";
         $stmt = $this->db->prepare($query);
@@ -116,7 +115,7 @@ class DatabaseHelper{
     }
 
     public function getUserPosts($username){
-        $query = "SELECT urlSpotify, urlImage, description, likeNum, dislikeNum, dateTime FROM post WHERE username = ?";
+        $query = "SELECT  postID, description, likeNum, dislikeNum, activeComments, dateTime, trackID, username FROM post WHERE username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();
@@ -193,12 +192,11 @@ class DatabaseHelper{
         }   
     }
 
-    function insertResetRequest($email,$key,$expDate){
-        $query = "INSERT INTO password_reset (email,resetKey,expDate) VALUES (?, ?, ?)";
+    function insertResetRequest(string $email, string $token, string $expDate) : bool{
+        $query = "INSERT INTO password_reset (email,token,expDate) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sss',$email, $key, $expDate);
-        $result=$stmt->execute();
-        return !$result;
+        $stmt->bind_param('sss',$email, $token, $expDate);
+        return $stmt->execute();
     }
 
     function insertFollowed($followed, $me){
@@ -215,6 +213,74 @@ class DatabaseHelper{
         $stmt->bind_param('ss', $followed, $me);
         $result=$stmt->execute();
         return $result;
+    }
+
+    function getResetRequest(string $token){
+        $query = "SELECT email,token,expDate FROM password_reset WHERE token = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $token);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    function resetPassword(string $email, string $password) : bool{
+        $query = "UPDATE profile SET passwordHash = ? WHERE profile.email = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ss', $password, $email);
+        return $stmt->execute();
+    }
+
+    function removeTokens(string $email){
+        $query = "DELETE FROM password_reset WHERE password_reset.email = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+    }
+
+    function insertUserToken(string $username, string $selector, string $hashed_validator, string $expiry) : bool {
+        $query = "INSERT INTO user_tokens (selector,hashed_validator,username,expiry) VALUES (?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ssss',$selector, $hashed_validator, $username, $expiry);
+        return $stmt->execute();
+    }
+
+    public function findUserTokenBySelector(string $selector){
+        $query = "SELECT tokenID, selector, hashed_validator, username, expiry FROM user_tokens WHERE selector = ? AND expiry >= now() LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $selector);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    function deleteUserToken(string $username) : bool {
+        $query = "DELETE FROM user_tokens WHERE username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $username);
+        return $stmt->execute();
+    }
+
+    function findUserByToken(string $token){
+        $tokens = parse_token($token);
+        if(!$tokens){
+            return null;
+        }
+        $query = "SELECT username FROM user_tokens WHERE selector = ? AND expiry > now() LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $tokens[0]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    function getGenresByID(int $genreID){
+        $query = "SELECT genreID,tag FROM genre WHERE genreID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $genreID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
     
 }

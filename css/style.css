@@ -14,32 +14,51 @@
 
 /*---------------------------------------------*/
 
+body {
+  min-width: 345px;
+}
+
 .main-div h1 {
   font-style: italic;
-  text-align: center;
   margin: 0% !important;
-  padding-top: 1%;
+  text-align: center;
 }
 
-.main-div nav details {
-  display: inline-block;
-  font-weight: bold;
-  padding: 0% 3%;
+.main-div > section nav{
+  justify-content: center;
+  padding: 0% 5% !important;
 }
 
-.main-div nav summary::after {
+.main-div > section label {
+  width: 50%;
+}
+
+.main-div > section label input {
+  margin: 0%;
+}
+
+.main-div > section summary {
+  margin-top: 5%;
+  text-align: center;
+  border: none !important;
+}
+
+.main-div > section summary::after {
   display: none !important;
 }
 
-.main-div nav ul {
-  overflow-y: scroll !important;
-  height: 50vh;
-  width: 50vw;
-  max-width: fit-content;
+.main-div > section nav ul {
+  overflow-y: scroll;
+  height: 60vh;
 }
 
-.main-div nav .notification ul {
-  left: -40vw !important;
+.main-div > section details:last-child ul {
+  left: -50vw;
+  top: 10vh;
+}
+
+.main-div > section label {
+  margin-top: 1vh;
 }
 
 /*----------------------------------------*/
@@ -47,93 +66,32 @@
 .menu {
   position: fixed;
   bottom: 0;
-  background-color: lightgray;
+  background-color: white;
   width: 100%;
-  padding-left: 1%;
+  padding-left: 4%;
 }
 
 .menu li {
   float: left;
-  width: 14%;
-  margin: 0% 1vw;
+  width: 16%;
   align-items: center;
 }
 
-.menu a label {
+.menu figure {
+  margin: 0 !important;
+}
+
+.menu a figcaption {
   display: none;
 }
 
 main {
   border-top: solid;
+  padding: 1% !important;
+  margin-bottom: 12%;
 }
 
 /*---------------------------------------------*/
-
-@media screen and (min-width: 768px) {
-
-  .menu {
-    position: fixed;
-    float: left;
-    width: 15%;
-    height: 100vh;
-    border: solid;
-    padding: 2% 1%;
-  }
-
-  .menu li{
-    width: 8vw;
-  }
-
-  .main-div {
-    float: right;
-    width: 85%;
-    overflow: auto;
-  }
-
-  .main-div nav summary::after {
-    display: inline;
-  }
-
-  .main-div nav .music-genre ul {
-    left: 20% !important;
-  }
-
-}
-
-@media screen and (min-width: 1024px) {
-  
-  .menu {
-    padding: 0%;
-  }
-
-  .menu nav {
-    padding: 0%;
-  }
-
-  .menu li{
-    width: 100%;
-    align-items: left;
-    vertical-align: middle;
-  }
-
-  .menu a {
-    width: 100%;
-    padding: 5% 0%;
-    margin: 0%;
-  }
-
-  .menu a label {
-    display: inline-block;
-    margin-left: 2%;
-  }
-
-  .menu img {
-    max-height: 3vw;
-  }
-
-}
-
-/*------------------------------*/
 
 .error_form {
   border-color: #b71c1c !important;
@@ -147,4 +105,187 @@ main {
   margin: 0%;
 }
 
+/*-main home----------------------------------*/
 
+.post_section {
+  display: none;
+}
+
+.post_section article, .grid article {
+  margin: 3% 1%;
+}
+
+main .list {
+  align-items: center;
+  margin: 2% 1%;
+}
+
+main .grid .current_post article {
+  font-size: 200%;
+}
+
+/*---------------------------------------------*/
+
+article.current_post{
+  margin: 0% !important;
+  padding: 2% 2% 3%;
+  text-align: left;
+}
+
+article.post_body div.grid {
+  grid-template-columns: 25% 75% !important;
+  margin-bottom: 2% !important;
+}
+
+section {
+  margin-bottom: 0% !important;
+}
+
+section.post_text {
+  padding-left: 5% !important;
+}
+
+section.post_text .song, section.post_text a, section.post_text p {
+  margin: 3% 0% !important;
+}
+
+section.post_text p img, section.post_text p label {
+  display: inline-block;
+  width: 5vw;
+  max-width: 40px;
+  margin: 0% 1%;
+}
+
+section.post_text p .dislike {
+  transform: rotate(180deg);
+}
+
+section.post_text label {
+  font-size: 130%;
+}
+
+section.comments input {
+  float: left;
+  width: 80% !important;
+}
+
+section.comments button {
+  float: right;
+  width: 20%;
+  background: transparent;
+}
+
+details {
+  clear: both;
+  padding: 0% 2% !important;
+  margin: 0% !important;
+}
+
+details article {
+  margin: 0% !important;
+  background-color: black;
+}
+
+/*------------------------------------------*/
+
+@media screen and (min-width: 768px) {
+
+  .menu {
+    position: fixed;
+    float: left;
+    width: 15%;
+    height: 100vh;
+    border: solid;
+    padding: 1%;
+    background-color: transparent;
+  }
+
+  .menu li{
+    float: none;
+    width: 80% !important;
+    padding: 2% !important;
+    margin: 0% 10% !important;
+  }
+
+  .menu figure {
+    margin: 0% !important;
+    padding: 15% !important;
+  }
+
+  .main-div {
+    float: right;
+    height: 100vh;
+    width: 85%;
+    overflow: auto;
+  }
+
+  .main-div > section details:last-child ul {
+    left: -40vw;
+    top: 10vh;
+  }
+
+}
+
+@media screen and (min-width: 992px) {
+
+  .main-div h1 {
+    text-align: left;
+    padding: 2%;
+  }
+
+}
+
+@media screen and (min-width: 1024px) {
+  
+  .menu {
+    padding: 1% 0%;
+  }
+
+  .menu nav {
+    padding: 0%;
+  }
+
+  .menu li{
+    width: 100%;
+    vertical-align: middle;
+    margin-left: 9% !important;
+    padding: 0% !important;
+
+  }
+
+  .menu a {
+    width: 100%;
+    padding: 0% !important;
+    margin: 0% !important;
+  }
+
+  .menu figure {
+    padding: 10% 5% !important;
+  }
+
+  .menu a figcaption {
+    display: inline-block;
+    margin-left: 2%;
+  }
+
+  .menu img {
+    max-height: 3vw;
+  }
+
+  .post_section {
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    text-align: center;
+    margin: 0%;
+  }
+  
+  .post_section button {
+    margin: 0%;
+    background-color: transparent;
+  }
+  
+  .post_section button:hover {
+    background-color: black;
+  }
+
+}

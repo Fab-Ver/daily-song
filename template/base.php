@@ -9,31 +9,46 @@
     <meta name="decription" content="is a digital music social that gives you the possibility to share a day song with your friends"/>
 </head>
 <body>
-    <div class="main-div">
-        <h1>Title</h1>
-        <nav class="container">
-            <details role="list" class="music-genre">
-                <summary aria-haspopup="listbox" role="link">Music genre</summary>
-                <ul role="listbox">
-                    <?php foreach($genres as $genre): ?>
-                    <li>
-                        <label for="switch <?php echo $genre["tag"]; ?>">
-                            <input type="checkbox" id="switch<?php echo $genre["genreID"]; ?>" role="switch">
-                            <?php echo $genre["tag"]; ?>
-                        </label>
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
-            </details>
-            <details role="list" class="notification">
-                <summary aria-haspopup="listbox" role="link">3 Notification</summary>
-                <ul role="listbox">
-                    <li>Text shbyhdbsw hxcbuxusnx uhxhs</p></li>
-                    <li>Text shbyhdbsw hxcbuxusnx uhxhs</li>
-                </ul>
-            </details>
+    <aside class="menu">
+        <nav class="container-fluid">
+            <ul></ul>
         </nav>
+    </aside>
+    <div class="main-div">
+        <section class="grid">
+            <h1>Title</h1>
+            <nav class="title_nav">
+                <details id="track_genres" role="list" class="track_genres">
+                    <summary aria-haspopup="listbox">Select music genres</summary>
+                    <ul id="genres_list" role="listbox">
+                        <li>
+                            <input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()">
+                        </li>
+                        <?php foreach($genres as $genre): ?>
+                        <li>
+                            <label for="switch <?php echo $genre["tag"]; ?>">
+                                <input type="checkbox" id="switch<?php echo $genre["genreID"]; ?>" role="switch">
+                                <?php echo $genre["tag"]; ?>
+                            </label>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </details>
+                <label for="date">
+                    <input type="date" id="date" name="date">
+                </label>
+                <details id="notification" role="list" class="notification">
+                    <summary aria-haspopup="listbox">3 Notification</summary>
+                    <ul id="notification_list" role="listbox">
+                        <li>Text shbyhdbsw hxcbuxusnx uhxhs</p></li>
+                        <li>Text shbyhdbsw hxcbuxusnx uhxhs</li>
+                    </ul>
+                </details>
+            </nav>
+        </section>
         <main></main>
+
+        <script src="js/base.js" type="text/javascript"></script>
         <?php
         if(isset($templateParams["js"])):
             foreach($templateParams["js"] as $script):
@@ -42,48 +57,11 @@
         <?php
             endforeach;
         endif;
+        if(isset($templateParams["error"])):
+            echo $templateParams["error"];
+        endif;
         ?>
+        
     </div>
-    <aside class="menu">
-        <nav class="container-fluid">
-            <ul>
-                <li class="li-profile">
-                    <a <?php isActive("profile.php");?> href="profile.php">
-                        <img src="upload/user.png" alt="user">
-                        <label for="profile">Profile</label>
-                    </a>
-                </li>
-                <li class="li-home">
-                    <a <?php isActive("homepage.php");?> href="homepage.php">
-                        <img src="upload/home.png" alt="home"><label for="home">Home</label>
-                    </a>
-                </li>
-                <li class="li-new-post">
-                    <a <?php isActive("new_post.php");?> href="new_post.php">
-                        <img src="upload/add.png" alt="add">
-                        <label for="new post">New Post</label>
-                    </a>
-                </li>
-                <li class="li-search">
-                    <a <?php isActive(".php");?> href="#">
-                        <img src="upload/search.png" alt="search">
-                        <label for="search">Search</label>
-                    </a>
-                </li>
-                <li class="li-settings">
-                    <a <?php isActive("settings.php");?> href="settings.php">
-                        <img src="upload/settings.png" alt="settings">
-                        <label for="settings">Settings</label>
-                    </a>
-                </li>
-                <li class="li-logout">
-                    <a <?php isActive("logout.php");?> href="logout.php">
-                        <img src="upload/logout.png" alt="logout">
-                        <label for="logout">Logout</label>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
 </body>
 </html>

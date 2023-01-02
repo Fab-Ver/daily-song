@@ -1,5 +1,15 @@
 <?php
 require_once 'bootstrap.php';
+secure_session_start();
 
-$templateParams["titolo"] = "Nome sito - Impostazioni"
+if(isUserLoggedIn()){
+    $templateParams["title"] = "Nome sito - Settings";
+    $templateParams["js"] = array("js/config.js","https://unpkg.com/axios/dist/axios.min.js","js/settings.js");
+    $genres = $dbh->getGenres();
+
+    require 'template/base.php';
+} else {
+    header('Location: index.php');
+}
+
 ?>

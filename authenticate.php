@@ -2,35 +2,54 @@
 require_once 'bootstrap.php';
 secure_session_start();
 $result['loggedIn'] = false;
-$result["errorPassword"] = false;
-$result["checkBrute"] = false;
 
 if(!isUserLoggedIn()){
+    $result['errorMsg'] = "";
+    $result['elemID'] = "";
     if(isset($_POST["checkEmail"])){
-        $result["errorEmail"] = false;
-        if(count($dbh->getUser($_POST["checkEmail"])) == 0){
-            $result["errorEmail"] = true;
-        }
-    } else if (isset($_POST["email"]) && isset($_POST["password"])){
-        $email = $_POST["email"];
-        $password = $_POST["password"];
-        $user = $dbh->getUser($email);
-        $hash = $user[0]["passwordHash"];
-        if($dbh->checkBrute($user[0]["username"])){
-            $result["checkBrute"] = true;
-        } else {
-            if(password_verify($password,$hash)){
-                registerLoggedUser($user[0]['username'],$user[0]['email']);
-                $result["loggedIn"] = true;
-            } else {
-                $dbh->insertLoginAttempts($user[0]["username"]);
-                $result["errorPassword"] = true;
+        $email = Input::filter_string($_POST['checkEmail']);
+        if(Input::validate_email($email)){
+            if(count($dbh->findUsernameByEmail($email)) == 0){
+                $result['errorMsg'] = NO_USER;
             }
+        } else {
+            $result['errorMsg'] = INVALID_EMAIL;
         }
+    } else if (isset($_POST['email'], $_POST['password'], $_POST['remember_me'])){
+        $email = Input::filter_string($_POST['email']);
+        $password = Input::filter_string($_POST['password']);
+        $remember_me = Input::validate_boolean($_POST['remember_me']);
+
+        if(Input::validate_email($email)){
+            $user = $dbh->findUsernameByEmail($email);
+            if(count($user) != 0){
+                $username = $user[0]['username'];
+                if($dbh->isUserActive($username)){
+                    if(login($username,$password,$remember_me)){
+                        $result['loggedIn'] = true;
+                    } else {
+                        $result['errorMsg'] = WRONG_PASSWORD;
+                        $result['elemID'] = 'login_password';
+                    }
+                } else {
+                    /**
+                    * Aggiungere mail all'utente disabilitato
+                    */
+                    $result['errorMsg'] = DISABLED_USER;
+                }
+            } else {
+                $result['errorMsg'] = NO_USER;
+                $result['elemID'] = 'login_email';
+            }
+        } else {
+            $result['errorMsg'] = INVALID_EMAIL;
+            $result['elemID'] = 'login_email';
+        } 
     }
 } else {
-    $result["loggedIn"] = true;
+    header('Location: homepage.php');
 }
 
 header('Content-Type: application/json');
 echo json_encode($result);
+?>
