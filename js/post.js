@@ -12,8 +12,8 @@ function getPost() {
             <section>
                 <a href="#">Song Link</a>
                 <div class="grid">
-                    <img src="./upload/like.png" alt="like" class="like"><label>5</label>
-                    <img src="./upload/like.png" alt="dislike" class="dislike"><label>5</label>
+                    <img src="./upload/like.svg" alt="like" class="like"><label>5</label>
+                    <img src="./upload/like.svg" alt="dislike" class="dislike"><label>5</label>
                 </div>
             </section>
             <p class="description">Descrption: </p>
@@ -42,6 +42,6 @@ function getPost() {
     return article;
 }
 
-let articles = document.querySelectorAll("article");
+let articles = document.querySelector("article");
 articles.classList.add("post_body");
-articles.innerHTML += getPost();
+articles.innerHTML = getPost();
