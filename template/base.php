@@ -18,7 +18,7 @@
         <section class="grid">
             <h1>Title</h1>
             <section class="grid">
-                <details id="track_genres" role="list" class="track_genres">
+                <details id="track_genres" role="list" class="track_genres" > <!--onclick="return false;"-->
                     <summary aria-haspopup="listbox">Select music genres</summary>
                     <ul id="genres_list" role="listbox">
                         <li>
@@ -38,19 +38,19 @@
         </section>
         <main></main>
 
-        <script src="js/base.js" type="text/javascript"></script>
         <?php
         if(isset($templateParams["js"])):
             foreach($templateParams["js"] as $script):
         ?>
             <script src="<?php echo $script; ?>"></script>
-        <?php
+            <?php
             endforeach;
         endif;
         if(isset($templateParams["error"])):
             echo $templateParams["error"];
         endif;
         ?>
+        <script src="js/base.js" type="text/javascript"></script>
         
     </div>
 </body>

@@ -96,16 +96,13 @@ body {
   grid-template-columns: 40% 20% 40%;
 }
 
-.main-div > section > section details {
-  text-align: center;
-}
-
 .main-div > section > section input {
   margin-bottom: 0%;
   border: none;
 }
 
 .main-div > section > section details summary {
+  text-align: center;
   padding-left: 1% !important;
   padding-right: 1% !important;
   border: none !important;
@@ -175,7 +172,6 @@ main {
 .post_section {
   display: none;
 }
-*/
 
 .post_section article, .grid article {
   margin: 3% 1%;
@@ -190,6 +186,7 @@ main .list {
 main .grid .current_post article {
   font-size: 200%;
 }
+*/
 
 /*---------------------------------------------*/
 
@@ -204,11 +201,8 @@ article.post_body div.grid {
   margin-bottom: 2% !important;
 }
 
-section {
-  margin-bottom: 0% !important;
-}
-
 section.post_text {
+  margin-bottom: 0% !important;
   padding-left: 5%;
 }
 
@@ -258,17 +252,17 @@ section.post_text p.time_ago {
   margin: 0%;
 }
 
-section.comments input {
-  float: left;
-  width: 80% !important;
+section.comments {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  grid-gap: 0%;
+  margin-bottom: 0%;
 }
 
 section.comments button {
-  float: right;
-  width: 20%;
-  background: transparent;
   padding-left: 0%;
   padding-right: 0%;
+  background-color: transparent;
 }
 
 section.comments p {
@@ -276,12 +270,12 @@ section.comments p {
   display: none;
 }
 
-details {
+article.post_body details {
   clear: both;
   margin: 0% !important;
 }
 
-details article {
+article.post_body details article {
   margin: 0% !important;
   background-color: black;
 }
@@ -388,11 +382,6 @@ details article {
   
   .post_section button {
     margin: 0%;
-    background-color: transparent;
-  }
-  
-  .post_section button:hover {
-    background-color: black;
   }
 
 }

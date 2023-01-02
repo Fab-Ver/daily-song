@@ -1,4 +1,4 @@
-function getArticles() {
+function getPost() {
     let article = `
     <div class="grid">
         <aside>
@@ -12,8 +12,8 @@ function getArticles() {
             <section>
                 <a href="#">Song Link</a>
                 <div class="grid">
-                    <img src="./upload/like.png" alt="like" class="like"><label>5</label>
-                    <img src="./upload/like.png" alt="dislike" class="dislike"><label>5</label>
+                    <img src="./upload/like.svg" alt="like" class="like"><label>5</label>
+                    <img src="./upload/like.svg" alt="dislike" class="dislike"><label>5</label>
                 </div>
             </section>
             <p class="description">Descrption: </p>
@@ -21,7 +21,7 @@ function getArticles() {
         </section>
     </div>
     <section class="comments">
-        <input type="text" id="comment" name="comment" placeholder="Add comment" required>
+        <textarea id="comment" name="comment" placeholder="Add comment"></textarea>
         <button>Publish</button>
         <p>when clik publich show current comment</p>
     </section>
@@ -42,6 +42,6 @@ function getArticles() {
     return article;
 }
 
-const articles = document.querySelector("article");
+let articles = document.querySelector("article");
 articles.classList.add("post_body");
-articles.innerHTML = getArticles();
+articles.innerHTML = getPost();
