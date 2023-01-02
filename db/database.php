@@ -115,7 +115,7 @@ class DatabaseHelper{
     }
 
     public function getUserPosts($username){
-        $query = "SELECT  postID, description, likeNum, dislikeNum, activeComments, dateTime, trackID, username FROM post WHERE username = ?";
+        $query = "SELECT  postID, description, activeComments, dateTime, urlSpotify, urlImage, urlPreview, title, artists, albumName FROM post JOIN track ON post.trackID = track.trackID WHERE username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();
@@ -199,7 +199,7 @@ class DatabaseHelper{
         return $stmt->execute();
     }
 
-    function insertFollowed($followed, $me){
+    function insertFollowed(string $followed, string $me){
         $query = "INSERT INTO friend (followed, follower) VALUES (?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ss', $followed, $me);
@@ -207,7 +207,7 @@ class DatabaseHelper{
         return $result;
     }
 
-    function removeFollowed($followed, $me){
+    function removeFollowed(string $followed, string $me){
         $query = "DELETE FROM friend WHERE followed = ? AND follower = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ss', $followed, $me);
@@ -281,6 +281,24 @@ class DatabaseHelper{
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    function insertLike(int $postID, string $username){
+        $query = "UPDATE post SET likeNum = (SELECT likeNum FROM post WHERE postID = 1) + 1 WHERE postID = ? AND username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('is', $postID, $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result;
+    }
+
+    function insertDislike(int $postID, string $username){
+        $query = "UPDATE post SET dislikeNum = (SELECT dislikeNum FROM post WHERE postID = 1) + 1 WHERE postID = ? AND username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('is', $postID, $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result;
     }
     
 }

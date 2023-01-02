@@ -63,6 +63,17 @@
   width: 25%;
 }
 
+.like-button {
+  fill: #1db954;
+  max-width:40px;
+}
+
+.dislike-button {
+  fill: #1db954;
+  transform: rotate(180deg);
+  max-width:40px;
+}
+
 /*---------------------------------------------*/
 
 body {

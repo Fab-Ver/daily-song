@@ -1,7 +1,7 @@
 function showProfileHeader(result){
     return `
         <div class="grid">
-            <img src="${result["profilePicture"]}" alt="" width="50%"/>
+            <img class="profile-image" src="${result["profilePicture"]}" alt=""/>
             <div class="center-text">
                 <div id="profileUsername">${result["username"]}</div>
                 <div>${result["firstName"]} ${result["lastName"]}</div>

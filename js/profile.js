@@ -16,22 +16,31 @@ function showPosts(posts){
 
     for(let i of posts){
         let post = `
-            <img src="${i}" alt="" data-target="modal-example-${i}" onClick="toggleModal(event)" />
-            <dialog id="modal-example-${i}">
+            <img class="post-image" src="${i["urlImage"]}" alt="" data-target="modal-example-${i["postID"]}" onClick="toggleModal(event)" />
+            <dialog id="modal-example-${i["postID"]}">
                 <article>
                     <div class="grid">
-                    <div>
-                        <p class="title">Titolo canzone</p>
-                        <a href="#close" aria-label="Close" class="close" data-target="modal-example-${i}" onClick="toggleModal(event)"></a>
-                    
+                      <div>
+                          <p class="title">${i["title"]}</p>
+                          <a href="#close" aria-label="Close" class="close" data-target="modal-example-${i["postID"]}" onClick="toggleModal(event)"></a>
+                      </div>
                     </div>
-                    </div>
-                    <p>Artista</p>
-                    <p>Descrizione del post se c'è</p>
-                    <p><a href="#linkSpotify"> link Spotify</a></p>
-                    <img src="${i}" alt=""/>
+                    <p>${i["artists"]}</p>
+                    <p>${i["description"]}</p>
+                    <p><a href="${i["urlSpotify"]}"> Link Spotify</a></p>
+                    <img src="${i["urlImage"]}" alt=""/>
+                    <!--<div class="grid">
+                      <p id="like">${i["likeNum"]}</p>
+                      <img class="like-button" src="upload/like.svg" onClick="updateLike(true, ${i["postID"]})" alt=""/>
+                      <p id="dislike">${i["dislikeNum"]}</p>
+                      <p>Prova${result["posts"]['2']["likeNum"]}</p>
+                      <img class="dislike-button" src="upload/like.svg" onClick="updateLike(false, ${i["postID"]})" alt=""/>
+                    </div>-->
                     <footer>
-                        
+                      <figure>
+                      <figcaption class="left-text">Song preview:</figcaption>
+                        <audio controls src="${i["urlPreview"]}"></a>
+                      </figure>
                     </footer>
                 </article>
             </dialog>
@@ -40,6 +49,26 @@ function showPosts(posts){
         result += post;
     }
     return result;
+}
+
+function generateLike(isLike, newValue) {
+  if (isLike) {
+      return `<p id="like">${newValue}</p>`;
+  } else {
+      return `<p id="dislike">${newValue}</p>`;
+  }
+}
+
+function updateLike(isLike, postID){
+  let formData = new FormData();
+  formData.append('postID', postID);
+  formData.append('isLike', isLike ? "like" : "dislike");
+  axios.post('api-post.php', formData).then(response => {
+    console.log(response.data);
+    if(response.data["updateLike"]){
+      document.getElementById(isLike ? "like ": "dislike").outerHTML = generateLike(isLike, isLike ? response.data["posts"][postID]["likeNum"] : response.data["posts"][postID]["dislikeNum"]);
+    }
+});
 }
 
 axios.get('api-profile.php'+location.search).then(response => {

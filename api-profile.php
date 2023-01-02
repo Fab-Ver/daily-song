@@ -21,7 +21,7 @@ if(isset($_POST["username"]) && isset($_POST["value"])){
     $result["profileNumberOfFollowed"] = count($dbh->getUserFollowed($result["username"]));
     $result["profileNumberOfFollower"] = count($dbh->getUserFollower($result["username"]));
     $result["preferredGenres"] = $dbh->getUserPreferredGenres($result["username"]);
-    $result["posts"] = [UPLOAD_DIR."post1.jpg", UPLOAD_DIR."post2.jpg", UPLOAD_DIR."post3.jpg", UPLOAD_DIR."post4.jpg"]; //$dbh->getUserPosts($result["username"]);
+    $result["posts"] = $dbh->getUserPosts($result["username"]);
 }
 
 header("Content-Type: application/json");
