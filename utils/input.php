@@ -36,27 +36,27 @@
             $error = "";
             if(!empty($password)){
                 if (strlen($password) < 8) {
-                    $error .= SHORT_PASSWORD;
+                    $error .= '<li>'.SHORT_PASSWORD.'</li>';
                 }
                 if (strlen($password) > 30) {
-                    $error .= LONG_PASSWORD;
+                    $error .= '<li>'.LONG_PASSWORD.'</li>';
                 }
                 if(!preg_match("#[0-9]+#",$password)) {
-                    $error .= NUMBER_PASSWORD;
+                    $error .= '<li>'.NUMBER_PASSWORD.'</li>';
                 }
                 if(!preg_match("#[A-Z]+#",$password)) {
-                    $error .= UPPER_PASSWORD;
+                    $error .= '<li>'.UPPER_PASSWORD.'</li>';
                 }
                 if(!preg_match("#[a-z]+#",$password)) {
-                    $error .= LOWER_PASSWORD;
+                    $error .= '<li>'.LOWER_PASSWORD.'</li>';
                 }
                 if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $password)) {
-                    $error .= SPECIAL_PASSWORD;
+                    $error .= '<li>'.SPECIAL_PASSWORD.'</li>';
                 }
                 if(empty($error)){
                     return [true,""];
                 }
-                return [false,"Your password:<br>".$error];
+                return [false,"Your password:<ul>".$error.'</ul>'];
             } else {
                 $error.="Please enter your password";
                 return [false,$error];
