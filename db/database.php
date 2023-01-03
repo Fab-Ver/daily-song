@@ -172,7 +172,7 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    function checkTrack($trackID){
+    function checkTrack(string $trackID) : bool{
         $query = "SELECT trackID FROM track WHERE trackID = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$trackID);
@@ -199,7 +199,7 @@ class DatabaseHelper{
         return $result;
     }
 
-    function getMaxPostID(){
+    function getMaxPostID() : int{
         $stmt = $this->db->prepare("SELECT MAX(postID) AS max FROM post");
         $stmt->execute();
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -209,16 +209,14 @@ class DatabaseHelper{
         return $result["0"]["max"]+1;
     }
 
-    function insertPost($description,$activeComments,$datetime,$trackID,$username){
+    function insertPost(string $username, string $trackID, string $description, bool $activeComments, string $datetime) : array{
         $postID = $this->getMaxPostID();
-        $query = "INSERT INTO post (postID,description,activeComments,datetime,trackID,username) VALUES (?,?,?,?,?,?)";
+        $active = (int) $activeComments;
+        $query = "INSERT INTO post (postID,description,activeComments,dateTime,trackID,username) VALUES (?,?,?,?,?,?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('isssss',$postID,$description,$activeComments,$datetime,$trackID,$username);
+        $stmt->bind_param('isisss',$postID,$description,$activeComments,$datetime,$trackID,$username);
         $result = $stmt->execute();
-        if($result){
-            return $postID;
-        }
-        return -1;
+        return [$result,$postID];
     }
 
     function insertPostGenres($postID,$genresIDs){
