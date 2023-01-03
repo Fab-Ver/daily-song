@@ -37,9 +37,10 @@ class DatabaseHelper{
     }
 
     public function insertSettings(string $username, string $notification){
+        $not = (int) $notification;
         $query = "INSERT INTO settings (username,postNotification,commentNotification,followerNotification) VALUES (?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('siii',$username, (int)$notification, (int)$notification, (int)$notification);
+        $stmt->bind_param('siii',$username, $not, $not, $not);
         $stmt->execute();
     }
 
