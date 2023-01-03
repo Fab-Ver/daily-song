@@ -304,6 +304,11 @@ article.post_body details article {
 
 @media screen and (min-width: 992px) {
 
+  .main-div > section h1 {
+    display: flex;
+    align-items: center;
+    padding-left: 10%;
+  }
   .main-div > section section {
     padding: 1%;
   }
