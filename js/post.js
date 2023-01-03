@@ -1,9 +1,14 @@
 function getPost() {
     let article = `
+    <article class="profile_post">
+        <button>
+            <img src="./res/default.PNG" alt="profile_image" width="10%" height="10%">
+            <label>nome utente</label>
+        </button>
+        <label class="time_ago">3h ago </label>
+    </article>
     <div class="grid">
-        <aside>
-            <img src="./res/post4.jpg" alt="profile icon">
-        </aside>
+        <img src="./res/post4.jpg" alt="profile icon">
         <section class="post_text">
             <hgroup class="song">
                 <h2>Song Title</h2>
@@ -17,7 +22,6 @@ function getPost() {
                 </div>
             </section>
             <p class="description">Descrption: </p>
-            <p class="time_ago">3h ago </p>
         </section>
     </div>
     <section class="comments">
