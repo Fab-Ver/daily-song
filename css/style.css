@@ -99,6 +99,7 @@ body {
   position: fixed;
   bottom: 0;
   background-color: white;
+  /*filter: invert(100%);*/
   width: 100%;
   padding-left: 4%;
 }
@@ -255,14 +256,48 @@ section.comments p {
   display: none;
 }
 
-article.post_body details {
+article.post_body details.show_comments {
   clear: both;
   margin: 0% !important;
 }
 
-article.post_body details article {
-  margin: 0% !important;
-  background-color: black;
+details.show_comments ul.list_comment {
+  max-height: 30vh;
+  overflow: scroll;
+  margin: 0%;
+  padding-left: 0%;
+}
+
+details.show_comments li > div {
+  grid-template-columns: 10% 90%;
+}
+
+details.show_comments li img {
+  width: 90%;
+}
+
+section.comment_text, section.comment_text label{
+  margin: 0%;
+}
+
+section.comment_text label.username {
+  float: left;
+  width: 70%;
+  font-size: 90%;
+}
+
+section.comment_text label.time_comment {
+  float: right;
+  width: 25%;
+  font-size: 50%;
+  text-align: center;
+}
+
+section.comment_text p {
+  clear: both;
+  padding: 0% 3%;
+  margin: 0%;
+  font-size: 70%;
 }
 
 /*------------------------------------------*/
