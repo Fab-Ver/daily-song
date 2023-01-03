@@ -115,11 +115,21 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getDayPost(string $day){
+    public function getPostOfDay($day){
         $query="SELECT * FROM post WHERE (SELECT DATE(dateTime) as date_part FROM post) = '$day'";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
+        
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getTimePost($postId){
+        $query="SELECT HOUR(dateTime) as hour_part, MINUTE(dateTime) as minute_part FROM post WHERE post.postID = '$postId'";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
