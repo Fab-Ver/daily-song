@@ -36,5 +36,7 @@
     define('INVALID_IMAGE', 'The uploaded file is not an image.');
     define('FILE_EXTENSION','Wrong file extension, accepted: ');
     define('ERROR_UPLOAD','Error uploading the image');
-    define('IMAGE_DIMENSION','The image should have equal width and height.')
+    define('IMAGE_DIMENSION','The image should have equal width and height.');
+    define('EMPTY_TRACK_ID','Track ID required, please enter track ID to continue');
+    define('INVALID_TRACK_ID','The specified track ID is not in our system, try with another track ID');
 ?>
