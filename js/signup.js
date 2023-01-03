@@ -72,14 +72,14 @@ function createSignUpForm(){
 function checkSignUpEmail(){
     if(!email.validity.valueMissing){
         if(email.validity.typeMismatch){
-            showError(email,"Wrong mail format (example@domain.com)");
+            showError(email,'Invalid email format, expected example@domain.com');
             setValid(email,false);
         } else {
             let formData = new FormData();
             formData.append('checkEmail',email.value);
             axios.post('registration.php',formData).then(response => {
-                if(response.data["errorEmail"]){
-                    showError(email,"Email already in use, try with another or log in");
+                if(response.data.errorMsg !== ""){
+                    showError(email,response.data.errorMsg);
                     setValid(email,false);
                 } else {
                     setValid(email,true);
@@ -142,9 +142,9 @@ function checkUsername(){
     if(!username.validity.valueMissing){
         let formData = new FormData();
         formData.append('checkUsername',username.value);
-        axios.post('validate.php',formData).then(response => {
-            if(response.data["errorUsername"]){
-                showError(username,"Username already in use, try with another or log in");
+        axios.post('registration.php',formData).then(response => {
+            if(response.data.errorMsg !== ""){
+                showError(username,response.data.errorMsg);
                 setValid(username,false);
             } else {
                 setValid(username,true);
@@ -156,7 +156,7 @@ function checkUsername(){
 }
 
 function checkPassword(){
-    let regex =  /^(?=.*[0-9])(?=.*[\'^£$%&*()}{@#~?><>,|=_+¬-])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9\'^£$%&*()}{@#~?><>,|=_+¬-]{8,30}$/
+    let regex =  /^(?=.*[0-9])(?=.*[\'^£$%&*()}{@#~?><>,|=_+¬-])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9\'^£$%&*()}{@#~?><>,|=_+¬-]{8,30}$/;
     if(!password.validity.valueMissing){
         if(!password.value.match(regex)){
             showError(password,"Wrong password format, should contain at least:\n- one digit\n- one upper case\n- one lower case\n- one special character \'^£$%&*()}{@#~?><>,|=_+¬-\nMin length: 8\nMax length: 30 ");
@@ -164,7 +164,7 @@ function checkPassword(){
         } else {
             if(!confirm_password.validity.valueMissing){
                 if(password.value != confirm_password.value){
-                    showError(password,"The passwords don't match");
+                    showError(password,"The passwords do not match");
                     setValid(password,false);
                 } else {
                     setValid(password,true);
@@ -182,7 +182,7 @@ function checkConfirmPassword(){
     if(!confirm_password.validity.valueMissing){
         if(!password.validity.valueMissing){
             if(password.value != confirm_password.value){
-                showError(confirm_password,"The passwords don't match");
+                showError(confirm_password,"The passwords do not match");
                 setValid(confirm_password,false);
             } else {
                 setValid(confirm_password,true);
@@ -198,7 +198,7 @@ function checkImage(){
     let allowedExtensions =/(\.jpg|\.jpeg|\.png|\.gif)$/i;
     if(profile_picture.value != ""){
         if (!allowedExtensions.exec(filePath)) {
-            showError(profile_picture,"Wrong image extension, accepted .jpg .jpeg .png .gif");
+            showError(profile_picture,"Wrong file extension, accepted: .jpg .jpeg .png .gif");
             setValid(profile_picture,false);
         } else {
             setValid(profile_picture,true);
@@ -219,47 +219,47 @@ function checkSignUpForm(){
     }
 
     if(first_name.validity.valueMissing){
-        errors.push("Enter first name");
+        errors.push("First name required, enter first name to continue");
         err_element.push(first_name);
     }
 
     if(last_name.validity.valueMissing){
-        errors.push("Enter last name");
+        errors.push("Last name required, enter last name to continue");
         err_element.push(last_name);
     }
 
     if(birth_date.validity.valueMissing || birth_date.getAttribute('aria-invalid') === 'true'){
-        errors.push("Invalid birth date");
+        errors.push("Enter a valid birth date to continue");
         err_element.push(birth_date);
     }
 
     if(telephone.getAttribute('aria-invalid') === 'true'){
-        errors.push("Invalid telephone format");
+        errors.push("Wrong telephone number format, +XX XXX XXXXXXX expected");
         err_element.push(telephone);
     }
 
     if(username.validity.valueMissing || username.getAttribute('aria-invalid') === 'true'){
-        errors.push("Username missing or already used");
+        errors.push("Username required, enter a valid username to continue");
         err_element.push(username);
     }
 
     if(password.validity.valueMissing || password.getAttribute('aria-invalid') === 'true'){
-        errors.push("Password missing or password mismatch");
+        errors.push("Wrong password format or password mismatch");
         err_element.push(password);
     }
 
     if(confirm_password.validity.valueMissing || confirm_password.getAttribute('aria-invalid') === 'true'){
-        errors.push("Confirm password missing or password mismatch");
+        errors.push("Confirm password does not match the specified password");
         err_element.push(confirm_password);
     }
 
     if(profile_picture.getAttribute('aria-invalid') === 'true'){
-        errors.push("Invalid profile picture extension");
+        errors.push("Wrong file extension, accepted: .jpg .jpeg .png .gif");
         err_element.push(profile_picture);
     }
 
     if(!checkGenres(0,5)){
-        errors.push("Wrong number of favorite genres, too low or too high");
+        errors.push("Wrong number of selected genresID, please select between 1 and 5 genres");
     }
 
     if(errors.length == 0){
@@ -269,7 +269,7 @@ function checkSignUpForm(){
             setValid(element,false);
         });
         let error_div = document.querySelector("div.error_form");
-        error_div.innerHTML = `During sign up the following errors occurred:<ul>` + createError(errors);
+        error_div.innerHTML = `While processing your data the following errors occurred:<ul>` + createError(errors);
         error_div.removeAttribute('hidden');
         error_div.focus();
     }
@@ -277,14 +277,7 @@ function checkSignUpForm(){
 
 function submitForm(){
     let formData = new FormData();
-    let SQL_date = birth_date.valueAsDate.toISOString().slice(0,9);
-    let notification_status = notification.checked.toString();
-    let file_name = "";
-    if(profile_picture.value != ""){
-        file_name = profile_picture.value.replace(/^.*[\\\/]/, '');
-    } else {
-        file_name = "default.png";
-    }
+    let SQL_date = birth_date.valueAsDate.toISOString().slice(0,10);
     formData.append('email',email.value);
     formData.append('first_name',first_name.value);
     formData.append('last_name',last_name.value);
@@ -293,17 +286,22 @@ function submitForm(){
     formData.append('username',username.value);
     formData.append('password',password.value);
     formData.append('confirmPassword',confirm_password.value);
-    formData.append('profile_picture',file_name);
-    formData.append('notification',notification_status);
+    if(profile_picture.value !== ''){
+        formData.append('profile_picture',profile_picture.files[0]);
+    }
+    formData.append('notification',notification.checked);
     formData.append('favoriteGenres',JSON.stringify(getGenresID()));
 
     axios.post('registration.php',formData).then(response => {
-        if(response.data["validateError"]){
-            let error_div = document.querySelector("div.error_form");
-            error_div.innerHTML = "An undefined error occurred, try again";
+        let error_div = document.querySelector('div.error_form');
+        if(response.data.errorMsg !== ""){
+            error_div.innerHTML = response.data.errorMsg;
             error_div.removeAttribute('hidden');
             error_div.focus();
-        } else if(response.data['loggedIn']) {
+            if(response.data.errorElem !== undefined){
+                response.data.errorElem.forEach(element => setValid(document.getElementById(element),false));
+            }
+        }  else if(response.data.loggedIn === true) {
             window.location.replace("homepage.php");
         }
     });
@@ -321,7 +319,7 @@ const password = document.getElementById('password');
 const confirm_password = document.getElementById('confirm_password');
 const profile_picture = document.getElementById('profile_picture');
 const notification = document.getElementById('notification');
-axios.get("genre.php").then(response => {
+axios.get("genre.php?genre=get").then(response => {
     let dropdown = document.getElementById('genres_list');
     dropdown.innerHTML += createGenres(response.data);
 });
