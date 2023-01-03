@@ -116,7 +116,7 @@ class DatabaseHelper{
     }
 
     public function getPostOfDay($day){
-        $query="SELECT * FROM post WHERE (SELECT DATE(dateTime) as date_part FROM post) = '$day'";
+        $query="SELECT * FROM post WHERE (SELECT DATE(dateTime) as date_part FROM post)= '$day'";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -124,9 +124,10 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getTimePost($postId){
-        $query="SELECT HOUR(dateTime) as hour_part, MINUTE(dateTime) as minute_part FROM post WHERE post.postID = '$postId'";
+    public function getTimePost(int $postID){
+        $query="SELECT HOUR(dateTime) as hour_part, MINUTE(dateTime) as minute_part FROM post WHERE post.postID = ?";
         $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $postID);
         $stmt->execute();
         $result = $stmt->get_result();
         
@@ -178,6 +179,16 @@ class DatabaseHelper{
         $stmt->execute();
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         return count($result) > 0;
+    }
+
+    function getTrack($trackID){
+        $query = "SELECT * FROM track WHERE trackID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i',$trackID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     function insertTrack($trackID, $urlSpotify, $urlImage, $urlPreview, $title, $artists, $albumName){
