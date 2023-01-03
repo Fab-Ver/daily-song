@@ -114,6 +114,14 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getDayPost(string $day){
+        $query="SELECT * FROM post WHERE (SELECT DATE(dateTime) as date_part FROM post) = '$day'";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function getUserPosts(string $username){
         $query = "SELECT  postID, description, activeComments, dateTime, urlSpotify, urlImage, urlPreview, title, artists, albumName FROM post JOIN track ON post.trackID = track.trackID WHERE username = ?";
         $stmt = $this->db->prepare($query);
