@@ -8,6 +8,7 @@
     
     <!--Pico.css-->
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/default_style.css" />
 </head>
 <body>
     <?php
