@@ -17,16 +17,7 @@
     <div class="main-div">
         <section class="grid">
             <h1>Title</h1>
-            <section class="grid">
-                <details id="track_genres" role="list" class="track_genres" > <!--onclick="return false;"-->
-                    <summary aria-haspopup="listbox">Select music genres</summary>
-                    <ul id="genres_list" role="listbox">
-                        <li>
-                            <input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()">
-                        </li>
-                    </ul>
-                </details>
-                <input type="date" id="date" name="date">
+            <section>
                 <details id="notification" role="list" class="notification">
                     <summary aria-haspopup="listbox">3 Notification</summary>
                     <ul id="notification_list" role="listbox">

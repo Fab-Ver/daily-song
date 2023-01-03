@@ -46,8 +46,3 @@ for(let i=0; i<datiMenu.length; i++) {
     ul_menu.innerHTML = ul_menu.innerHTML + li;
 }
 
-axios.get("genre.php").then(response => {
-    let dropdown = document.getElementById('genres_list');
-    dropdown.innerHTML += createGenres(response.data);
-});
-

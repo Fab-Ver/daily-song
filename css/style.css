@@ -37,8 +37,7 @@
 }
 
 .container-fluid {
-  padding: 0% !important; 
-  /*height: 100vh;*/
+  padding: 0% !important;
 }
 
 .center-text {
@@ -91,35 +90,45 @@ body {
   text-align: center;
 }
 
-.main-div > section > section {
-  column-gap: 1%;
-  grid-template-columns: 40% 20% 40%;
+.main-div > section {
+  margin: 0% 2% !important;
 }
 
-.main-div > section > section input {
+.main-div > section section {
+  margin: 0% !important;
+}
+
+.main-div > section details {
+  margin-bottom: 0%;
+}
+
+.main-div > section .track_genres {
+  float: left;
+  width: 60%;
+}
+
+.main-div > section .track_genres summary {
+  border: none;
+}
+
+.main-div > section div > input {
+  float: right;
+  width: 40%;
   margin-bottom: 0%;
   border: none;
 }
 
-.main-div > section > section details summary {
+.main-div > section details summary {
   text-align: center;
-  padding-left: 1% !important;
-  padding-right: 1% !important;
-  border: none !important;
 }
 
-.main-div > section > section details summary::after{
+.main-div > section details summary::after{
   display: none !important;
 }
 
-.main-div > section > section ul {
+.main-div > section ul {
   overflow-y: scroll;
   height: 60vh;
-}
-
-.main-div > section > section details:last-child ul {
-  left: -50vw;
-  top: 10vh;
 }
 
 /*----------------------------------------*/
@@ -165,28 +174,6 @@ main {
 .error_form ul {
   margin: 0%;
 }
-
-/*-main home----------------------------------*/
-
-/*
-.post_section {
-  display: none;
-}
-
-.post_section article, .grid article {
-  margin: 3% 1%;
-}
-
-main .list {
-  align-items: center;
-  margin: 2% 1%;
-}
-
-
-main .grid .current_post article {
-  font-size: 200%;
-}
-*/
 
 /*---------------------------------------------*/
 
@@ -313,25 +300,12 @@ article.post_body details article {
     overflow: auto;
   }
 
-  .main-div > section {
-    grid-template-columns: 40% 60%;
-  }
-
-  .main-div > section > section {
-    grid-template-columns: 39% 19% 37%;
-  }
-
 }
 
 @media screen and (min-width: 992px) {
 
-  .main-div h1 {
-    text-align: left;
-    padding: 2%;
-  }
-
-  .main-div > section > section {
-    margin-top: 1%;
+  .main-div > section section {
+    padding: 1%;
   }
 
 }
