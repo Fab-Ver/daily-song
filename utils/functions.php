@@ -1,5 +1,6 @@
 <?php
 require_once 'remember.php';
+require_once 'error_msg.php';
 
 function isActive($pagename){
     if(basename($_SERVER['PHP_SELF'])==$pagename){
@@ -59,6 +60,69 @@ function registerLoggedUser(string $username, string $email, string $passwordHas
         return true;
     }
     return false;
+}
+
+function uploadImage($path, $image){
+    $imageName = basename($image['name']);
+    $fullPath = $path.$imageName;
+    
+    $maxKB = 2000;
+    $acceptedExtensions = array("jpg", "jpeg", "png", "gif");
+    $result = false;
+    $msg = "";
+    /*Check if uploaded file is an image*/
+    $imageSize = getimagesize($image['tmp_name']);
+    
+    if($imageSize === false) {
+        $msg .= '<li>'.INVALID_IMAGE.'</li>';
+    } else {
+        $width = $imageSize[0];
+        $height = $imageSize[1];
+    }
+    /*Check image dimension < 2 MB */
+    if ($image['size'] > $maxKB * 1024) {
+        $msg .= '<li>'."Uploaded file too large, maximum dimension".$maxKB."KB".'</li>';
+    }
+
+    /*Check if the image is a square */
+    if(isset($width,$height)){
+        if($width !== $height){
+            $msg .= '<li>'.IMAGE_DIMENSION.'</li>';
+        }
+    }
+    /*Check file extension*/
+    $imageFileType = strtolower(pathinfo($fullPath,PATHINFO_EXTENSION));
+    if(!in_array($imageFileType, $acceptedExtensions)){
+        $msg .= '<li>'.FILE_EXTENSION.implode(",", $acceptedExtensions).'</li>';
+    }
+
+    /*Search for file with the same name; if found rename the file. */
+    if (file_exists($fullPath)) {
+        $i = 1;
+        do{
+            $i++;
+            $imageName = pathinfo(basename($image['name']), PATHINFO_FILENAME)."_$i.".$imageFileType;
+        }
+        while(file_exists($path.$imageName));
+        $fullPath = $path.$imageName;
+    }
+
+    /*If no error occurred, we move the file form the temp location to upload dir*/
+    if(strlen($msg)==0){
+        if(!move_uploaded_file($image['tmp_name'], $fullPath)){
+            $msg.= '<li>'.ERROR_UPLOAD.'</li>';
+        }
+        else{
+            $result = true;
+            $msg = $imageName;
+        }
+    }
+
+    if(!$result) {
+        $msg = 'File errors: <ul>'.$msg.'</ul>';
+    }
+
+    return array($result, $msg);
 }
 
 function canFollow($user1, $user2follower){
