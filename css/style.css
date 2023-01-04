@@ -139,6 +139,15 @@ main {
   margin: 0%;
 }
 
+label[for="comments"]{
+  margin-bottom: var(--spacing) !important;
+}
+
+#new_post_form #genres_list {
+  overflow-y: scroll;
+  height: 50vh;
+}
+
 /*---------------------------------------------*/
 
 article.post_body{
