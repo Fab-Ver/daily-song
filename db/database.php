@@ -116,7 +116,7 @@ class DatabaseHelper{
     }
 
     public function getPostOfDay($day){
-        $query="SELECT * FROM post WHERE (SELECT DATE(dateTime) as date_part FROM post)= '$day'";
+        $query="SELECT * FROM `post` /*WHERE DATE(dateTime) = '$day'*/";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -131,7 +131,7 @@ class DatabaseHelper{
         $stmt->execute();
         $result = $stmt->get_result();
         
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return mysqli_fetch_array($result, MYSQLI_ASSOC);
     }
 
     public function getUserPosts(string $username){
@@ -188,7 +188,7 @@ class DatabaseHelper{
         $stmt->execute();
         $result = $stmt->get_result();
         
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return mysqli_fetch_array($result, MYSQLI_ASSOC);
     }
 
     function insertTrack(string $trackID, string $urlSpotify, string $urlImage, string $urlPreview, string $title, string $artists, string $albumName) : bool{

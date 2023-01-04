@@ -1,14 +1,3 @@
-const main = document.querySelector("main");
-let li_comment;
-for(let i=0; i<3; i++){
-    main.innerHTML += addPost();
-    li_comment = document.querySelectorAll(".post_body")[i].querySelector(".list_comment");
-    console.log(li_comment);
-    for(let j=0; j<3; j++){
-        li_comment.innerHTML += addComment();
-    }
-}
-
 /*
 <section class="post_section">
     <button class="button_prev">p</button>
@@ -34,31 +23,32 @@ document.querySelectorAll("button")[1].addEventListener("click", function(){
 });
 */
 
-function addPost() {
+function addPost(post) {
+    //console.log(post);
     let article = `
     <article class="post_body">
         <section class="profile_post">
             <button>
-                <img src="./res/default.PNG" alt="profile_image" width="10%" height="10%">
-                <label>nome utente</label>
+                <img src="./res/${post["profilePicture"]}" alt="profile_image" width="10%" height="10%">
+                <label>${post["username"]}</label>
             </button>
-            <label class="time_ago">3h ago </label>
+            <label class="time_ago">${post["time_ago"]}</label>
         </section>
         <div class="grid">
-            <img src="./res/post4.jpg" alt="profile icon">
+            <img src="${post["track"]["urlImage"]}" alt="song_image">
             <section class="post_text">
                 <hgroup class="song">
-                    <h2>Song Title</h2>
-                    <h3><p>Author: ____ - Album: ____ - Genres: ___</p></h3>
+                    <h2>${post["track"]["title"]}</h2>
+                    <h3><p>Author: ${post["track"]["artists"]} - Album: ${post["track"]["albumName"]} - Genres: ___</p></h3>
                 </hgroup>
                 <section>
-                    <a href="#">Song Link</a>
+                    <a href="${post["track"]["urlSpotify"]}">Song Link</a>
                     <div class="grid">
-                        <img src="./upload/like.svg" alt="like" class="like"><label>5</label>
-                        <img src="./upload/like.svg" alt="dislike" class="dislike"><label>5</label>
+                        <img src="./upload/like.svg" alt="like" class="like"><label>${post["like"]}</label>
+                        <img src="./upload/like.svg" alt="dislike" class="dislike"><label>x</label>
                     </div>
                 </section>
-                <p class="description">Descrption: </p>
+                <p class="description">Descrption: ${post["description"]}</p>
             </section>
         </div>
         <section class="comments">
@@ -90,3 +80,37 @@ function addComment() {
     `;
     return li_comment;
 }
+
+const main = document.querySelector("main");
+let li_comment;
+
+axios.get('api-home.php').then(response => {
+    //console.log(response.data);
+    const posts = response.data;
+    //console.log(posts.length);
+    for(let i=0; i<posts.length; i++){
+        main.innerHTML += addPost(posts[i]);
+        li_comment = document.querySelectorAll(".post_body")[i].querySelector(".list_comment");
+        for(let j=0; j<4; j++){
+            li_comment.innerHTML += addComment();
+        }
+    }
+    
+    /*
+    if(response.data.loggedIn){
+
+    } else {
+        //window.location.replace("index.php");
+    }
+    */
+
+
+    /*
+    const posts = showPosts(response.data["posts"]);
+    const genres = showGenres(response.data["preferredGenres"]);
+    const paragraph = document.querySelector('#genres');
+    const content = document.querySelector('#content');
+    content.innerHTML = posts;
+    paragraph.innerHTML = genres;
+    */
+});
