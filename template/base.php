@@ -28,7 +28,13 @@
                 </details>
             </section>
         </section>
-        <main></main>
+        <main>
+            <?php
+            if(isset($templateParams["error"])):
+                echo $templateParams["error"];
+            endif;
+            ?>
+        </main>
 
         <?php
         if(isset($templateParams["js"])):
@@ -38,9 +44,7 @@
             <?php
             endforeach;
         endif;
-        if(isset($templateParams["error"])):
-            echo $templateParams["error"];
-        endif;
+        
         ?>
         <script src="js/base.js" type="text/javascript"></script>
         
