@@ -123,5 +123,36 @@
             }
             return true;
         }
+
+        /**
+         * Check if a string is base64 encoded.
+         */
+        static function is_base62(string $s) : bool{
+            // Check if there are valid base62 characters
+            return preg_match('/^[0-9A-Za-z_-]{22}$/', $s);
+        }
+
+        /**
+         * Filter and validate url
+         */
+        static function validate_URL(string $url) : array{
+            $url = filter_var($url, FILTER_SANITIZE_URL);
+            if(filter_var($url,FILTER_VALIDATE_URL,FILTER_FLAG_PATH_REQUIRED)){
+                return [true,$url];
+            } 
+            return [false,''];
+        }
+
+        /**
+         * Check if url is spotify url, then return track ID
+         */
+        static function validate_SpotifyURL(string $spotifyURL) : array {
+            $matches = array();
+            if(preg_match('/^(?:spotify:|(?:https?:\/\/(?:open|play)\.spotify\.com\/))(?:embed)?\/?(track)(?::|\/)((?:[0-9a-zA-Z]){22})/',$spotifyURL,$matches)){
+                return [true,$matches[2]];
+            } else {
+                return [false,''];
+            }
+        }
     }
 ?>
