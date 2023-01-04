@@ -359,9 +359,45 @@ INSERT INTO `prefers` (`genreID`, `username`) VALUES
 (23, 'test_user'),
 (67, 'test_user');
 
+INSERT INTO `track` (`trackID`, `urlSpotify`, `urlImage`, `urlPreview`, `title`, `artists`, `albumName`) VALUES
+('08Hacl2rWl6GD6TKUyaKIy', 'https://open.spotify.com/track/08Hacl2rWl6GD6TKUyaKIy', 'https://i.scdn.co/image/ab67616d00001e02995c371c4edb3e01b1121c31', 'https://p.scdn.co/mp3-preview/04f2259cbf36285216c62e594ddd8456a6520294?cid=4467e6ad0f484420be8e1546bc0d3a60', 'TUTTO (con te)', 'ARIETE', 'TUTTO (con te)'),
+('0nLiqZ6A27jJri2VCalIUs', 'https://open.spotify.com/track/0nLiqZ6A27jJri2VCalIUs', 'https://i.scdn.co/image/ab67616d00001e02cf84c5b276431b473e924802', 'null', 'Nothing Else Matters', 'Metallica', 'Metallica'),
+('0TI8TP4FitVPoEHPTySx48', 'https://open.spotify.com/track/0TI8TP4FitVPoEHPTySx48', 'https://i.scdn.co/image/ab67616d00001e029683e5d7361bb80bfb00f46d', 'https://p.scdn.co/mp3-preview/307c6d41d8d5f301d4ad64d212a1e1fcd60bb1de?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Iron Man', 'Black Sabbath', 'Paranoid (2009 Remastered Version)'),
+('2svcZXmmAYPo1JKr7KFbK7', 'https://open.spotify.com/track/2svcZXmmAYPo1JKr7KFbK7', 'https://i.scdn.co/image/ab67616d00001e02b7b54273d8bd612c070505ef', 'https://p.scdn.co/mp3-preview/e467f542146ae1dd31251b9f651049513d29eef2?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Teorema', 'Beatrice Quinta', 'X Factor 2022 - Playlist Live #6'),
+('3gVhsZtseYtY1fMuyYq06F', 'https://open.spotify.com/track/3gVhsZtseYtY1fMuyYq06F', 'https://i.scdn.co/image/ab67616d00001e028b2c42026277efc3e058855b', 'null', 'Sonne', 'Rammstein', 'Mutter'),
+('3YYnFEXCLNbaWuC0hIEnIS', 'https://open.spotify.com/track/3YYnFEXCLNbaWuC0hIEnIS', 'https://i.scdn.co/image/ab67616d00001e02b2396840a8fba4ef2785c09d', 'https://p.scdn.co/mp3-preview/3dbc675e9926c47802561b0026f882d1822030b1?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Patient Number 9 (feat. Jeff Beck)', 'Ozzy Osbourne,Jeff Beck', 'Patient Number 9'),
+('5CQ30WqJwcep0pYcV4AMNc', 'https://open.spotify.com/track/5CQ30WqJwcep0pYcV4AMNc', 'https://i.scdn.co/image/ab67616d00001e02c8a11e48c91a982d086afc69', 'https://p.scdn.co/mp3-preview/fc80a280376d5142c888475bd8fdcd00b4fc8d7d?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Stairway to Heaven - Remaster', 'Led Zeppelin', 'Led Zeppelin IV (Deluxe Edition)'),
+('5USVtbBrftHgHASbNYqtOV', 'https://open.spotify.com/track/5USVtbBrftHgHASbNYqtOV', 'https://i.scdn.co/image/ab67616d00001e022476ca70d888474fdc5f77d9', 'https://p.scdn.co/mp3-preview/1d2b45d7dfd30a83f49dec1e805a2b9fb11268fb?cid=4467e6ad0f484420be8e1546bc0d3a60', 'CRISI DI STATO', 'Fedez', 'CRISI DI STATO'),
+('6Qs4SXO9dwPj5GKvVOv8Ki', 'https://open.spotify.com/track/6Qs4SXO9dwPj5GKvVOv8Ki', 'https://i.scdn.co/image/ab67616d00001e023b52eca47232bedfbb5e9443', 'null', 'Dancing With A Stranger (with Normani)', 'Sam Smith,Normani', 'Dancing With A Stranger (with Normani)');
+
 INSERT INTO `post` (`postID`, `description`, `activeComments`, `dateTime`, `trackID`, `username`) VALUES
-(1, 'ciao\r\n\r\n.\r\nproivjhvgyh ygtfcrtgyhjn', 0, '2023-01-02 16:08:00', '5USVtbBrftHgHASbNYqtOV', 'sara-capp'),
-(2, 'A\r\nf\r\nbgfefgf\r\n.\r\nprova su più righe', 0, '2023-01-02 16:45:19', '6Qs4SXO9dwPj5GKvVOv8Ki', 'sara-capp'),
-(3, 'gfdfg grfr3tgr Perchè nj', 0, '2023-01-02 16:45:44', '2svcZXmmAYPo1JKr7KFbK7', 'sara-capp'),
-(4, 'PRova\r\nciao \r\nsi iokjhgfrdeswasedfghjkml,kmjhgfrdesrtyuijkmnjbhvgcxdsert6y7u', 0, '2023-01-02 16:46:15', '08Hacl2rWl6GD6TKUyaKIy', 'sara-capp'),
-(5, 'Mi piace Rhove', 0, '2023-01-02 16:47:12', '4EC028SvtlC25iHQSG2OIa', 'fabio_veroli');
+(1, 'Il mio primo post :)', 0, '2023-01-04 21:15:59', '0TI8TP4FitVPoEHPTySx48', 'fabio_veroli'),
+(2, 'Il mio secondo post', 1, '2023-01-04 21:19:49', '0nLiqZ6A27jJri2VCalIUs', 'fabio_veroli'),
+(3, '', 0, '2023-01-04 21:22:43', '5CQ30WqJwcep0pYcV4AMNc', 'fabio_veroli'),
+(4, 'Ciao\r\nQuesto è un post\r\n:)', 0, '2023-01-04 21:25:36', '3YYnFEXCLNbaWuC0hIEnIS', 'fabio_veroli'),
+(5, '', 0, '2023-01-04 21:28:23', '3gVhsZtseYtY1fMuyYq06F', 'fabio_veroli'),
+(6, 'Questo è il mio primo post !!!', 1, '2023-01-04 21:33:32', '5USVtbBrftHgHASbNYqtOV', 'sara-capp'),
+(7, 'Questo è un brano pop...', 1, '2023-01-04 21:35:47', '6Qs4SXO9dwPj5GKvVOv8Ki', 'sara-capp'),
+(8, 'Che bella canzone !!!', 0, '2023-01-04 21:38:44', '2svcZXmmAYPo1JKr7KFbK7', 'sara-capp'),
+(9, 'Questa canzone mi piace molto ! Ascoltatela tutti.', 1, '2023-01-04 21:40:31', '08Hacl2rWl6GD6TKUyaKIy', 'sara-capp');
+
+INSERT INTO `belongs` (`genreID`, `postID`) VALUES
+(42, 3),
+(52, 3),
+(52, 4),
+(55, 2),
+(55, 4),
+(58, 8),
+(63, 5),
+(75, 1),
+(75, 2),
+(75, 5),
+(78, 5),
+(80, 6),
+(80, 7),
+(80, 8),
+(80, 9),
+(103, 1),
+(103, 2),
+(103, 3);
+
