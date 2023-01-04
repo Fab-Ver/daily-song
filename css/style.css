@@ -37,6 +37,7 @@
 }
 
 .dislike-button > img {
+  max-width: 2em;
   transform: rotate(180deg);
 }
 

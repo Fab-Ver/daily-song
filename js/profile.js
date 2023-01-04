@@ -31,24 +31,34 @@ function showPosts(posts){
                     <img src="${i["urlImage"]}" alt=""/>
                     <div>
                       ${i["numLike"]}
-                      <button class="like-button" onclick="console.log()">
+                      <button class="like-button" onclick="updateLike(true, ${i["postID"]}, ${i["sessionUsername"]})">
                         <img src="upload/like.svg" alt="Like">
                       </button>
                       ${i["numDislike"]}
-                      <button class="like-button dislike-button">
+                      <button class="like-button dislike-button" onclick="updateLike(false, ${i["postID"]}, ${i["sessionUsername"]})">
                         <img src="upload/like.svg" alt="Dislike">
                       </button>
                     </div>
-                    <footer>
-                      <figure>
-                      <figcaption class="left-text">Song preview:</figcaption>
-                        <audio controls src="${i["urlPreview"]}"></a>
-                      </figure>
-                    </footer>
-                </article>
-            </dialog>
         `;
-        
+        let songPreview = "";
+        if(i["urlPreview"] != null){
+          songPreview =  ` 
+            <footer>
+              <figure>
+              <figcaption class="left-text">Song preview: ${i["urlPreview"]}  </figcaption>
+                <audio controls src="${i["urlPreview"]}"></a>
+              </figure>
+            </footer>
+          `;
+        }
+        let endOfPost = `
+          </article>
+          </dialog>
+        `;
+
+        post += songPreview;
+        post += endOfPost;
+
         result += post;
     }
     return result;
@@ -62,21 +72,16 @@ function generateLike(isLike, newValue) {
   }
 }
 
-function updateLike(isLike, postID){
+function updateLike(isLike, postID, user){
   let formData = new FormData();
   formData.append('postID', postID);
+  formData.append('user', user);
   formData.append('isLike', isLike);
   axios.post('api-post.php', formData).then(response => {
     console.log(response.data);
     if(response.data["updateLike"]){
-      let post = [];
-      for(let i of response.data["posts"]){
-        if(i["postID"] == postID){
-          post = i;
-        }
-      }
-      document.getElementById(isLike ? "like ": "dislike").outerHTML = 
-        generateLike(isLike, isLike ? result[postID]["likeNum"] : response.data["posts"][postID]["dislikeNum"]);
+      document.getElementById("like").outerHTML = `<p id="like">${response.data["likeNum"]})</p>`;
+      document.getElementById("dislike").outerHTML = `<p id="dislike">${response.data["dislikeNum"]})</p>`;
     }
 });
 }

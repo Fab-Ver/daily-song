@@ -320,12 +320,12 @@ class DatabaseHelper{
     }
 
     function insertLike(int $postID, string $username, bool $likes){
-        /*$query = "UPDATE post SET likeNum = (SELECT likeNum FROM post WHERE postID = 1) + 1 WHERE postID = ? AND username = ?";
+        $query = "INSERT INTO reaction (postID, username, likes) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('isb', $postID, $username, $likes);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result;*/
+        return $result;
     }
     
 }

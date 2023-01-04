@@ -3,6 +3,7 @@ require("bootstrap.php");
 secure_session_start();
 
 $_SESSION["username"] = "sara-capp";
+$result["sessionUsername"] = $_SESSION["username"];
 $result["username"] = isset($_GET["user"]) ? $_GET["user"] : $_SESSION["username"];
 
 if(isset($_POST["username"]) && isset($_POST["value"])){
@@ -23,9 +24,9 @@ if(isset($_POST["username"]) && isset($_POST["value"])){
     $result["preferredGenres"] = $dbh->getUserPreferredGenres($result["username"]);
     $result["posts"] = $dbh->getUserPosts($result["username"]);
     foreach($result["posts"] as &$post){
-        $reactions = $dbh->getReactions($post["postID"]);
-        $post["numLike"] = count(array_filter($reactions, function($p) { return $p["likes"]; }));
-        $post["numDislike"] = count(array_filter($reactions, function($p) { return !$p["likes"]; }));
+        $post["reactions"] = $dbh->getReactions($post["postID"]);
+        $post["numLike"] = count(array_filter($post["reactions"], function($p) { return $p["likes"]; }));
+        $post["numDislike"] = count(array_filter($post["reactions"], function($p) { return !$p["likes"]; }));
     }
 }
 
