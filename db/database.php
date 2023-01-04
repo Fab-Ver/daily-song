@@ -191,7 +191,7 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    function insertTrack($trackID, $urlSpotify, $urlImage, $urlPreview, $title, $artists, $albumName){
+    function insertTrack(string $trackID, string $urlSpotify, string $urlImage, string $urlPreview, string $title, string $artists, string $albumName) : bool{
         $query = "INSERT INTO track (trackID, urlSpotify, urlImage, urlPreview, title, artists, albumName) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sssssss',$trackID, $urlSpotify, $urlImage, $urlPreview, $title, $artists, $albumName);
@@ -214,7 +214,7 @@ class DatabaseHelper{
         $active = (int) $activeComments;
         $query = "INSERT INTO post (postID,description,activeComments,dateTime,trackID,username) VALUES (?,?,?,?,?,?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('isisss',$postID,$description,$activeComments,$datetime,$trackID,$username);
+        $stmt->bind_param('isisss',$postID,$description,$active,$datetime,$trackID,$username);
         $result = $stmt->execute();
         return [$result,$postID];
     }
