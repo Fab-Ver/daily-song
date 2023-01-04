@@ -46,4 +46,5 @@
     define('EMPTY_ALBUM','Album name required, please enter album name to continue');
     define('INVALID_URL','must be a valid url, enter valid url to continue');
     define('ID_MISMATCH','The trackID must be the same specified in the spotify url');
+    define('TRACK_ID_IN_USE','Track ID already registered, bad request.');
 ?>
