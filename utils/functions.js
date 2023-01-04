@@ -94,24 +94,63 @@ function createError(errors){
         }
     }).then((response) => {
           return response.data.access_token;
-    });
+    }).catch(function (error) {
+        let string;
+        if(error.response){
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            string = error.response.status + " " + error.response.data.error_description;
+        } else if (error.request){
+            // The request was made but no response was received
+            string = 'No response received from the server';
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            string = error.message;
+        }
+        let errorMsg = {
+            error_string : string
+        }
+        return errorMsg;
+      });
  };
 
  const retrieveData = (track_id) => {
     let request_url = 'https://api.spotify.com/v1/tracks/' + track_id;
     return getToken().then(token => {
-        const config = {
-            method: 'get',
-            url: request_url,
-            headers: {
-                'Accept' : 'application/json',
-                'Content-Type' : 'application/json',
-                'Authorization' : 'Bearer '+ token
-            }
-        };
-
-        return axios(config).then(response => {
-            return response.data;
-        });
+        if(token.error_string !== undefined){
+            return token;
+        } else {
+            const config = {
+                method: 'get',
+                url: request_url,
+                headers: {
+                    'Accept' : 'application/json',
+                    'Content-Type' : 'application/json',
+                    'Authorization' : 'Bearer '+ token
+                }
+            };
+    
+            return axios(config).then(response => {
+                return response.data;
+            }).catch(function (error) {
+                let string;
+                if(error.response){
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    string = error.response.status + " " + error.response.data.error.message;
+                } else if (error.request){
+                    // The request was made but no response was received
+                    string = 'No response received from the server';
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    string = error.message;
+                }
+                let errorMsg = {
+                    error_string : string
+                }
+                return errorMsg;
+              });
+        }
+        
     });
  };
