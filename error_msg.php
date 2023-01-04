@@ -32,6 +32,7 @@
     define('WRONG_DATE','You are to young or to old to subscribe to our website');
     define('INVALID_TELEPHONE','Invalid telephone format, expected +XX.XXX.XXXXXXX');
     define('GENRES_ID_NUM','Wrong number of selected genresID, please select between 1 and 5 genres');
+    define('GENRES_ID_POST','Wrong number of selected genresID, please select between 1 and 3 genres');
     define('INVALID_GENRES_ID','Invalid genresID format, the selected genresID do not match any music genre');
     define('INVALID_IMAGE', 'The uploaded file is not an image.');
     define('FILE_EXTENSION','Wrong file extension, accepted: ');
@@ -39,4 +40,10 @@
     define('IMAGE_DIMENSION','The image should have equal width and height.');
     define('EMPTY_TRACK_ID','Track ID required, please enter track ID to continue');
     define('INVALID_TRACK_ID','The specified track ID is not in our system, try with another track ID');
+    define('WRONG_FORMAT_TRACK_ID','Invalid trackID format, enter valid trackID to continue');
+    define('EMPTY_TITLE','Title required, please enter title to continue');
+    define('EMPTY_ARTIST','Artist name required, please enter artist name to continue');
+    define('EMPTY_ALBUM','Album name required, please enter album name to continue');
+    define('INVALID_URL','must be a valid url, enter valid url to continue');
+    define('ID_MISMATCH','The trackID must be the same specified in the spotify url');
 ?>
