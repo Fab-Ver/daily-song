@@ -158,7 +158,7 @@ if(!isUserLoggedIn()){
             $result['errorMsg'] = 'While processing your data the following errors occurred: '.'<ul>'. $result['errorMsg'].'<ul>';
         }
     } else {
-        header('Location: signup.php');
+        $result['errorMsg'] = 'Bad Request';
     }
 } else {
     header('Location: homepage.php');

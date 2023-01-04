@@ -45,6 +45,8 @@ if(!isUserLoggedIn()){
             $result['errorMsg'] = INVALID_EMAIL;
             $result['elemID'] = 'login_email';
         } 
+    } else {
+        $result['errorMsg'] = 'Bad Request';
     }
 } else {
     header('Location: homepage.php');

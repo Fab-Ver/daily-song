@@ -24,6 +24,8 @@ if(!isUserLoggedIn()){
         } else {
             $result['errorMsg'] = INVALID_EMAIL;
         }
+    } else {
+        $result['errorMsg'] = 'Bad Request';
     }
 } else {
     header('Location: homepage.php');
