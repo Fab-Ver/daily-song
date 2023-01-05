@@ -99,37 +99,37 @@ body {
   margin: 0% !important;
 }
 
-.main-div > section details {
-  margin-bottom: 0%;
+.selector {
+  padding: 1%;
 }
 
-.main-div > section .track_genres {
+.selector .track_genres {
   float: left;
-  width: 60%;
+  width: 50%;
 }
 
-.main-div > section .track_genres summary {
-  border: none;
-}
-
-.main-div > section div > input {
+.selector #date {
   float: right;
-  width: 40%;
+  width: 50%;
   margin-bottom: 0%;
-  border: none;
 }
 
-.main-div > section details summary {
+
+.notification summary, .selector summary {
   text-align: center;
 }
 
-.main-div > section details summary::after{
+.main-div details summary::after{
   display: none !important;
 }
 
 .main-div > section ul {
   overflow-y: scroll;
   height: 60vh;
+}
+
+.selector ul {
+  width: 120%;
 }
 
 /*----------------------------------------*/
@@ -189,6 +189,7 @@ label[for="comments"]{
 /*---------------------------------------------*/
 
 article.post_body{
+  clear: both;
   margin-top: 3%;
   margin-bottom: 3%;
 }
@@ -371,6 +372,10 @@ section.comment_text p {
 /*------------------------------------------*/
 
 @media screen and (min-width: 768px) {
+
+  main {
+    margin-bottom: 1%;
+  }
 
   .profile-image {
     border-radius: 40%;

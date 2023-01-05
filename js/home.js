@@ -1,3 +1,19 @@
+const main = document.querySelector("main");
+main.innerHTML = `
+<div class="selector">
+    <details id="track_genres" role="list" class="track_genres" >
+        <summary aria-haspopup="listbox">Select music genres</summary>
+        <ul id="genres_list" role="listbox">
+            <li>
+                <input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()">
+            </li>
+        </ul>
+    </details>
+    <input type="date" id="date" name="date" onchange="selectDate()">
+</div>
+<div id="div_posts"></div>
+`;
+
 function addPost(post) {
     let article1 = `
     <article id="article${post["postID"]}" class="post_body">
@@ -19,7 +35,7 @@ function addPost(post) {
                     <a href="${post["track"]["urlSpotify"]}">Song Link</a>
     `;
 
-    let likes = showLikes(post["postID"], post["numLike"], post["numDislike"]);
+    let likes = showLikes(post["postID"], post["numLike"], post["numDislike"], post["isMyReaction"], post["myReaction"]);
 
     let songPreview = "";
     if(post["urlPreview"] !== "null"){
@@ -70,7 +86,6 @@ function publishComment(idButton){
     form_data.append("comment", text_comment.value);
     form_data.append("post_id", id);
     if(text_comment.value !== ""){
-        console.log("fabio");
         axios.post("api-home.php",form_data).then(response => {
             text_comment.value = "";
             li_comment = document.getElementById("article"+[id]).querySelector(".list_comment");
@@ -90,18 +105,46 @@ function genreList(geners){
     return genre.toString();
 }
 
-const main = document.querySelector("main");
+function listPost(data){
+    let div_post = document.getElementById("div_posts");
+    div_post.innerHTML = ``;
+
+    if(data.no_post !== undefined){
+        div_post.innerHTML = `
+            <article class="post_body">
+                ${data.no_post}
+            </article>
+        `;
+    }else{
+        let posts = data;
+        for(let i=0; i<posts.length; i++){
+            posts[i]["genre"] = genreList(posts[i]["genre"]);
+            div_post.innerHTML += addPost(posts[i]);
+            li_comment = document.getElementById("article"+posts[i]["postID"]).querySelector(".list_comment");
+            for(let j=0; j<posts[i]["comments"].length; j++){
+                li_comment.innerHTML += addComment(posts[i]["comments"][j]);
+            }
+        }
+    }
+}
+
 let li_comment;
 
 axios.get('api-home.php').then(response => {
     console.log(response.data);
-    const posts = response.data;
-    for(let i=0; i<posts.length; i++){
-        posts[i]["genre"] = genreList(posts[i]["genre"]);
-        main.innerHTML += addPost(posts[i]);
-        li_comment = document.getElementById("article"+posts[i]["postID"]).querySelector(".list_comment");
-        for(let j=0; j<posts[i]["comments"].length; j++){
-            li_comment.innerHTML += addComment(posts[i]["comments"][j]);
-        }
-    }
+    listPost(response.data);
+});
+
+function selectDate() {
+    let formData = new FormData();
+    let day = date.valueAsDate.toISOString().slice(0,10);
+    formData.append("day",day);
+    axios.post("api-home.php",formData).then(response => {
+        listPost(response.data);
+    });
+}
+
+axios.get("genre.php").then(response => {
+    let dropdown = document.getElementById('genres_list');
+    dropdown.innerHTML += createGenres(response.data);
 });
