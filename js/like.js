@@ -50,13 +50,3 @@ function updateLikeImg(isLike, postID){
 		document.getElementById("dislike-img"+postID).src = `upload/like.svg`;
 	}
 }
-  
-axios.get('api-profile.php'+location.search).then(response => {
-	console.log(response.data);
-	const posts = showPosts(response.data["posts"]);
-	const genres = showGenres(response.data["preferredGenres"]);
-	const paragraph = document.querySelector('#genres');
-	const content = document.querySelector('#content');
-	content.innerHTML = posts;
-	paragraph.innerHTML = genres;
-});
