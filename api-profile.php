@@ -2,8 +2,6 @@
 require("bootstrap.php");
 secure_session_start();
 
-//$_SESSION["username"] = "sara-capp";
-$result["sessionUsername"] = $_SESSION["username"];
 $result["username"] = isset($_GET["user"]) ? $_GET["user"] : $_SESSION["username"];
 
 if(isset($_POST["username"]) && isset($_POST["value"])){
@@ -13,7 +11,6 @@ if(isset($_POST["username"]) && isset($_POST["value"])){
         $result["followButton"] = $dbh->removeFollowed($_POST["username"], $result["username"]);
     }
 } else {
-    $result["prova"] = $_SERVER['REQUEST_URI'];
     $result["isMyProfile"] = $_SESSION["username"] == $result["username"];
     $result["canFollow"] = $result["isMyProfile"] ? false : canFollow($result["username"], $dbh->getUserFollowed($_SESSION["username"]));
     $user = $dbh->getUserProfile($result["username"]);

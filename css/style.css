@@ -15,9 +15,26 @@
   font-size: x-large;
 }
 
+.main-header{
+  display: grid;
+}
+
+.profile-header{
+  display: flex !important;
+}
+
 .profile-image {
-  border-radius: 50px;
-  width: 75%;
+  border-radius: 40%;
+  max-width: 25%;
+}
+
+.header-div {
+  width: 45%;
+}
+
+.header-element {
+  padding: 5% !important;
+  margin: 0 !important;
 }
 
 .post-image {
@@ -25,11 +42,12 @@
 }
 
 .like-button {
-  display: inline;
+  float: left;
   background: transparent;
   border: transparent;
-  max-width: 3em;
+  max-width: 50%;
   padding: 0;
+  margin: 0% !important;
 }
 
 .like-button > img {
@@ -41,12 +59,20 @@
   transform: rotate(180deg);
 }
 
-.like-bar {
-  float: left;
-  width: 20%;
-  margin: 0%;
+.modal-image{
+  padding: 5%;
+  clear: both;
 }
 
+.song-preview {
+  clear: both;
+}
+
+.caption {
+  display: inline-block;
+  width: 5%;
+  margin: 0 !important;
+}
 /*---------------------------------------------*/
 
 body {
@@ -339,6 +365,11 @@ section.comment_text p {
 
 @media screen and (min-width: 768px) {
 
+  .profile-image {
+    border-radius: 40%;
+    width: 5%;
+  }
+
   .menu {
     position: fixed;
     float: left;
@@ -368,10 +399,34 @@ section.comment_text p {
     overflow: auto;
   }
 
+  .under {
+    float: right;
+    height: 100vh;
+    width: 85%;
+    overflow: auto;
+  }
+
 }
 
 @media screen and (min-width: 992px) {
 
+  .main-header{
+    display: flex;
+  }
+
+  .header-div {
+    width: 45%;
+  }
+
+  .profile-header{
+    display: flex !important;
+    width: 45%;
+  }
+
+  .profile-image {
+    border-radius: 40%;
+    width: 25%;
+  }
   .main-div > section h1 {
     display: flex;
     align-items: center;
@@ -384,7 +439,16 @@ section.comment_text p {
 }
 
 @media screen and (min-width: 1024px) {
-  
+
+  .main-header{
+    display: flex;
+  }
+
+  .profile-image {
+    border-radius: 40%;
+    width: 45%;
+  }
+
   .menu {
     padding: 1% 0%;
   }

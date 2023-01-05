@@ -1,15 +1,13 @@
-function showLikes(postID, numLikes, numDislikes, sessionUsername){
+function showLikes(postID, numLikes, numDislikes){
       let result =`
-        <div class="grid like-bar">
-            <label id="like">${numLikes}</label>
-            <button class="like-button" onclick="updateLike(true, ${postID}, ${sessionUsername})">
+            <button class="like-button" onclick="updateLike(true, ${postID})">
                 <img src="upload/like.svg" alt="Like">
+                <label class"caption" id="like">${numLikes}</label>
             </button>
-            <label id="dislike">${numDislikes}</label>
-            <button class="like-button dislike-button" onclick="updateLike(false, ${postID}, ${sessionUsername})">
+            <button class="like-button dislike-button" onclick="updateLike(false, ${postID})">
                 <img src="upload/like.svg" alt="Dislike">
+                <label class"caption" id="dislike">${numDislikes}</label>
             </button>
-        </div>
           `;
           
       return result;
@@ -23,10 +21,9 @@ function showLikes(postID, numLikes, numDislikes, sessionUsername){
     }
   }
   
-  function updateLike(isLike, postID, user){
+  function updateLike(isLike, postID){
     let formData = new FormData();
     formData.append('postID', postID);
-    formData.append('user', user);
     formData.append('isLike', isLike);
     axios.post('api-post.php', formData).then(response => {
       console.log(response.data);

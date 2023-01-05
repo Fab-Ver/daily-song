@@ -11,7 +11,7 @@ function showGenres(genresArray){
   return result + genres;
 }
 
-function showPosts(posts){
+function showPosts(posts, sessionUsername){
     let result = "";
     reversePosts = posts.reverse();
     for(let i of reversePosts){
@@ -21,14 +21,14 @@ function showPosts(posts){
                 <article>
                     <div class="grid">
                       <div>
-                          <p class="title">${i["title"]}${i["prova"]}</p>
+                          <p class="title">${i["title"]}</p>
                           <a href="#close" aria-label="Close" class="close" data-target="modal-example-${i["postID"]}" onClick="toggleModal(event)"></a>
                       </div>
                     </div>
                     <p>${i["artists"]}</p>
                     <p>${i["description"]}</p>
                     <p><a href="${i["urlSpotify"]}"> Link Spotify</a></p>
-                    <img src="${i["urlImage"]}" alt=""/>
+                    <img class="modal-image" src="${i["urlImage"]}" alt=""/>
         `;
           /*<div>
           ${i["numLike"]}
@@ -40,15 +40,15 @@ function showPosts(posts){
             <img src="upload/like.svg" alt="Dislike">
           </button>
         </div>*/
-        let likes = showLikes(i["postID"], i["numLike"], i["numDislike"], i["sessionUsername"]);
+        let likes = showLikes(i["postID"], i["numLike"], i["numDislike"]);
 
         let songPreview = "";
         if(i["urlPreview"] !== "null"){
           songPreview =  ` 
-            <footer>
+            <footer class="song-preview">
               <figure>
               <figcaption class="left-text">Song preview: </figcaption>
-                <audio controls src="${i["urlPreview"]}"></a>
+                <audio controls src="${i["urlPreview"]}"></audio>
               </figure>
             </footer>
           `;
@@ -91,7 +91,7 @@ function updateLike(isLike, postID, user){
 
 axios.get('api-profile.php'+location.search).then(response => {
     console.log(response.data);
-    const posts = showPosts(response.data["posts"]);
+    const posts = showPosts(response.data["posts"], response.data["sessionUsername"]);
     const genres = showGenres(response.data["preferredGenres"]);
     const paragraph = document.querySelector('#genres');
     const content = document.querySelector('#content');

@@ -1,22 +1,26 @@
 function showProfileHeader(result){
     return `
-        <div class="grid">
-            <img class="profile-image" src="${result["profilePicture"]}" alt=""/>
-            <div class="center-text">
-                <div id="profileUsername">${result["username"]}</div>
-                <div>${result["firstName"]} ${result["lastName"]}</div>
+        <div class="main-header">
+            <div class="profile-header">
+                <img class="profile-image" src="${result["profilePicture"]}" alt=""/>
+                <div class="center-text header-div">
+                    <label id="profileUsername" class="header-element">${result["username"]}</label>
+                    <label class="header-element">${result["firstName"]} ${result["lastName"]}</label>
+                </div>
             </div>
-            <div class="center-text">
-                <div>${result["profileNumberOfFollower"]}</div>
-                <div><a href="follower.php?user=${result["username"]}&kind=follower">follower</a></div>
-            </div>
-            <div class="center-text">
-                <div>${result["profileNumberOfFollowed"]}</div>
-                <div><a href="follower.php?user=${result["username"]}&kind=followed">followed</a></button></div>
-            </div>
-            <div class="center-text">
-                <div>${result["posts"].length}</div>
-                <div><a href="profile.php?user=${result["username"]}">posts</a></div>
+            <div class="profile-header">
+                <div class="center-text header-div">
+                    <label class="header-element">${result["profileNumberOfFollower"]}</label>
+                    <a class="header-element" href="follower.php?user=${result["username"]}&kind=follower">follower</a>
+                </div>
+                <div class="center-text header-div">
+                    <label class="header-element">${result["profileNumberOfFollowed"]}</label>
+                    <a class="header-element" href="follower.php?user=${result["username"]}&kind=followed">followed</a>
+                </div>
+                <div class="center-text header-div">
+                    <label class="header-element">${result["posts"].length}</label>
+                    <a class="header-element" href="profile.php">posts</a>
+                </div>
             </div>
             ${result["isMyProfile"] ? '' : generateFollowButton(result["canFollow"])}
         </div>
