@@ -13,7 +13,7 @@ function showGenres(genresArray){
 	return result + genres;
 }
 
-function showPosts(posts, sessionUsername){
+function showPosts(posts){
     let result = "";
     reversePosts = posts.reverse();
     for(let i of reversePosts){
