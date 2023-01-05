@@ -5,7 +5,7 @@ secure_session_start();
 if (isUserLoggedIn()){
     if(isset($_POST["postID"]) && isset($_POST["isLike"])){
         $likeValue = Input::validate_boolean($_POST["isLike"]);
-        if($dbh->checkReaction($_POST["postID"], $_SESSION["username"])){
+        if(count($dbh->checkReaction($_POST["postID"], $_SESSION["username"])) > 0){
             $result["updateLike"] = $dbh->updateLike($likeValue, $_POST["postID"], $_SESSION["username"]);
         } else {
             $result["updateLike"] = $dbh->insertLike($_POST["postID"], $_SESSION["username"], $likeValue);

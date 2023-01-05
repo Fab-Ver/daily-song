@@ -23,6 +23,8 @@ if(isset($_POST["username"]) && isset($_POST["value"])){
     $result["posts"] = $dbh->getUserPosts($result["username"]);
     foreach($result["posts"] as &$post){
         $post["reactions"] = $dbh->getReactions($post["postID"]);
+        $post["isMyReaction"] = count($dbh->checkReaction($post["postID"], $_SESSION["username"]));
+        $post["myReaction"] = $dbh->checkReaction($post["postID"], $_SESSION["username"]);
         $post["numLike"] = count(array_filter($post["reactions"], function($p) { return $p["likes"]; }));
         $post["numDislike"] = count(array_filter($post["reactions"], function($p) { return !$p["likes"]; }));
     }

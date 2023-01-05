@@ -348,13 +348,12 @@ class DatabaseHelper{
     }
 
     function checkReaction(int $postID, string $username){
-        $query = "SELECT username FROM reaction WHERE postID = ? AND username = ?";
+        $query = "SELECT likes FROM reaction WHERE postID = ? AND username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('is', $postID, $username);
         $stmt->execute();
         $result = $stmt->get_result();
-        $result = $result->fetch_all(MYSQLI_ASSOC);
-        return count($result) > 0;
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
     }
 
     function updateLike(bool $likes, int $postID, string $username){

@@ -30,17 +30,8 @@ function showPosts(posts, sessionUsername){
                     <p><a href="${i["urlSpotify"]}"> Link Spotify</a></p>
                     <img class="modal-image" src="${i["urlImage"]}" alt=""/>
         `;
-          /*<div>
-          ${i["numLike"]}
-          <button class="like-button" onclick="updateLike(true, ${i["postID"]}, ${i["sessionUsername"]})">
-            <img src="upload/like.svg" alt="Like">
-          </button>
-          ${i["numDislike"]}
-          <button class="like-button dislike-button" onclick="updateLike(false, ${i["postID"]}, ${i["sessionUsername"]})">
-            <img src="upload/like.svg" alt="Dislike">
-          </button>
-        </div>*/
-        let likes = showLikes(i["postID"], i["numLike"], i["numDislike"]);
+
+        let likes = showLikes(i["postID"], i["numLike"], i["numDislike"], i["isMyReaction"], i["myReaction"]);
 
         let songPreview = "";
         if(i["urlPreview"] !== "null"){
