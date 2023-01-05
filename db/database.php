@@ -181,14 +181,14 @@ class DatabaseHelper{
         return count($result) > 0;
     }
 
-    function getTrack($trackID){
+    function getTrack(string $trackID) {
         $query = "SELECT * FROM track WHERE trackID = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i',$trackID);
+        $stmt->bind_param('s',$trackID);
         $stmt->execute();
         $result = $stmt->get_result();
         
-        return mysqli_fetch_array($result, MYSQLI_ASSOC);
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
     }
 
     function insertTrack(string $trackID, string $urlSpotify, string $urlImage, string $urlPreview, string $title, string $artists, string $albumName) : bool{
