@@ -3,10 +3,10 @@ require_once 'bootstrap.php';
 secure_session_start();
 
 if(isUserLoggedIn()){
-    $posts = $dbh->getUserPosts($_SESSION['username']);
+    $dates = $dbh->getUserPostsDate($_SESSION['username']);
     $alreadyPost = false;
-    foreach($posts as $post){
-        if(hours_date_diff(date("Y-m-d H:i:s"),$post['dateTime']) < 24){
+    foreach($dates as $date){
+        if(date("Y-m-d") === $date['postDate']){
             $alreadyPost = true;
         }
     }
