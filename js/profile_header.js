@@ -49,9 +49,11 @@ function updateFollowed(canFollow){
 }
 
 const main = document.querySelector("main");
-main.innerHTML = `<div id="header"></div>
-                  <p id="genres"></p>
-                  <div id="content"></div>`;
+main.innerHTML = `
+                    <div id="header"></div>
+                    <p id="genres"></p>
+                    <div id="content"></div>
+                `;
 
 axios.get('api-profile.php'+location.search).then(response => {
     console.log(response.data);

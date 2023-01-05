@@ -2,11 +2,11 @@ function showSearchResult(searchResult){
     let result = "";
     for (let user of searchResult) {
         let profile = `
-        <div>
-            <img src="${user["profilePicture"]}" alt="" width="5%"/>
-            <a href="profile.php?user=${user["username"]}">${user["username"]}</a>
-            ${generateFollowButton(user["canFollow"], user["username"])}
-        </div>
+            <div>
+                <img src="${user["profilePicture"]}" alt="" width="5%"/>
+                <a href="profile.php?user=${user["username"]}">${user["username"]}</a>
+                ${generateFollowButton(user["canFollow"], user["username"])}
+            </div>
         `;
         result += profile;
     }

@@ -1,14 +1,16 @@
 function showGenres(genresArray){
-  let result = `Favourite genres: <br>`;
-  let genres = "";
-  for(let i=0; i < genresArray.length; i++){
-      if(i == genresArray.length - 1){
-          genres += genresArray[i]["tag"];
-      } else{
-          genres += genresArray[i]["tag"] + ", ";
-      } 
-  }
-  return result + genres;
+	let result = `
+		Favourite genres: <br>
+	`;
+	let genres = "";
+	for(let i=0; i < genresArray.length; i++){
+		if(i == genresArray.length - 1){
+			genres += genresArray[i]["tag"];
+		} else{
+			genres += genresArray[i]["tag"] + ", ";
+		} 
+	}
+	return result + genres;
 }
 
 function showPosts(posts, sessionUsername){
@@ -45,8 +47,8 @@ function showPosts(posts, sessionUsername){
           `;
         }
         let endOfPost = `
-          </article>
-          </dialog>
+        		</article>
+        	</dialog>
         `;
 
         post += likes;
@@ -57,28 +59,6 @@ function showPosts(posts, sessionUsername){
     }
     return result;
 }
-
-/*function generateLike(isLike, newValue) {
-  if (isLike) {
-      return `<p id="like">${newValue}</p>`;
-  } else {
-      return `<p id="dislike">${newValue}</p>`;
-  }
-}
-
-function updateLike(isLike, postID, user){
-  let formData = new FormData();
-  formData.append('postID', postID);
-  formData.append('user', user);
-  formData.append('isLike', isLike);
-  axios.post('api-post.php', formData).then(response => {
-    console.log(response.data);
-    if(response.data["updateLike"]){
-      document.getElementById("like").outerHTML = `<p id="like">${response.data["likeNum"]})</p>`;
-      document.getElementById("dislike").outerHTML = `<p id="dislike">${response.data["dislikeNum"]})</p>`;
-    }
-});
-}*/
 
 axios.get('api-profile.php'+location.search).then(response => {
     console.log(response.data);
