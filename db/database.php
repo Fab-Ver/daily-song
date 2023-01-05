@@ -173,7 +173,7 @@ class DatabaseHelper{
     }
 
     public function getPostComments(int $postID){
-        $query = "SELECT text, dateTime, username FROM comment WHERE postID = ?";
+        $query = "SELECT text, dateTime, comment.username, profilePicture FROM comment JOIN profile ON profile.username = comment.username WHERE postID = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $postID);
         $stmt->execute();

@@ -1,9 +1,9 @@
 function addPost(post) {
     let article1 = `
-    <article class="post_body">
+    <article id="article${post["postID"]}" class="post_body">
         <section class="profile_post">
             <a href="profile.php?user=${post["username"]}">
-                <img src="./res/${post["profilePicture"]}" alt="profile_image" width="10%" height="10%">
+                <img src="${post["profilePicture"]}" alt="profile_image" width="10%" height="10%">
                 <label>${post["username"]}</label>
             </a>
             <label class="time_ago">${post["time_ago"]}</label>
@@ -19,7 +19,7 @@ function addPost(post) {
                     <a href="${post["track"]["urlSpotify"]}">Song Link</a>
     `;
 
-    let likes = showLikes(post["postID"], post["numLike"], post["numDislike"], post["sessionUsername"]);
+    let likes = showLikes(post["postID"], post["numLike"], post["numDislike"]);
 
     let songPreview = "";
     if(post["urlPreview"] !== "null"){
@@ -31,7 +31,7 @@ function addPost(post) {
     }
 
     let article2 = `</section>
-                <p class="description">Descrption: ${post["description"]}</p>
+                <p class="description">${post["description"]}</p>
             </section>
         </div>
         <section class="comments">
@@ -47,15 +47,15 @@ function addPost(post) {
     return article1 + likes + songPreview + article2;
 }
 
-function addComment() {
+function addComment(comment) {
     let li_comment = `
     <li>
         <div class="grid">
-            <img src="./upload/home.png" alt="profile_picture">
+            <img src="${comment["profilePicture"]}" alt="profile_picture">
             <section class="comment_text">
-                <label for="username" class="username">username</label>
-                <label for="time_comment" class="time_comment">12:00</label>
-                <p>commento:</p>
+                <label for="username" class="username">${comment["username"]}</label>
+                <label for="time_comment" class="time_comment">${comment["dateTime"]}</label>
+                <p>${comment["text"]}</p>
             </section>
         </div>
     </li>
@@ -68,12 +68,18 @@ function publishComment(idButton){
     let text_comment = document.getElementById("textarea" + id);
     let form_data = new FormData();
     form_data.append("comment", text_comment.value);
-    if(!text_comment.validity.valueMissing){
+    form_data.append("post_id", id);
+    if(text_comment.value !== ""){
+        console.log("fabio");
         axios.post("api-home.php",form_data).then(response => {
-            
+            text_comment.value = "";
+            li_comment = document.getElementById("article"+[id]).querySelector(".list_comment");
+            li_comment.innerHTML = ``;
+            for(let j=0; j<response.data["comments"].length; j++){
+                li_comment.innerHTML += addComment(response.data["comments"][j]);
+            }
         });
     }
-    text_comment.value = "";
 }
 
 function genreList(geners){
@@ -93,27 +99,9 @@ axios.get('api-home.php').then(response => {
     for(let i=0; i<posts.length; i++){
         posts[i]["genre"] = genreList(posts[i]["genre"]);
         main.innerHTML += addPost(posts[i]);
-        li_comment = document.querySelectorAll(".post_body")[i].querySelector(".list_comment");
-        for(let j=0; j<4; j++){
-            li_comment.innerHTML += addComment();
+        li_comment = document.getElementById("article"+posts[i]["postID"]).querySelector(".list_comment");
+        for(let j=0; j<posts[i]["comments"].length; j++){
+            li_comment.innerHTML += addComment(posts[i]["comments"][j]);
         }
     }
-    
-    /*
-    if(response.data.loggedIn){
-
-    } else {
-        //window.location.replace("index.php");
-    }
-    */
-
-
-    /*
-    const posts = showPosts(response.data["posts"]);
-    const genres = showGenres(response.data["preferredGenres"]);
-    const paragraph = document.querySelector('#genres');
-    const content = document.querySelector('#content');
-    content.innerHTML = posts;
-    paragraph.innerHTML = genres;
-    */
 });
