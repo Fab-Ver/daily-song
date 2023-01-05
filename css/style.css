@@ -41,6 +41,12 @@
   transform: rotate(180deg);
 }
 
+.like-bar {
+  float: left;
+  width: 20%;
+  margin: 0%;
+}
+
 /*---------------------------------------------*/
 
 body {

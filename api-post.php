@@ -2,7 +2,7 @@
 require("bootstrap.php");
 secure_session_start();
 
-$_SESSION["username"] = "sara-capp";
+//$_SESSION["username"] = "sara-capp";
 $result["username"] = isset($_GET["user"]) ? $_GET["user"] : $_SESSION["username"];
 
 if(isset($_POST["postID"]) && isset($_POST["isLike"]) && isset($_POST["user"])){

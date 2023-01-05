@@ -1,7 +1,7 @@
 <?php
 require("bootstrap.php");
 
-$_SESSION["username"] = "sara-capp";
+//$_SESSION["username"] = "sara-capp";
 $result["username"] = isset($_GET["user"]) ? $_GET["user"] : $_SESSION["username"];
 
 if(isset($_POST["username"]) && isset($_POST["value"])){

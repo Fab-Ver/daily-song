@@ -13,15 +13,15 @@ function showGenres(genresArray){
 
 function showPosts(posts){
     let result = "";
-
-    for(let i of posts){
+    reversePosts = posts.reverse();
+    for(let i of reversePosts){
         let post = `
             <img class="post-image" src="${i["urlImage"]}" alt="" data-target="modal-example-${i["postID"]}" onClick="toggleModal(event)" />
             <dialog id="modal-example-${i["postID"]}">
                 <article>
                     <div class="grid">
                       <div>
-                          <p class="title">${i["title"]}</p>
+                          <p class="title">${i["title"]}${i["prova"]}</p>
                           <a href="#close" aria-label="Close" class="close" data-target="modal-example-${i["postID"]}" onClick="toggleModal(event)"></a>
                       </div>
                     </div>
@@ -29,23 +29,25 @@ function showPosts(posts){
                     <p>${i["description"]}</p>
                     <p><a href="${i["urlSpotify"]}"> Link Spotify</a></p>
                     <img src="${i["urlImage"]}" alt=""/>
-                    <div>
-                      ${i["numLike"]}
-                      <button class="like-button" onclick="updateLike(true, ${i["postID"]}, ${i["sessionUsername"]})">
-                        <img src="upload/like.svg" alt="Like">
-                      </button>
-                      ${i["numDislike"]}
-                      <button class="like-button dislike-button" onclick="updateLike(false, ${i["postID"]}, ${i["sessionUsername"]})">
-                        <img src="upload/like.svg" alt="Dislike">
-                      </button>
-                    </div>
         `;
+          /*<div>
+          ${i["numLike"]}
+          <button class="like-button" onclick="updateLike(true, ${i["postID"]}, ${i["sessionUsername"]})">
+            <img src="upload/like.svg" alt="Like">
+          </button>
+          ${i["numDislike"]}
+          <button class="like-button dislike-button" onclick="updateLike(false, ${i["postID"]}, ${i["sessionUsername"]})">
+            <img src="upload/like.svg" alt="Dislike">
+          </button>
+        </div>*/
+        let likes = showLikes(i["postID"], i["numLike"], i["numDislike"], i["sessionUsername"]);
+
         let songPreview = "";
-        if(i["urlPreview"] != null){
+        if(i["urlPreview"] !== "null"){
           songPreview =  ` 
             <footer>
               <figure>
-              <figcaption class="left-text">Song preview: ${i["urlPreview"]}  </figcaption>
+              <figcaption class="left-text">Song preview: </figcaption>
                 <audio controls src="${i["urlPreview"]}"></a>
               </figure>
             </footer>
@@ -56,6 +58,7 @@ function showPosts(posts){
           </dialog>
         `;
 
+        post += likes;
         post += songPreview;
         post += endOfPost;
 
@@ -64,7 +67,7 @@ function showPosts(posts){
     return result;
 }
 
-function generateLike(isLike, newValue) {
+/*function generateLike(isLike, newValue) {
   if (isLike) {
       return `<p id="like">${newValue}</p>`;
   } else {
@@ -84,7 +87,7 @@ function updateLike(isLike, postID, user){
       document.getElementById("dislike").outerHTML = `<p id="dislike">${response.data["dislikeNum"]})</p>`;
     }
 });
-}
+}*/
 
 axios.get('api-profile.php'+location.search).then(response => {
     console.log(response.data);
