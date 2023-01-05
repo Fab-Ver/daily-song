@@ -169,15 +169,22 @@ article.post_body .profile_post {
   padding: 0%;
 }
 
-article.post_body .profile_post button {
+article.post_body .profile_post a {
   padding: 1% 5%;
   margin: 0%;
   text-align: left;
   background-color: transparent;
-  border: none;
 }
 
-.profile_post button img, .profile_post button label {
+article.post_body .profile_post a:hover {
+  text-decoration: none;
+}
+
+.profile_post a img {
+  border-radius: 20%;
+}
+
+.profile_post a img, .profile_post a label {
   display: inline-block;
   margin: 0%;
   margin-left: 2%;
@@ -234,8 +241,17 @@ section.post_text .dislike {
   transform: rotate(180deg);
 }
 
-section.post_text p.description {
+section.post_text figure {
   clear: both;
+  padding-top: 2%;
+  margin: 0%;
+}
+
+section.post_text figure audio {
+  width: 70%;
+}
+
+section.post_text p.description {
   width: 90%;
   font-size: 60%;
   padding: 2% 0%;
@@ -257,6 +273,9 @@ section.comments {
 
 section.comments textarea {
   height: 80%;
+  max-width: 100%;
+  min-width: 50%;
+  min-height: 80%;
   margin: 0%;
 }
 
@@ -270,7 +289,6 @@ section.comments button {
 
 section.comments p {
   clear: both;
-  display: none;
 }
 
 article.post_body details.show_comments {

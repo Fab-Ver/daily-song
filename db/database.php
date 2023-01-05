@@ -124,9 +124,20 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPostOfDay($day){
-        $query="SELECT * FROM `post` /*WHERE DATE(dateTime) = '$day'*/";
+    public function getPostPreferredGenres($postID){
+        $query = "SELECT tag FROM belongs JOIN genre ON belongs.genreId = genre.genreID WHERE belongs.postID = ?";
         $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $postID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getPostOfDay(string $day){
+        $query="SELECT * FROM `post` WHERE DATE(dateTime) = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $day);
         $stmt->execute();
         $result = $stmt->get_result();
         
@@ -153,8 +164,16 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    function insertPostComment(string $text, string $dateTime, string $username, int $postID) : bool{
+        $query = "INSERT INTO comment (text, dateTime, username, postID) VALUES (?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sssi',$text, $dateTime, $username, $postID);
+        $result=$stmt->execute();
+        return $result;
+    }
+
     public function getPostComments(int $postID){
-        $query = "SELECT text, dateTime, commentUsername FROM comment WHERE postID = ?";
+        $query = "SELECT text, dateTime, username FROM comment WHERE postID = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $postID);
         $stmt->execute();

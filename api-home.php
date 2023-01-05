@@ -3,14 +3,13 @@ require_once 'bootstrap.php';
 secure_session_start();
 
 if (isUserLoggedIn()) {
-    $_SESSION["username"] = "sara-capp";
-    //$result["username"] = isset($_GET["user"]) ? $_GET["user"] : $_SESSION["username"];
 
-    $posts = $dbh->getPostOfDay(date('Y-m-d'));
+    $posts = $dbh->getPostOfDay("2023-01-04");//date('Y-m-d')
     if(!isset($posts) || count($posts) <= 0){
         var_dump("non ci sono post oggi");
     }
-    
+
+    //$posts["sessionUsername"] = $_SESSION["username"];
     $i = 0;
     foreach($posts as $post){
         $time_ago = $dbh->getTimePost($post["postID"]);
@@ -29,15 +28,18 @@ if (isUserLoggedIn()) {
 
         $posts[$i]["profilePicture"] = $dbh->getUserProfile($post["username"])["profilePicture"];
 
-        $posts[$i]["like"] = count($dbh->getReactions($post["postID"]));
+        $posts[$i]["reactions"] = $dbh->getReactions($post["postID"]);
+        $posts[$i]["numLike"] = count(array_filter($posts[$i]["reactions"], function($p) { return $p["likes"]; }));
+        $posts[$i]["numDislike"] = count(array_filter($posts[$i]["reactions"], function($p) { return !$p["likes"]; }));
 
         if($dbh->checkTrack($post["trackID"])){
             $posts[$i]["track"] = $dbh->getTrack($post["trackID"]);
         }
 
+        $posts[$i]["genre"] = $dbh->getPostPreferredGenres($post["postID"]);
+
         $i++;
     }
-    //var_dump($posts);
 
 } else {
     header('Location: index.php');
