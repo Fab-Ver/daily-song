@@ -1,24 +1,16 @@
-function showLikes(postID, numLikes, numDislikes){
+function showLikes(postID, numLike, numDislike){
       let result =`
             <button class="like-button" onclick="updateLike(true, ${postID})">
                 <img src="upload/like.svg" alt="Like">
-                <label class"caption" id="like">${numLikes}</label>
+                <label class"caption" id="like${postID}">${numLike}</label>
             </button>
             <button class="like-button dislike-button" onclick="updateLike(false, ${postID})">
                 <img src="upload/like.svg" alt="Dislike">
-                <label class"caption" id="dislike">${numDislikes}</label>
+                <label class"caption" id="dislike${postID}">${numDislike}</label>
             </button>
           `;
           
       return result;
-  }
-  
-  function generateLike(isLike, newValue) {
-    if (isLike) {
-        return `<p id="like">${newValue}</p>`;
-    } else {
-        return `<p id="dislike">${newValue}</p>`;
-    }
   }
   
   function updateLike(isLike, postID){
@@ -28,8 +20,8 @@ function showLikes(postID, numLikes, numDislikes){
     axios.post('api-post.php', formData).then(response => {
       console.log(response.data);
       if(response.data["updateLike"]){
-        document.getElementById("like").outerHTML = `<label id="like">${response.data["likeNum"]}</label>`;
-        document.getElementById("dislike").outerHTML = `<label id="dislike">${response.data["dislikeNum"]}</label>`;
+        document.getElementById("like"+postID).innerText = response.data["numLike"];
+        document.getElementById("dislike"+postID).innerHTML = response.data["numDislike"];
       }
   });
   }

@@ -4,7 +4,12 @@ secure_session_start();
 
 if (isUserLoggedIn()){
     if(isset($_POST["postID"]) && isset($_POST["isLike"])){
-        $result["updateLike"] = $dbh->insertLike($_POST["postID"], $_SESSION["username"], $_POST["isLike"] ? 1 : 0);
+        $likeValue = Input::validate_boolean($_POST["isLike"]);
+        if($dbh->checkReaction($_POST["postID"], $_SESSION["username"])){
+            $result["updateLike"] = $dbh->updateLike($likeValue, $_POST["postID"], $_SESSION["username"]);
+        } else {
+            $result["updateLike"] = $dbh->insertLike($_POST["postID"], $_SESSION["username"], $likeValue);
+        }
         //aggiorno il numero dei like e dislike del post
         $result["reactions"] = $dbh->getReactions($_POST["postID"]);
         $result["numLike"] = count(array_filter($result["reactions"], function($p) { return $p["likes"]; }));

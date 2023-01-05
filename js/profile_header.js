@@ -21,17 +21,17 @@ function showProfileHeader(result){
                     <label class="header-element">${result["posts"].length}</label>
                     <a class="header-element" href="profile.php">posts</a>
                 </div>
+                ${result["isMyProfile"] ? '' : generateFollowButton(result["canFollow"])}
             </div>
-            ${result["isMyProfile"] ? '' : generateFollowButton(result["canFollow"])}
         </div>
     `;
 }  
 
 function generateFollowButton(canFollow) {
     if (canFollow) {
-        return '<button id="followButton" name="follow" onclick="updateFollowed(true)">Follow</button>';
+        return '<button id="followButton" class="followButton" name="follow" onclick="updateFollowed(true)">Follow</button>';
     } else {
-        return '<button id="followButton" class="secondary" name="unfollow" onclick="updateFollowed(false)">Unfollow</button>';
+        return '<button id="followButton" class="secondary followButton" name="unfollow" onclick="updateFollowed(false)">Unfollow</button>';
     }
 }
 
