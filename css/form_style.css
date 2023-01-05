@@ -33,4 +33,26 @@ header h1{
     height: 40vh;
 }
 
+@media screen and (max-width: 1024px) {
+    #genres_list {
+        overflow-y: scroll;
+        height: 40vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #genres_list {
+        overflow-y: scroll;
+        height: 25vh;
+    }
+}
+
+@media screen and (max-width: 992px) {
+
+    #genres_list {
+        overflow-y: scroll;
+        height: 25vh;
+    }
+  
+}
 
