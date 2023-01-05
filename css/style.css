@@ -25,7 +25,7 @@
 
 .profile-image {
   border-radius: 40%;
-  max-width: 25%;
+  max-width: 20%;
 }
 
 .header-div {
@@ -73,6 +73,11 @@
   display: inline-block;
   width: 5%;
   margin: 0 !important;
+}
+
+.followButton{
+  width: 40%;
+  height: 70%;
 }
 /*---------------------------------------------*/
 
@@ -368,7 +373,7 @@ section.comment_text p {
 
   .profile-image {
     border-radius: 40%;
-    width: 5%;
+    width: 20%;
   }
 
   .menu {
@@ -426,7 +431,7 @@ section.comment_text p {
 
   .profile-image {
     border-radius: 40%;
-    width: 25%;
+    width: 30%;
   }
   .main-div > section h1 {
     display: flex;
@@ -447,7 +452,7 @@ section.comment_text p {
 
   .profile-image {
     border-radius: 40%;
-    width: 45%;
+    width: 30%;
   }
 
   .menu {
