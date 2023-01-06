@@ -422,8 +422,11 @@ section.comment_text p {
     padding-left: 10%;
   }
 
-  .main-div #notification summary {
-    margin-top: 4%;
+  .main-div #notification summary{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
     border: none !important;
   }
 

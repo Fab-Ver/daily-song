@@ -56,7 +56,7 @@ function createGenres(genres){
         let item = `
         <li id="li${element["genreID"]}">
             <label id="label${element["genreID"]}">
-                <input id="${element["genreID"]}"type="checkbox">
+                <input id="${element["genreID"]}"type="checkbox" onclick="getGenre(this.id)">
             ${element["tag"]}
             </label>
         </li> `;

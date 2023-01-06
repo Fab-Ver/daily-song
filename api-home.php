@@ -23,23 +23,32 @@ if (isUserLoggedIn()) {
         if(isset($_POST["day"])){
             $result = $dbh->getPostOfDay($_POST["day"]);
             $today = 0;
+        }else if(isset($_POST["idGenre"])){
+            $result = $dbh->getPostByIdGenre($_POST["idGenre"]);
+            $today = 1;
         }else{
             $result = $dbh->getPostOfDay(date('Y-m-d'));
-            $today = 1;
+            $today = 2;
         }
 
-        if(count($result) <= 0){
+        if(count($result) <= 0 && $today === 0){
             $result["no_post"] = "Any post in " . $_POST["day"];
+        }else if(count($result) <= 0 && $today === 1){
+            $result["no_post"] = "Any post of this genre";
+        }else if(count($result) <= 0 && $today === 2){
+            $result["no_post"] = "Any post today ";
         }else{
             $i = 0;
             foreach($result as $post){
                 $time_ago = $dbh->getTimePost($post["postID"]);
-                $hour = $time_ago["hour"];
-                $minute = $time_ago["minute"];
-                if($today === 1){
-                    $diffHours = date('H') - $hour;
+                if($today === 0){
+                    $result[$i]["time_ago"] = $time_ago["hour"] . ":" . $time_ago["minute"];
+                }else if($today === 1){
+                    $result[$i]["time_ago"] = (string)$time_ago["day"];
+                }else{
+                    $diffHours = date('H') - $time_ago["hour"];
                     if($diffHours <= 0){
-                        $diffMinute = date('i') - $minute;
+                        $diffMinute = date('i') - $time_ago["minute"];
                         if($diffMinute <= 0){
                             $result[$i]["time_ago"] = "now";
                         }else{
@@ -48,8 +57,6 @@ if (isUserLoggedIn()) {
                     }else{
                         $result[$i]["time_ago"] = "$diffHours hours ago";
                     }
-                }else{
-                    $result[$i]["time_ago"] = "$hour : $minute";
                 }
         
                 $result[$i]["profilePicture"] = UPLOAD_DIR.$dbh->getUserProfile($post["username"])["profilePicture"];

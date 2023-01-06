@@ -158,3 +158,11 @@ axios.get("genre.php").then(response => {
     let dropdown = document.getElementById('genres_list');
     dropdown.innerHTML += createGenres(response.data);
 });
+
+function getGenre(idGenre){
+    let formData = new FormData();
+    formData.append("idGenre",idGenre);
+    axios.post("api-home.php",formData).then(response => {
+        listPost(response.data);
+    });
+}

@@ -144,8 +144,18 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getPostByIdGenre(int $idGenre){
+        $query="SELECT * FROM post JOIN belongs ON belongs.genreID = ? WHERE post.postID = belongs.postID";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $idGenre);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function getTimePost(int $postID){
-        $query="SELECT HOUR(dateTime) as hour, MINUTE(dateTime) as minute FROM post WHERE post.postID = ?";
+        $query="SELECT DATE(dateTime) as day, HOUR(dateTime) as hour, MINUTE(dateTime) as minute FROM post WHERE post.postID = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $postID);
         $stmt->execute();
