@@ -275,14 +275,14 @@ section.post_text section button img {
 
 section.post_text p.description {
   width: 90%;
-  font-size: 70%;
+  font-size: 90%;
   padding: 2% 0%;
   margin: 0%;
 }
 
 section.post_text p.time_ago {
   width: 90%;
-  font-size: 60%;
+  font-size: 70%;
   margin: 0%;
 }
 

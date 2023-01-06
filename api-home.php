@@ -22,8 +22,10 @@ if (isUserLoggedIn()) {
     }else{
         if(isset($_POST["day"])){
             $result = $dbh->getPostOfDay($_POST["day"]);
+            $today = 0;
         }else{
             $result = $dbh->getPostOfDay(date('Y-m-d'));
+            $today = 1;
         }
 
         if(count($result) <= 0){
@@ -32,17 +34,22 @@ if (isUserLoggedIn()) {
             $i = 0;
             foreach($result as $post){
                 $time_ago = $dbh->getTimePost($post["postID"]);
-                $diffHours = date('H') - $time_ago["hour_part"];
-                
-                if($diffHours <= 0){
-                    $diffMinute = date('i') - $time_ago["minute_part"];
-                    if($diffMinute <= 0){
-                        $result[$i]["time_ago"] = "now";
+                $hour = $time_ago["hour"];
+                $minute = $time_ago["minute"];
+                if($today === 1){
+                    $diffHours = date('H') - $hour;
+                    if($diffHours <= 0){
+                        $diffMinute = date('i') - $minute;
+                        if($diffMinute <= 0){
+                            $result[$i]["time_ago"] = "now";
+                        }else{
+                            $result[$i]["time_ago"] = "$diffMinute minute ago";
+                        }
                     }else{
-                        $result[$i]["time_ago"] = "$diffMinute minute ago";
+                        $result[$i]["time_ago"] = "$diffHours hours ago";
                     }
                 }else{
-                    $result[$i]["time_ago"] = "$diffHours hours ago";
+                    $result[$i]["time_ago"] = "$hour : $minute";
                 }
         
                 $result[$i]["profilePicture"] = UPLOAD_DIR.$dbh->getUserProfile($post["username"])["profilePicture"];

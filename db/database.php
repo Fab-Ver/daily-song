@@ -145,7 +145,7 @@ class DatabaseHelper{
     }
 
     public function getTimePost(int $postID){
-        $query="SELECT HOUR(dateTime) as hour_part, MINUTE(dateTime) as minute_part FROM post WHERE post.postID = ?";
+        $query="SELECT HOUR(dateTime) as hour, MINUTE(dateTime) as minute FROM post WHERE post.postID = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $postID);
         $stmt->execute();
