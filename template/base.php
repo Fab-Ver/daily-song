@@ -12,21 +12,19 @@
 <body>
     <aside class="menu">
         <nav class="container-fluid">
-            <ul></ul>
+            <ul id="ul_menu"></ul>
         </nav>
     </aside>
     <div class="main-div">
         <section class="grid">
             <h1>Title</h1>
-            <section>
-                <details id="notification" role="list" class="notification">
-                    <summary aria-haspopup="listbox">3 Notification</summary>
-                    <ul id="notification_list" role="listbox">
-                        <li>Text shbyhdbsw hxcbuxusnx uhxhs</p></li>
-                        <li>Text shbyhdbsw hxcbuxusnx uhxhs</li>
-                    </ul>
-                </details>
-            </section>
+            <details id="notification" role="list">
+                <summary aria-haspopup="listbox">3 Notification</summary>
+                <ul id="notification_list" role="listbox">
+                    <li>Text shbyhdbsw hxcbuxusnx uhxhs</li>
+                    <li>Text shbyhdbsw hxcbuxusnx uhxhs</li>
+                </ul>
+            </details>
         </section>
         <main>
             <?php

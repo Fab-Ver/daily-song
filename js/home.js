@@ -1,16 +1,14 @@
 const main = document.querySelector("main");
 main.innerHTML = `
-<div class="selector">
-    <details id="track_genres" role="list" class="track_genres" >
-        <summary aria-haspopup="listbox">Select music genres</summary>
-        <ul id="genres_list" role="listbox">
-            <li>
-                <input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()">
-            </li>
-        </ul>
-    </details>
-    <input type="date" id="date" name="date" onchange="selectDate()">
-</div>
+<details id="track_genres" role="list">
+    <summary aria-haspopup="listbox">Select music genres</summary>
+    <ul id="genres_list" role="listbox">
+        <li>
+            <input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()">
+        </li>
+    </ul>
+</details>
+<input type="date" id="date" name="date" onchange="selectDate()">
 <div id="div_posts"></div>
 `;
 
@@ -22,23 +20,27 @@ function addPost(post) {
                 <img src="${post["profilePicture"]}" alt="profile_image" width="10%" height="10%">
                 <label>${post["username"]}</label>
             </a>
-            <label class="time_ago">${post["time_ago"]}</label>
+            <div class="time_ago">
+                <label>${post["time_ago"]}</label>
+            </div>
         </section>
         <div class="grid">
-            <img src="${post["track"]["urlImage"]}" alt="song_image">
+            <div class="grid">
+                <div class="song_image">
+                    <img src="${post["track"]["urlImage"]}" alt="song_image">
+                </div>
+                <a href="${post["track"]["urlSpotify"]}">Song Link</a>
+            </div>
             <section class="post_text">
                 <hgroup class="song">
                     <h2>${post["track"]["title"]}</h2>
                     <h3><p>Author: ${post["track"]["artists"]} - Album: ${post["track"]["albumName"]} - Genres: ${post["genre"]}</p></h3>
                 </hgroup>
-                <section>
-                    <a href="${post["track"]["urlSpotify"]}">Song Link</a>
+                <section class="grid">
     `;
 
-    let likes = showLikes(post["postID"], post["numLike"], post["numDislike"], post["isMyReaction"], post["myReaction"]);
-
     let songPreview = "";
-    if(post["urlPreview"] !== "null"){
+    if(post["track"]["urlPreview"] !== "null"){
         songPreview =  ` 
             <figure>
                 <audio controls src="${post["track"]["urlPreview"]}">
@@ -46,21 +48,17 @@ function addPost(post) {
         `;
     }
 
-    let article2 = `</section>
+    let likes = `<div>` + showLikes(post["postID"], post["numLike"], post["numDislike"], post["isMyReaction"], post["myReaction"]) + `</div>`;
+
+    let article2 = `
+                </section>
                 <p class="description">${post["description"]}</p>
             </section>
         </div>
-        <section class="comments">
-            <textarea id="textarea${post["postID"]}" name="comment" placeholder="Add comment"></textarea>
-            <button id="button${post["postID"]}" onclick=publishComment(this.id)>Publish</button>
-        </section>
-        <details class="show_comments">
-            <summary aria-haspopup="listbox">Show all comments</summary>
-            <ul role="listbox" class="list_comment"></ul>
-        </details>
+        <div class="div_comment"></div>
     </article>
     `;
-    return article1 + likes + songPreview + article2;
+    return article1 + songPreview + likes + article2;
 }
 
 function addComment(comment) {
@@ -120,9 +118,21 @@ function listPost(data){
         for(let i=0; i<posts.length; i++){
             posts[i]["genre"] = genreList(posts[i]["genre"]);
             div_post.innerHTML += addPost(posts[i]);
-            li_comment = document.getElementById("article"+posts[i]["postID"]).querySelector(".list_comment");
-            for(let j=0; j<posts[i]["comments"].length; j++){
-                li_comment.innerHTML += addComment(posts[i]["comments"][j]);
+            if(posts[i]["activeComments"] === 1){
+                let div_comment = document.getElementById("article"+posts[i]["postID"]).querySelector(".div_comment");
+                div_comment.innerHTML = `
+                    <section class="comments">
+                        <textarea id="textarea${posts[i]["postID"]}" name="comment" placeholder="Add comment"></textarea>
+                        <button id="button${posts[i]["postID"]}" onclick=publishComment(this.id)>Publish</button>
+                    </section>
+                    <details class="show_comments">
+                        <summary aria-haspopup="listbox">Show all comments</summary>
+                        <ul role="listbox" class="list_comment"></ul>
+                    </details>`;
+                li_comment = document.getElementById("article"+posts[i]["postID"]).querySelector(".list_comment");
+                for(let j=0; j<posts[i]["comments"].length; j++){
+                    li_comment.innerHTML += addComment(posts[i]["comments"][j]);
+                }
             }
         }
     }
@@ -131,7 +141,7 @@ function listPost(data){
 let li_comment;
 
 axios.get('api-home.php').then(response => {
-    console.log(response.data);
+    //console.log(response.data);
     listPost(response.data);
 });
 

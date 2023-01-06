@@ -30,7 +30,7 @@ const datiMenu = [{
     "Name": "Logout"
 }]
 
-const ul_menu = document.querySelector("aside").querySelector("nav").querySelector("ul");
+const ul_menu = document.getElementById("ul_menu");
 
 for(let i=0; i<datiMenu.length; i++) {
     const li = `
