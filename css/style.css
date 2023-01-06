@@ -119,9 +119,24 @@ main {
 
 /*-selector genere and date home-----------------------------------*/
 
-main #track_genres{
+main #track_genres {
   float: left;
   width: 50%;
+}
+
+main #track_genres div{
+  grid-template-columns: 70% 30%;
+  grid-gap: 1%;
+}
+
+main #track_genres div input {
+  margin-bottom: 0%;
+}
+
+main #track_genres button {
+  padding-left: 0%;
+  padding-right: 0%;
+  margin-bottom: 0%;
 }
 
 main #date {
@@ -130,7 +145,7 @@ main #date {
 }
 
 main #track_genres ul {
-  width: 120%;
+  width: 150%;
 }
 
 /*-menu bar---------------------------------------*/
@@ -368,6 +383,10 @@ section.comment_text p {
 
   main {
     margin-bottom: 1%;
+  }
+
+  main #track_genres ul {
+    width: 100%;
   }
 
   .profile-image {

@@ -4,7 +4,10 @@ main.innerHTML = `
     <summary aria-haspopup="listbox">Select music genres</summary>
     <ul id="genres_list" role="listbox">
         <li>
-            <input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()">
+            <div class="grid">
+                <input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()">
+                <button id="button_clear" onclick="clearGenres()">clear all</button>
+            <div>
         </li>
     </ul>
 </details>
@@ -154,12 +157,36 @@ function selectDate() {
     });
 }
 
+
 axios.get("genre.php").then(response => {
     let dropdown = document.getElementById('genres_list');
     dropdown.innerHTML += createGenres(response.data);
 });
 
+let genreSelect = Array();
+
+function clearGenres() {
+    genreSelect.forEach(element => {
+        document.getElementById(element).checked = false;
+    });
+    genreSelect = Array();
+    axios.get('api-home.php').then(response => {
+        listPost(response.data);
+    });
+}
+
 function getGenre(idGenre){
+    if(genreSelect.includes(idGenre)){
+        for(let i = 0; i < genreSelect.length; i++){
+            if(genreSelect[i] === idGenre){
+                genreSelect.splice(i, 1);
+            }
+        }
+    }else{
+        genreSelect.push(idGenre);
+    }
+    console.log(genreSelect);
+    //se gli passo piu generi database chiede più and ma tutti distinti
     let formData = new FormData();
     formData.append("idGenre",idGenre);
     axios.post("api-home.php",formData).then(response => {
