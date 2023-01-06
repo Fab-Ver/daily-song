@@ -368,7 +368,12 @@ INSERT INTO `track` (`trackID`, `urlSpotify`, `urlImage`, `urlPreview`, `title`,
 ('3YYnFEXCLNbaWuC0hIEnIS', 'https://open.spotify.com/track/3YYnFEXCLNbaWuC0hIEnIS', 'https://i.scdn.co/image/ab67616d00001e02b2396840a8fba4ef2785c09d', 'https://p.scdn.co/mp3-preview/3dbc675e9926c47802561b0026f882d1822030b1?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Patient Number 9 (feat. Jeff Beck)', 'Ozzy Osbourne,Jeff Beck', 'Patient Number 9'),
 ('5CQ30WqJwcep0pYcV4AMNc', 'https://open.spotify.com/track/5CQ30WqJwcep0pYcV4AMNc', 'https://i.scdn.co/image/ab67616d00001e02c8a11e48c91a982d086afc69', 'https://p.scdn.co/mp3-preview/fc80a280376d5142c888475bd8fdcd00b4fc8d7d?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Stairway to Heaven - Remaster', 'Led Zeppelin', 'Led Zeppelin IV (Deluxe Edition)'),
 ('5USVtbBrftHgHASbNYqtOV', 'https://open.spotify.com/track/5USVtbBrftHgHASbNYqtOV', 'https://i.scdn.co/image/ab67616d00001e022476ca70d888474fdc5f77d9', 'https://p.scdn.co/mp3-preview/1d2b45d7dfd30a83f49dec1e805a2b9fb11268fb?cid=4467e6ad0f484420be8e1546bc0d3a60', 'CRISI DI STATO', 'Fedez', 'CRISI DI STATO'),
-('6Qs4SXO9dwPj5GKvVOv8Ki', 'https://open.spotify.com/track/6Qs4SXO9dwPj5GKvVOv8Ki', 'https://i.scdn.co/image/ab67616d00001e023b52eca47232bedfbb5e9443', 'null', 'Dancing With A Stranger (with Normani)', 'Sam Smith,Normani', 'Dancing With A Stranger (with Normani)');
+('6Qs4SXO9dwPj5GKvVOv8Ki', 'https://open.spotify.com/track/6Qs4SXO9dwPj5GKvVOv8Ki', 'https://i.scdn.co/image/ab67616d00001e023b52eca47232bedfbb5e9443', 'null', 'Dancing With A Stranger (with Normani)', 'Sam Smith,Normani', 'Dancing With A Stranger (with Normani)'),
+('1HNE2PX70ztbEl6MLxrpNL', 'https://open.spotify.com/track/1HNE2PX70ztbEl6MLxrpNL', 'https://i.scdn.co/image/ab67616d00001e029a482180e6a306229bff49dc', 'https://p.scdn.co/mp3-preview/0aec695bf2d68f2c378d8acd640327104a6da336?cid=4467e6ad0f484420be8e1546bc0d3a60', 'In Too Deep', 'Sum 41', 'All Killer, No Filler'),
+('4Ryw3Qv9CpkfX8NaPViEjF', 'https://open.spotify.com/track/4Ryw3Qv9CpkfX8NaPViEjF', 'https://i.scdn.co/image/ab67616d00001e026ac44a996e41a7cfb5fbad3e', 'https://p.scdn.co/mp3-preview/fe23be0aa9ae8daf1085cc6b079afc83a6b50ef8?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Chiodo Fisso', 'Eugenio In Via Di Gioia', 'Tsunami (forse vi ricorderete di noi per canzoni come)'),
+('49gdfYsDIgpP0lAJJnp3E4', 'https://open.spotify.com/track/49gdfYsDIgpP0lAJJnp3E4', 'https://i.scdn.co/image/ab67616d00001e02e0185989102fa989c915910d', 'null', 'lady', 'sangiovanni', 'sangiovanni');
+
+
 
 INSERT INTO `post` (`postID`, `description`, `activeComments`, `dateTime`, `trackID`, `username`) VALUES
 (1, 'Il mio primo post :)', 0, '2023-01-04 21:15:59', '0TI8TP4FitVPoEHPTySx48', 'fabio_veroli'),
@@ -379,7 +384,10 @@ INSERT INTO `post` (`postID`, `description`, `activeComments`, `dateTime`, `trac
 (6, 'Questo è il mio primo post !!!', 1, '2023-01-04 21:33:32', '5USVtbBrftHgHASbNYqtOV', 'sara-capp'),
 (7, 'Questo è un brano pop...', 1, '2023-01-03 21:35:47', '6Qs4SXO9dwPj5GKvVOv8Ki', 'sara-capp'),
 (8, 'Che bella canzone !!!', 0, '2023-01-02 21:38:44', '2svcZXmmAYPo1JKr7KFbK7', 'sara-capp'),
-(9, 'Questa canzone mi piace molto ! Ascoltatela tutti.', 1, '2023-01-01 21:40:31', '08Hacl2rWl6GD6TKUyaKIy', 'sara-capp');
+(9, 'Questa canzone mi piace molto ! Ascoltatela tutti.', 1, '2023-01-01 21:40:31', '08Hacl2rWl6GD6TKUyaKIy', 'sara-capp'),
+(10, 'Questa è la prima prova !!', 1, '2023-01-06 10:00:33', '1HNE2PX70ztbEl6MLxrpNL', 'luca_bigo'),
+(11, 'Prova la mia numero 2', 0, '2023-01-02 21:00:44', '4Ryw3Qv9CpkfX8NaPViEjF', 'luca_bigo'),
+(12, 'Odio questa canzone!!', 0, '2023-01-06 10:00:34', '49gdfYsDIgpP0lAJJnp3E4', 'luca_bigo');
 
 INSERT INTO `belongs` (`genreID`, `postID`) VALUES
 (42, 3),
@@ -399,5 +407,12 @@ INSERT INTO `belongs` (`genreID`, `postID`) VALUES
 (80, 9),
 (103, 1),
 (103, 2),
-(103, 3);
+(103, 3),
+(3, 11),
+(4, 11),
+(18, 10),
+(22, 10),
+(35, 10),
+(41, 12),
+(72, 12);
 
