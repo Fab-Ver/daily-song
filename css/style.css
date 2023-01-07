@@ -226,6 +226,11 @@ label[for="comments"]{
   text-align: center;
 }
 
+#delete_account_button {
+  color : #b71c1c !important;
+  border-color: #b71c1c !important;;
+}
+
 /*-article_post--------------------------------------------*/
 
 article.post_body{
