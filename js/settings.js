@@ -44,6 +44,26 @@ function createNotificationsForm(){
     return notification;
 }
 
+function createLogoutDelete(){
+    let result = `
+        <article class="grid">
+            <button class="contrast" onclick="logout()">Logout</button>
+            <button id="delete_account_button" data-target="delete_account_modal" onclick="toggleModal(event)" class="contrast outline">Delete your account</button>
+            <dialog id="delete_account_modal">
+                <article>
+                    <a href="#" aria-label="Close" class="close" data-target="delete_account_modal" onClick="toggleModal(event)"></a>
+                    <h3>Confirm your action</h3>
+                    <p>Are you sure you want to permanently delete your account?</p>
+                    <footer>
+                        <a href="#" role="button" class="secondary" data-target="delete_account_modal" onClick="toggleModal(event)">Cancel</a>
+                        <a href="delete_account.php" role="button">Confirm</a>
+                    </footer>
+                </article>
+                </dialog>
+        </article>`;
+    return result;
+}
+
 function submitNotificationForm(){
     let formData = new FormData();
     formData.append('posts',document.getElementById('post_notification').checked);
@@ -69,10 +89,7 @@ function deselectAllNotification(){
     document.querySelectorAll('#notifications_form input[type="checkbox"]').forEach(element => element.checked = false);
 }
 
-function createLogoutDelete(){
-    let result = `
-        <article class="grid">
-            <a href="./logout.php" role="button" class="contrast">Logout</a>
-        </article>`;
-    return result;
+function logout(){
+    window.location.replace("logout.php");
 }
+

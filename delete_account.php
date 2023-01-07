@@ -1,10 +1,11 @@
 <?php
-require_once('bootstrap.php');
+require_once 'bootstrap.php';
 secure_session_start();
 
 if(isUserLoggedIn()){
-    /*Delete the user token*/
-    $dbh->deleteUserToken($_SESSION['username']);
+    $username = Input::filter_string($_SESSION['username']);
+    /**Delete user from database */
+    $dbh->deleteUser($username);
 
     /*Delete session variables*/
     unset($_SESSION['username'], $_SESSION['email'], $_SESSION['login_string']);
@@ -23,5 +24,6 @@ if(isUserLoggedIn()){
     session_destroy();
 }
 
-header('Location: ./index.php');
+header('Location: index.php');
+
 ?>
