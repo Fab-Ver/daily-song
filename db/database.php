@@ -106,8 +106,8 @@ class DatabaseHelper{
         $stmt->execute();
     }
 
-    public function getUserProfile($username){
-        $query = "SELECT firstName, lastName, profilePicture FROM profile WHERE username = ?";
+    public function getUserProfile(string $username){
+        $query = "SELECT username, firstName, lastName, profilePicture, telephone FROM profile WHERE username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();
@@ -435,6 +435,14 @@ class DatabaseHelper{
         $stmt->bind_param('s', $username);
         return $stmt->execute();
     } 
+
+    function updateUserData(string $first_name, string $last_name, string $telephone, string $username, string $profile_picture,string $current_username) : bool{
+        $query = "UPDATE profile SET firstName = ?, lastName = ?, telephone = ?, username = ?, profilePicture = ? WHERE username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ssssss', $first_name, $last_name, $telephone, $username, $profile_picture,$current_username);
+        $result = $stmt->execute();
+        return $result;
+    }
     
 }
 ?>
