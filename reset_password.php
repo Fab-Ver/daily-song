@@ -68,6 +68,33 @@ if(!isUserLoggedIn()){
         require 'template/empty-base.php';
     }
 } else {
-    header('Location: homepage.php');
+    if(isset($_POST['password'], $_POST['confirmPassword'])) {
+        $result['errorMsg'] = "";
+        $password = Input::filter_string($_POST['password']);
+        $confirmPassword = Input::filter_string($_POST['confirmPassword']);
+        $email = Input::filter_string($_SESSION['email']);
+        $username = Input::filter_string($_SESSION['username']);
+        [$secure,$errorPassword] = Input::is_secure_password($password);
+        if($secure){
+            if(strcmp($password,$confirmPassword) === 0){
+                $hash_password = password_hash($password,PASSWORD_DEFAULT);
+                if($dbh->resetPassword($email,$hash_password)){
+                    $user = $dbh->findUserByUsername($username)[0];
+                    registerLoggedUser($user['username'],$user['email'],$user['passwordHash']);
+                } else {
+                    $result['errorMsg'] = UNDEFINED;
+                } 
+            } else {
+                $result['errorMsg'] = PASSWORD_MISMATCH;
+            }
+        } else {
+            $result['errorMsg'] = $errorPassword;
+        }
+        header('Content-Type: application/json');
+        echo json_encode($result);
+    } else {
+        $templateParams['js'] = array("https://unpkg.com/axios/dist/axios.min.js","utils/functions.js","js/reset_password.js");
+        require 'template/empty-base.php';
+    }
 }
 ?>
