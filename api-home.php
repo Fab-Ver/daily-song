@@ -70,7 +70,7 @@ if (isUserLoggedIn()) {
                 $result[$i]["numDislike"] = count(array_filter($result[$i]["reactions"], function($p) { return !$p["likes"]; }));
         
                 if($dbh->checkTrack($post["trackID"])){
-                    $result[$i]["track"] = $dbh->getTrack($post["trackID"]);
+                    $result[$i]["track"] = $dbh->getTrack($post["trackID"])[0];
                 }
         
                 $result[$i]["genre"] = $dbh->getPostPreferredGenres($post["postID"]);
