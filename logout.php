@@ -7,7 +7,7 @@ if(isUserLoggedIn()){
     $dbh->deleteUserToken($_SESSION['username']);
 
     /*Delete session variables*/
-    unset($_SESSION['username'], $_SESSION['email']);
+    unset($_SESSION['username'], $_SESSION['email'], $_SESSION['login_string']);
 
     /*Remove the remember_me cookie*/
     if(isset($_COOKIE['remember_me'])){
