@@ -40,7 +40,7 @@ function checkResetPassword(){
     }
 
     if(confirm_password.validity.valueMissing || confirm_password.getAttribute('aria-invalid') === 'true'){
-        errors.push("Confirm invalid/password missing or password mismatch");
+        errors.push("Confirm password does not match the specified password");
         err_element.push(confirm_password);
     }
 
