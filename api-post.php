@@ -10,7 +10,7 @@ if(isUserLoggedIn()) {
                 $result["updateLike"] = $dbh->removeLike($_POST["postID"], $_SESSION["username"]);
                 $result["isMyReaction"] = false;
             } else {
-                $result["updateLike"] = $dbh->updateLike($_POST["postID"], $_SESSION["username"], $likeValue);
+                $result["updateLike"] = $dbh->updateLike($likeValue, $_POST["postID"], $_SESSION["username"]);
                 $result["isMyReaction"] = true;
             }
         } else {

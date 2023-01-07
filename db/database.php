@@ -390,20 +390,18 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    function updateLike(int $postID, string $username, bool $likes){
-        $likes = (int)$likes;
-        $query = "UPDATE reaction SET likes = ? WHERE postID = ? AND username = ?";
+    function updateLike(int $likeValue, int $postID, string $username){
+        $query = "UPDATE reaction SET likeValue = ? WHERE postID = ? AND username = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('iis', $likes, $postID, $username);
+        $stmt->bind_param('iis', $likeValue, $postID, $username);
         $result = $stmt->execute();
         return $result;
     }
 
-    function insertLike(int $postID, string $username, bool $likes){
-        $likes = (int)$likes;
-        $query = "INSERT INTO reaction (postID, username, likes) VALUES (?, ?, ?)";
+    function insertLike(int $postID, string $username, int $likeValue){
+        $query = "INSERT INTO reaction (postID, username, likeValue) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('isi', $postID, $username, $likes);
+        $stmt->bind_param('isi', $postID, $username, $likeValue);
         $result = $stmt->execute();
         return $result;
     }
