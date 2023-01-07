@@ -34,4 +34,3 @@ if(isset($_POST["username"]) && isset($_POST["value"])){
 
 header("Content-Type: application/json");
 echo json_encode($result);
-?>

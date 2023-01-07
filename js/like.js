@@ -2,7 +2,7 @@ function showLikes(postID, numLike, numDislike, isMyReaction, myReaction){
 	let likeImg = "";
 	let dislikeImg = "";
 	if(isMyReaction){
-		if(myReaction){
+		if(myReaction == 1){
 			likeImg = `<img id="like-img${postID}" src="upload/like.svg" alt="Like">`;
 			dislikeImg = `<img id="dislike-img${postID}" src="upload/unused-like.svg" alt="Dislike">`;
 		} else {
