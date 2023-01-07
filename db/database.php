@@ -36,12 +36,36 @@ class DatabaseHelper{
         return $stmt->execute();
     }
 
-    public function insertSettings(string $username, string $notification){
-        $not = (int) $notification;
-        $query = "INSERT INTO settings (username,postNotification,commentNotification,followerNotification) VALUES (?, ?, ?, ?)";
+    public function insertSettings(string $username, bool $post, bool $comment, bool $follower, bool $account) : bool{
+        $post = (int) $post;
+        $comment = (int) $comment;
+        $follower = (int) $follower;
+        $account = (int) $account;
+        $query = "INSERT INTO settings (username,postNotification,commentNotification,followerNotification,accountNotification) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('siii',$username, $not, $not, $not);
+        $stmt->bind_param('siiii',$username, $post,$comment,$follower,$account);
+        return $stmt->execute();
+    }
+
+    public function getSettingsByUsername(string $username) {
+        $query = "SELECT postNotification,commentNotification,followerNotification,accountNotification FROM settings WHERE username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
         $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function updateSettings(string $username, bool $post, bool $comment, bool $follower, bool $account) : bool{
+        $post = (int) $post;
+        $comment = (int) $comment;
+        $follower = (int) $follower;
+        $account = (int) $account;
+        $query = "UPDATE settings SET postNotification = ?,commentNotification = ?,followerNotification = ?,accountNotification = ? WHERE username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iiiis',$post,$comment,$follower,$account,$username);
+        return $stmt->execute();
     }
 
     public function insertFavoriteGenres($username,$genresIDs){
@@ -226,7 +250,7 @@ class DatabaseHelper{
         $stmt->execute();
         $result = $stmt->get_result();
         
-        return $result->fetch_all(MYSQLI_ASSOC)[0];
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     function insertTrack(string $trackID, string $urlSpotify, string $urlImage, string $urlPreview, string $title, string $artists, string $albumName) : bool{

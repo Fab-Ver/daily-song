@@ -86,6 +86,7 @@ create table settings (
      postNotification boolean not null,
      commentNotification boolean not null,
      followerNotification boolean not null,
+     accountNotification boolean not null,
      constraint FKset_ID primary key (username));
 
 create table profile (

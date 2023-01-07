@@ -87,7 +87,10 @@ body {
 
 main {
   padding: 1% !important;
-  margin-bottom: 12%;
+}
+
+.main-div {
+  padding-bottom: 16%;
 }
 
 .main-div > section h1 {
@@ -133,7 +136,7 @@ main #track_genres div input {
   margin-bottom: 0%;
 }
 
-main #track_genres button {
+main #track_genres button, main button.go_top {
   padding-left: 0%;
   padding-right: 0%;
   margin-bottom: 0%;
@@ -146,6 +149,17 @@ main #date {
 
 main #track_genres ul {
   width: 150%;
+}
+
+main #button_top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main button.go_top {
+  display: none;
+  width: 20%;
 }
 
 /*-menu bar---------------------------------------*/
@@ -195,6 +209,21 @@ label[for="comments"]{
 #new_post_form #genres_list {
   overflow-y: scroll;
   height: 50vh;
+}
+
+#save_notification_button {
+  width: 50%;
+  float: right;
+}
+
+#notifications_form {
+  overflow: hidden;
+}
+
+#deselect_notification{
+  width: 35%;
+  float: left;
+  text-align: center;
 }
 
 /*-article_post--------------------------------------------*/
@@ -381,8 +410,8 @@ section.comment_text p {
 
 @media screen and (min-width: 768px) {
 
-  main {
-    margin-bottom: 1%;
+  .main-div {
+    padding-bottom: 1%;
   }
 
   main #track_genres ul {
