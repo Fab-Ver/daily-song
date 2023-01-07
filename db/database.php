@@ -135,7 +135,7 @@ class DatabaseHelper{
     }
 
     public function getPostOfDay(string $day){
-        $query="SELECT * FROM `post` WHERE DATE(dateTime) = ?";
+        $query="SELECT * FROM post WHERE DATE(dateTime) = ? ORDER BY postID DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $day);
         $stmt->execute();
