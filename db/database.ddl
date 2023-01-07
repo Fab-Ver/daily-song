@@ -120,7 +120,8 @@ create table reaction (
 alter table comment add constraint FKwrite
      foreign key (username)
      references profile (username)
-     ON DELETE CASCADE;
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
 
 alter table comment add constraint FKhas
      foreign key (postID)
@@ -130,17 +131,20 @@ alter table comment add constraint FKhas
 alter table password_reset add constraint FKrequest_FK
      foreign key (email)
      references profile (email)
-     ON DELETE CASCADE;
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
 
 alter table friend add constraint FKfollower
      foreign key (follower)
      references profile (username)
-     ON DELETE CASCADE;
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
 
 alter table friend add constraint FKfollowed
      foreign key (followed)
      references profile (username)
-     ON DELETE CASCADE;
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
 
 alter table belongs add constraint FKbel_pos
      foreign key (postID)
@@ -155,12 +159,14 @@ alter table belongs add constraint FKbel_gen
 alter table login_attempts add constraint FKmake
      foreign key (username)
      references profile (username)
-     ON DELETE CASCADE;
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
 
 alter table notification add constraint FKreceives
      foreign key (username)
      references profile (username)
-     ON DELETE CASCADE;
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
 
 alter table post add constraint FKrefers
      foreign key (trackID)
@@ -170,12 +176,14 @@ alter table post add constraint FKrefers
 alter table post add constraint FKpublish
      foreign key (username)
      references profile (username)
-     ON DELETE CASCADE;
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
 
 alter table prefers add constraint FKpre_use
      foreign key (username)
      references profile (username)
-     ON DELETE CASCADE;
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
 
 alter table prefers add constraint FKpre_gen
      foreign key (genreID)
@@ -185,17 +193,20 @@ alter table prefers add constraint FKpre_gen
 alter table settings add constraint FKset_FK
      foreign key (username)
      references profile (username)
-     ON DELETE CASCADE;
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
 
 alter table user_tokens add constraint FKhave_FK
      foreign key (username)
      references profile (username)
-     ON DELETE CASCADE;
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
 
 alter table reaction add constraint FKmake_reaction_FK
      foreign key (username)
      references profile (username)
-     ON DELETE CASCADE;
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
 
 alter table reaction add constraint FKhas_reaction
      foreign key (postID)
