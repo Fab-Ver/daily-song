@@ -391,7 +391,7 @@ class DatabaseHelper{
     }
 
     function updateLike(int $likeValue, int $postID, string $username){
-        $query = "UPDATE reaction SET likeValue = ? WHERE postID = ? AND username = ?";
+        $query = "UPDATE reaction SET likes = ? WHERE postID = ? AND username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('iis', $likeValue, $postID, $username);
         $result = $stmt->execute();
@@ -399,7 +399,7 @@ class DatabaseHelper{
     }
 
     function insertLike(int $postID, string $username, int $likeValue){
-        $query = "INSERT INTO reaction (postID, username, likeValue) VALUES (?, ?, ?)";
+        $query = "INSERT INTO reaction (postID, username, likes) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('isi', $postID, $username, $likeValue);
         $result = $stmt->execute();
