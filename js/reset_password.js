@@ -27,48 +27,6 @@ function createResetPasswordForm(){
     return reset;
 }
 
-function checkPassword(){
-    let password = document.getElementById('password');
-    let confirm_password = document.getElementById('confirm_password');
-    let regex =  /^(?=.*[0-9])(?=.*[\'^£$%&*()}{@#~?><>,|=_+¬-])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9\'^£$%&*()}{@#~?><>,|=_+¬-]{8,30}$/
-    if(!password.validity.valueMissing){
-        if(!password.value.match(regex)){
-            showError(password,"Wrong password format, should contain at least:\n- one digit\n- one upper case\n- one lower case\n- one special character \'^£$%&*()}{@#~?><>,|=_+¬-\nMin length: 8\nMax length: 30 ");
-            setValid(password,false);
-        } else {
-            if(!confirm_password.validity.valueMissing){
-                if(password.value != confirm_password.value){
-                    showError(password,"The passwords don't match");
-                    setValid(password,false);
-                } else {
-                    setValid(password,true);
-                }
-            } else {
-                setValid(password,true);
-            }
-        }
-    } else {
-        password.removeAttribute("aria-invalid");
-    }
-}
-
-function checkConfirmPassword(){
-    let password = document.getElementById('password');
-    let confirm_password = document.getElementById('confirm_password');
-    if(!confirm_password.validity.valueMissing){
-        if(!password.validity.valueMissing){
-            if(password.value != confirm_password.value){
-                showError(confirm_password,"The passwords don't match");
-                setValid(confirm_password,false);
-            } else {
-                setValid(confirm_password,true);
-            }
-        }
-    } else {
-        confirm_password.removeAttribute("aria-invalid");
-    }
-}
-
 function checkResetPassword(){
     let password = document.getElementById('password');
     let confirm_password = document.getElementById('confirm_password');
