@@ -117,7 +117,7 @@ function listPost(data){
             </article>
         `;
     }else{
-        let posts = data;
+        let posts = data.reverse();
         for(let i=0; i<posts.length; i++){
             posts[i]["genre"] = genreList(posts[i]["genre"]);
             div_post.innerHTML += addPost(posts[i]);
@@ -144,7 +144,7 @@ function listPost(data){
 let li_comment;
 
 axios.get('api-home.php').then(response => {
-    //console.log(response.data);
+    console.log(response.data);
     listPost(response.data);
 });
 
@@ -154,6 +154,7 @@ function selectDate() {
     formData.append("day",day);
     axios.post("api-home.php",formData).then(response => {
         listPost(response.data);
+        console.log(response.data);
     });
 }
 
@@ -163,20 +164,20 @@ axios.get("genre.php").then(response => {
     dropdown.innerHTML += createGenres(response.data);
 });
 
-let genreSelect = Array();
+//let genreSelect = new Array();
 
 function clearGenres() {
-    genreSelect.forEach(element => {
+    /*genreSelect.forEach(element => {
         document.getElementById(element).checked = false;
     });
     genreSelect = Array();
     axios.get('api-home.php').then(response => {
         listPost(response.data);
-    });
+    });*/
 }
 
 function getGenre(idGenre){
-    if(genreSelect.includes(idGenre)){
+    /*if(genreSelect.includes(idGenre)){
         for(let i = 0; i < genreSelect.length; i++){
             if(genreSelect[i] === idGenre){
                 genreSelect.splice(i, 1);
@@ -187,9 +188,15 @@ function getGenre(idGenre){
     }
     console.log(genreSelect);
     //se gli passo piu generi database chiede più and ma tutti distinti
+    */
     let formData = new FormData();
     formData.append("idGenre",idGenre);
+    /*for(let i=0; i<genreSelect.length; i++){
+        formData.append(i,genreSelect[i]);
+    }*/
     axios.post("api-home.php",formData).then(response => {
         listPost(response.data);
+        console.log(response.data);
     });
+    document.getElementById(idGenre).checked = false;
 }
