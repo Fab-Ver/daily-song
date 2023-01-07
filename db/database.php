@@ -373,7 +373,7 @@ class DatabaseHelper{
     }
 
     function getGenresByID(int $genreID){
-        $query = "SELECT genreID,tag FROM genre WHERE genreID = ?";
+        $query = "SELECT genreID, tag FROM genre WHERE genreID = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $genreID);
         $stmt->execute();
@@ -412,6 +412,14 @@ class DatabaseHelper{
         $stmt->bind_param('is', $postID, $username);
         $result = $stmt->execute();
         return $result;
+    }
+
+    function getAllUsernames(){
+        $query = "SELECT username FROM profile";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
     
 }
