@@ -77,6 +77,13 @@ class DatabaseHelper{
         }   
     }
 
+    public function removeAllFavoriteGenres(string $username){
+        $query = "DELETE FROM prefers WHERE username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+    }
+
     function isUserActive(string $username) : bool{
         $now = time();
         $valid_attempts = $now - (3*60*60);
@@ -130,7 +137,7 @@ class DatabaseHelper{
     }
 
     public function getUserPreferredGenres($username){
-        $query = "SELECT tag FROM prefers JOIN genre ON prefers.genreId = genre.genreID WHERE username = ?";
+        $query = "SELECT prefers.genreID,tag FROM prefers JOIN genre ON prefers.genreID = genre.genreID WHERE username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();
