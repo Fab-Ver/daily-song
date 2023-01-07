@@ -44,7 +44,7 @@ function updateLike(likeValue, postID){
 
 function updateLikeImg(isMyReaction, likeValue, postID){
 	if(isMyReaction){
-		if(likeValue){
+		if(likeValue == 1){
 			document.getElementById("like-img"+postID).src = `upload/like.svg`;
 			document.getElementById("dislike-img"+postID).src = `upload/unused-like.svg`;
 		} else {

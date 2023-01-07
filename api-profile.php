@@ -25,7 +25,7 @@ if(isset($_POST["username"]) && isset($_POST["value"])){
         $post["reactions"] = $dbh->getReactions($post["postID"]);
         $post["isMyReaction"] = count($dbh->checkReaction($post["postID"], $_SESSION["username"]));
         if($post["isMyReaction"]){
-            $post["myReaction"] = $dbh->checkReaction($post["postID"], $_SESSION["username"]);
+            $post["myReaction"] = $dbh->checkReaction($post["postID"], $_SESSION["username"])[0]["likes"];
         }
         $post["numLike"] = count(array_filter($post["reactions"], function($p) { return $p["likes"]; }));
         $post["numDislike"] = count(array_filter($post["reactions"], function($p) { return !$p["likes"]; }));
