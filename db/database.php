@@ -413,6 +413,13 @@ class DatabaseHelper{
         $result = $stmt->execute();
         return $result;
     }
+
+    function deleteUser(string $username){
+        $query = "DELETE FROM profile WHERE username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $username);
+        return $stmt->execute();
+    }
     
 }
 ?>
