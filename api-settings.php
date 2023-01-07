@@ -35,6 +35,8 @@ if(isUserLoggedIn()){
             $result['settings'] = array(true,true,true,true);
         }
         $result['favoriteGenres'] = $dbh->getUserPreferredGenres($username);
+        $result['accountData'] = $dbh->getUserProfile($username);
+        $result['accountData']['profilePicture'] = UPLOAD_DIR.$result['accountData']['profilePicture'];
 
     } else if(isset($_POST['favoriteGenres'])){
         $genresIDs = json_decode($_POST['favoriteGenres']);
@@ -57,7 +59,90 @@ if(isUserLoggedIn()){
         } else {
             $result['errorMsg'] = 'While processing your data the following errors occurred: '.'<ul>'. $result['errorMsg'].'<ul>';
         }
-    } else {
+    } else if(isset($_POST['checkUsername'])){
+        $username = Input::filter_string($_POST['checkUsername']);
+        if(!empty($username)){
+            if($username !== Input::filter_string($_SESSION['username'])){
+                if(count($dbh->findUserByUsername($username)) != 0){
+                    $result['errorMsg'] = USERNAME_IN_USE;
+                }
+            }
+        } else {
+            $result['errorMsg'] = USERNAME_REQUIRED;
+        }
+    } else if (isset($_POST['first_name'],$_POST['last_name'],$_POST['telephone'],$_POST['username'])){
+        $result['errorElem'] = array();
+        $first_name = Input::filter_string($_POST['first_name']);
+        $last_name = Input::filter_string($_POST['last_name']);
+        $telephone = filter_var($_POST['telephone'], FILTER_SANITIZE_NUMBER_INT);
+        $username = Input::filter_string($_POST['username']);
+        $current_username = Input::filter_string($_SESSION['username']);
+
+        /**
+         * Check for first name validity
+         */
+        if(!Input::validate_name($first_name)){
+            $result['errorMsg'] .= '<li>'."First".NAME.'</li>';
+            array_push($result['errorElem'],'first_name');
+        }
+
+        /**
+         * Check for last name validity
+         */
+        if(!Input::validate_name($last_name)){
+            $result['errorMsg'] .= '<li>'."Last".NAME.'</li>';
+            array_push($result['errorElem'],'last_name');
+        }
+
+        /**
+         * Check for telephone validity
+         */
+        if(!empty($telephone) && !Input::validate_phone_number($telephone)){
+            $result['errorMsg'] .= '<li>'.INVALID_TELEPHONE.'</li>';
+            array_push($result['errorElem'],'telephone');
+        }
+
+        /**
+         * Check for username validity
+        */
+        if(!empty($username)){
+            if(count($dbh->findUserByUsername($username)) != 0){
+                $result['errorMsg'] .= '<li>'.USERNAME_IN_USE.'</li>';
+                array_push($result['errorElem'],'username');
+            }
+        } else {
+            $result['errorMsg'] .= '<li>'.USERNAME_REQUIRED.'</li>';
+            array_push($result['errorElem'],'username');
+        }
+
+        /**
+         * Check for profile picture validity.
+         */
+        $profile_picture = "";
+        if(isset($_FILES['profile_picture'])){
+            [$response,$msg] = uploadImage(UPLOAD_DIR,$_FILES['profile_picture']);
+            if(!$response){
+                $result['errorMsg'] .= '<li>'.$msg.'</li>';
+                array_push($result['errorElem'],'profile_picture');
+            } else {
+                $profile_picture = $msg;
+            }
+        } else {
+            $profile_picture = 'default.png';
+        }
+
+        if(empty($result['errorMsg'])){
+            if($dbh->updateUserData($first_name,$last_name,$telephone,$username,$profile_picture,$current_username)){
+                $user = $dbh->findUserByUsername($username)[0];
+                registerLoggedUser($user['username'],$user['email'],$user['passwordHash']);
+                $result['updated'] = true;
+            } else {
+                $result['errorMsg'] = UNDEFINED;
+            }
+        } else {
+            $result['errorMsg'] = 'While processing your data the following errors occurred: '.'<ul>'. $result['errorMsg'].'<ul>';
+        } 
+    }else{
         $result['errorMsg'] = 'Bad Request';
     }
 
