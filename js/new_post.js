@@ -25,7 +25,7 @@ function createNewPostForm(){
             </label>
             <label for="track_genres">
                         Select track music genres (max 3):
-                        <details id="track_genres" role="list">
+                        <details id="post_genres" role="list">
                             <summary aria-haspopup="listbox">Track music genres...</summary>
                             <ul id="genres_list" role="listbox">
                                 <li><input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></li>
