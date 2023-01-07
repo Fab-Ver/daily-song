@@ -1,15 +1,57 @@
 
-const main = document.querySelector('main');
-main.innerHTML = createNotificationsForm();
-main.innerHTML += createLogoutDelete();
-axios.get('api-settings.php?settings=get').then(response => {
-    if(response.data.settings){
-        let checkboxes = document.querySelectorAll('#notifications_form input[type="checkbox"]');
-        response.data.settings.forEach((element,index) => {
-            checkboxes[index].checked = element;
-        });
-    }
+window.addEventListener('load', function(){
+    const main = document.querySelector('main');
+    main.innerHTML = createFavoriteGenresForm();
+    main.innerHTML += createNotificationsForm();
+    main.innerHTML += createLogoutDelete(); 
+    axios.get("genre.php?genre=get").then(response => {
+        let dropdown = document.getElementById('genres_list');
+        if(response.data.length !== undefined){
+            dropdown.innerHTML += createGenres(response.data);
+        } else {
+            dropdown.innerHTML += `<li>No genres available</li>`
+        }
+        showUserSettings();
+    });
 });
+
+function showUserSettings(){
+    axios.get('api-settings.php?settings=get').then(response => {
+        if(response.data.settings !== undefined && response.data.favoriteGenres !== undefined){
+            let checkboxes = document.querySelectorAll('#notifications_form input[type="checkbox"]');
+            response.data.settings.forEach((element,index) => {
+                checkboxes[index].checked = element;
+            });
+            showFavoriteGenres(response.data.favoriteGenres);
+        }
+    });
+}
+
+function createFavoriteGenresForm(){
+    let genres_form = `
+        <article id ="profile_settings">
+            <hgroup>
+                <h1>Profile</h1>
+                <h2>Change your favorite music genres</h2>
+            </hgroup>
+            Your favorite genres:
+            <ul id="current_favorite_genres"></ul>
+            <div id="error_profile" class="error_form" tabindex="-1" hidden></div>
+            <label for="favorite_genre">
+                Select favorite music genres (max 5):
+                <details id="favorite_genre" role="list">
+                    <summary aria-haspopup="listbox">Favorite music genres...</summary>
+                    <ul id="genres_list" role="listbox" title="List of music genres">
+                        <li><button class="contrast outline" onclick="clearAllGenres()">Clear All</button></li>
+                        <li><input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></li>
+                    </ul>
+                </details>
+            </label>
+            <div><button id="save_profile_button" name="save_profile_settings" onclick="updateFavoriteGenres()">Save</input></div>
+        </article>
+    `;
+    return genres_form;
+}
 
 function createNotificationsForm(){
     let notification = `
@@ -85,11 +127,54 @@ function submitNotificationForm(){
     });
 }
 
+function updateFavoriteGenres(){
+    let error_div = document.getElementById('error_profile');
+    if(!checkGenres(0,5)){
+        error_div.innerHTML = "Wrong number of selected genresID, please select between 1 and 5 genres";
+        error_div.removeAttribute('hidden');
+        error_div.focus();
+    } else {
+        let formData = new FormData();
+        formData.append('favoriteGenres',JSON.stringify(getGenresID()));
+        axios.post('api-settings.php',formData).then(response => {
+            if(response.data.errorMsg !== ""){
+                error_div.innerHTML = response.data.errorMsg;
+                error_div.removeAttribute('hidden');
+                error_div.focus();
+            } else if (response.data.updated === true){
+                error_div.innerHTML = "Favorite genres have been updated successfully";
+                error_div.removeAttribute('hidden');
+                error_div.style.setProperty("border-color", "#2e7d32", "important");
+                error_div.focus();
+                showUserSettings();
+            }
+        });
+    }
+}
+
 function deselectAllNotification(){
     document.querySelectorAll('#notifications_form input[type="checkbox"]').forEach(element => element.checked = false);
 }
 
 function logout(){
     window.location.replace("logout.php");
+}
+
+function clearAllGenres(){
+    let checkboxes = document.querySelectorAll('#genres_list input[type="checkbox"]');
+    let search = document.getElementById('search');
+    search.value = '';
+    filterGenre();
+    checkboxes.forEach(element => element.checked = false);
+}
+
+function showFavoriteGenres(genres){
+    let genres_list = document.getElementById('current_favorite_genres');
+    genres_list.innerHTML = '';
+    genres.forEach(element => {
+        let tag = `<li>${element['tag']}</li>`;
+        genres_list.innerHTML += tag;
+        document.getElementById(element['genreID']).checked = true;
+    });
 }
 
