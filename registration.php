@@ -147,7 +147,7 @@ if(!isUserLoggedIn()){
         if(empty($result['errorMsg'])){
             $hash = password_hash($password,PASSWORD_DEFAULT);
             if($dbh->insertUser($email,$first_name,$last_name,$birth_date,$telephone,$username,$hash,$profile_picture)){
-                $dbh->insertSettings($username,$notification);
+                $dbh->insertSettings($username,$notification,$notification,$notification,$notification);
                 $dbh->insertFavoriteGenres($username,$genresIDs);
                 registerLoggedUser($username,$email,$hash);
                 $result['loggedIn'] = true;
