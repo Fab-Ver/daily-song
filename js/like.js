@@ -28,25 +28,32 @@ function showLikes(postID, numLike, numDislike, isMyReaction, myReaction){
 	return result;
 }
   
-function updateLike(isLike, postID){
+function updateLike(likeValue, postID){
 	let formData = new FormData();
 	formData.append('postID', postID);
-	formData.append('isLike', isLike);
+	formData.append('likeValue', likeValue ? 1 : 0);
 	axios.post('api-post.php', formData).then(response => {
+		console.log(response.data);
 		if(response.data["updateLike"]){
-			updateLikeImg(isLike, postID);
+			updateLikeImg(response.data["isMyReaction"], likeValue, postID);
 			document.getElementById("like"+postID).innerText = response.data["numLike"];
 			document.getElementById("dislike"+postID).innerText = response.data["numDislike"];
 		}
 	});
 }
 
-function updateLikeImg(isLike, postID){
-	if(isLike){
-		document.getElementById("like-img"+postID).src = `upload/like.svg`;
-		document.getElementById("dislike-img"+postID).src = `upload/unused-like.svg`;
+function updateLikeImg(isMyReaction, likeValue, postID){
+	if(isMyReaction){
+		if(likeValue){
+			document.getElementById("like-img"+postID).src = `upload/like.svg`;
+			document.getElementById("dislike-img"+postID).src = `upload/unused-like.svg`;
+		} else {
+			document.getElementById("like-img"+postID).src = `upload/unused-like.svg`;
+			document.getElementById("dislike-img"+postID).src = `upload/like.svg`;
+		}	
 	} else {
 		document.getElementById("like-img"+postID).src = `upload/unused-like.svg`;
-		document.getElementById("dislike-img"+postID).src = `upload/like.svg`;
+		document.getElementById("dislike-img"+postID).src = `upload/unused-like.svg`;
 	}
+	
 }

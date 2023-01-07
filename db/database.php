@@ -366,7 +366,7 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    function updateLike(bool $likes, int $postID, string $username){
+    function updateLike(int $postID, string $username, bool $likes){
         $likes = (int)$likes;
         $query = "UPDATE reaction SET likes = ? WHERE postID = ? AND username = ?";
         $stmt = $this->db->prepare($query);
@@ -380,6 +380,14 @@ class DatabaseHelper{
         $query = "INSERT INTO reaction (postID, username, likes) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('isi', $postID, $username, $likes);
+        $result = $stmt->execute();
+        return $result;
+    }
+
+    function removeLike(int $postID, string $username){
+        $query = "DELETE FROM reaction WHERE postID = ? AND username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('is', $postID, $username);
         $result = $stmt->execute();
         return $result;
     }
