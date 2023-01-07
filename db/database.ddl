@@ -217,13 +217,13 @@ INSERT INTO `profile` (`username`, `firstName`, `lastName`, `email`, `telephone`
 ('fabio_veroli', 'Fabio', 'Veroli', 'fabio.veroli@studio.unibo.it', '+393665869789', '$2y$10$ron4rsdO2YDyiuFLkhRax.nynIRGBr9u6zCRTRA1BUjA9Uz9MDyD.', 'default.png', '2001-04-02'),
 ('luca_bigo', 'Luca', 'Bighini', 'luca.bighini@studio.unibo.it', '362726323283', '$2y$10$j.oF.Q2fLu7IS3.CNpjd7.4HKaczWC0K2dFkWw8bD2iy0SmQ9oL5u', 'default.png', '2001-12-02'),
 ('sara-capp', 'Sara', 'Cappelletti', 'sara.cappelletti@studio.unibo.it', '333333438333', '$2y$10$GxtLJsYJ6AcWzrfxn/sS3uuMELY0gB4.c/s9XyLqaxt1CepcEumZy', 'default.png', '2001-10-01'),
-('test_user', 'test', 'test', 'test@test', '121212121212', '$2y$10$6M9ldnhaLie1M69LhjSIO.P0gDKFZL7zJEuHgTmwaLYhadTBMGzjG', 'default.png', '0000-00-00');
+('test_user', 'test', 'test', 'test@test.it', '121212121212', '$2y$10$6M9ldnhaLie1M69LhjSIO.P0gDKFZL7zJEuHgTmwaLYhadTBMGzjG', 'default.png', '1990-12-31');
 
-INSERT INTO `settings` (`username`, `postNotification`, `commentNotification`, `followerNotification`) VALUES
-('fabio_veroli', 'false', 'false', 'false'),
-('luca_bigo', 'true', 'true', 'true'),
-('sara-capp', 'false', 'false', 'false'),
-('test_user', 'false', 'false', 'false');
+INSERT INTO `settings` (`username`, `postNotification`, `commentNotification`, `followerNotification`, `accountNotification`) VALUES
+('fabio_veroli', 1, 0, 1, 0),
+('luca_bigo', 0, 0, 0, 0),
+('sara-capp', 0, 0, 0, 0),
+('test_user', 0, 0, 0, 0);
 
 INSERT INTO `friend` (`follower`, `followed`) VALUES
 ('sara-capp', 'fabio_veroli'),
@@ -383,7 +383,12 @@ INSERT INTO `track` (`trackID`, `urlSpotify`, `urlImage`, `urlPreview`, `title`,
 ('6Qs4SXO9dwPj5GKvVOv8Ki', 'https://open.spotify.com/track/6Qs4SXO9dwPj5GKvVOv8Ki', 'https://i.scdn.co/image/ab67616d00001e023b52eca47232bedfbb5e9443', 'null', 'Dancing With A Stranger (with Normani)', 'Sam Smith,Normani', 'Dancing With A Stranger (with Normani)'),
 ('1HNE2PX70ztbEl6MLxrpNL', 'https://open.spotify.com/track/1HNE2PX70ztbEl6MLxrpNL', 'https://i.scdn.co/image/ab67616d00001e029a482180e6a306229bff49dc', 'https://p.scdn.co/mp3-preview/0aec695bf2d68f2c378d8acd640327104a6da336?cid=4467e6ad0f484420be8e1546bc0d3a60', 'In Too Deep', 'Sum 41', 'All Killer, No Filler'),
 ('4Ryw3Qv9CpkfX8NaPViEjF', 'https://open.spotify.com/track/4Ryw3Qv9CpkfX8NaPViEjF', 'https://i.scdn.co/image/ab67616d00001e026ac44a996e41a7cfb5fbad3e', 'https://p.scdn.co/mp3-preview/fe23be0aa9ae8daf1085cc6b079afc83a6b50ef8?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Chiodo Fisso', 'Eugenio In Via Di Gioia', 'Tsunami (forse vi ricorderete di noi per canzoni come)'),
-('49gdfYsDIgpP0lAJJnp3E4', 'https://open.spotify.com/track/49gdfYsDIgpP0lAJJnp3E4', 'https://i.scdn.co/image/ab67616d00001e02e0185989102fa989c915910d', 'null', 'lady', 'sangiovanni', 'sangiovanni');
+('49gdfYsDIgpP0lAJJnp3E4', 'https://open.spotify.com/track/49gdfYsDIgpP0lAJJnp3E4', 'https://i.scdn.co/image/ab67616d00001e02e0185989102fa989c915910d', 'null', 'lady', 'sangiovanni', 'sangiovanni'),
+('5gXKDmafOQ8i4lYr62wxTk', 'https://open.spotify.com/track/5gXKDmafOQ8i4lYr62wxTk', 'https://i.scdn.co/image/ab67616d00001e0231b0f8c9ee642bbb120ee3fd', 'https://p.scdn.co/mp3-preview/4e1ef619354e8cdf4c80352ebe3f77374476e2e7?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Deep Jungle Walk', 'Astrix', 'He.art'),
+('0iGPqIcglmqPUTMv7X2VEb', 'https://open.spotify.com/track/0iGPqIcglmqPUTMv7X2VEb', 'https://i.scdn.co/image/ab67616d00001e0262a64b9388cdff21e97ccac5', 'https://p.scdn.co/mp3-preview/1b1e4267b3fae3bc5b71c70bd94b8293237911cf?cid=4467e6ad0f484420be8e1546bc0d3a60', 'The Pretender', 'Infected Mushroom', 'Army of Mushrooms'),
+('1IBCR7sEQwU9P88AP4xcOn', 'https://open.spotify.com/track/1IBCR7sEQwU9P88AP4xcOn', 'https://i.scdn.co/image/ab67616d00001e02259d113181490d7de9141f03', 'https://p.scdn.co/mp3-preview/f1d0780f353a57e1c44f1d6994cad6b602bda426?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Saeed', 'Infected Mushroom', 'The Legend Of The Black Shawarma'),
+('2Ms9rXvqIqCzn9BYkhVoYA', 'https://open.spotify.com/track/2Ms9rXvqIqCzn9BYkhVoYA', 'https://i.scdn.co/image/ab67616d00001e0237233abcff297b770d93ad8d', 'https://p.scdn.co/mp3-preview/43746f050703e4183a5412041f9588ccb68c449e?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Louna', 'Sam Shure', 'Laconia');
+
 
 
 
@@ -399,7 +404,11 @@ INSERT INTO `post` (`postID`, `description`, `activeComments`, `dateTime`, `trac
 (9, 'Questa canzone mi piace molto ! Ascoltatela tutti.', 1, '2023-01-01 21:40:31', '08Hacl2rWl6GD6TKUyaKIy', 'sara-capp'),
 (10, 'Questa è la prima prova !!', 1, '2023-01-06 10:00:33', '1HNE2PX70ztbEl6MLxrpNL', 'luca_bigo'),
 (11, 'Prova la mia numero 2', 0, '2023-01-02 21:00:44', '4Ryw3Qv9CpkfX8NaPViEjF', 'luca_bigo'),
-(12, 'Odio questa canzone!!', 0, '2023-01-06 10:00:34', '49gdfYsDIgpP0lAJJnp3E4', 'luca_bigo');
+(12, 'Odio questa canzone!!', 0, '2023-01-05 10:00:34', '49gdfYsDIgpP0lAJJnp3E4', 'luca_bigo'),
+(13, 'My favorite musical duo !!! Love their music :)', 1, '2023-01-05 23:57:21', '1IBCR7sEQwU9P88AP4xcOn', 'fabio_veroli'),
+(14, 'Love this Foo Fighters cover !!! Which is better this or the original ?', 1, '2023-01-06 00:03:33', '0iGPqIcglmqPUTMv7X2VEb', 'fabio_veroli'),
+(15, 'Love this song!!!', 1, '2023-01-07 00:12:13', '2Ms9rXvqIqCzn9BYkhVoYA', 'fabio_veroli'),
+(16, '', 0, '2023-01-08 00:17:20', '5gXKDmafOQ8i4lYr62wxTk', 'fabio_veroli');
 
 INSERT INTO `belongs` (`genreID`, `postID`) VALUES
 (42, 3),
@@ -426,5 +435,32 @@ INSERT INTO `belongs` (`genreID`, `postID`) VALUES
 (22, 10),
 (35, 10),
 (41, 12),
-(72, 12);
+(72, 12),
+(8, 15),
+(30, 14),
+(31, 14),
+(34, 15),
+(48, 16),
+(90, 13),
+(92, 13),
+(92, 16),
+(97, 13),
+(97, 14),
+(108, 15),
+(111, 16);
 
+INSERT INTO `user_tokens` (`tokenID`, `selector`, `hashed_validator`, `expiry`, `username`) VALUES
+(5, 'd84a6480a02da00e7c4c0840b88872e7', '$2y$10$TVUbD5B8zOb.9NPgDp2nFuDQuVYuBNTP/IZ06L5BGPkVhg6Bimnpi', '2023-02-06 23:46:32', 'fabio_veroli');
+
+INSERT INTO `reaction` (`postID`, `username`, `likes`) VALUES
+(1, 'fabio_veroli', 1),
+(2, 'fabio_veroli', 1),
+(3, 'fabio_veroli', 1),
+(4, 'fabio_veroli', 1),
+(5, 'fabio_veroli', 1),
+(7, 'fabio_veroli', 0),
+(9, 'fabio_veroli', 0),
+(13, 'fabio_veroli', 1),
+(14, 'fabio_veroli', 1),
+(15, 'fabio_veroli', 1),
+(16, 'fabio_veroli', 1);
