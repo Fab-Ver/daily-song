@@ -51,7 +51,7 @@ function createSignUpForm(){
                         Select favorite music genres (max 5):
                         <details id="favorite_genre" role="list">
                             <summary aria-haspopup="listbox">Favorite music genres...</summary>
-                            <ul id="genres_list" role="listbox">
+                            <ul id="genres_list" role="listbox" title="List of music genres">
                                 <li><input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></li>
                             </ul>
                         </details>
