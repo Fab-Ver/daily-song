@@ -1,4 +1,5 @@
 const main = document.querySelector("main");
+const $afterPostGoTopButton = 0; /*change with 5 */
 main.innerHTML = `
 <details id="track_genres" role="list">
     <summary aria-haspopup="listbox">Select music genres</summary>
@@ -13,7 +14,15 @@ main.innerHTML = `
 </details>
 <input type="date" id="date" name="date" onchange="selectDate()">
 <div id="div_posts"></div>
+<div id="button_top">
+    <button class="go_top" onclick="goTop()">Go top</button>
+</div>
 `;
+
+function goTop(){
+    document.querySelector(".main-div").scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
 
 function addPost(post) {
     let article1 = `
@@ -118,6 +127,9 @@ function listPost(data){
         `;
     }else{
         let posts = data.reverse();
+        if(posts.length > $afterPostGoTopButton){
+            document.querySelector(".go_top").style.display = "block";
+        }
         for(let i=0; i<posts.length; i++){
             posts[i]["genre"] = genreList(posts[i]["genre"]);
             div_post.innerHTML += addPost(posts[i]);
@@ -174,6 +186,7 @@ function clearGenres() {
     axios.get('api-home.php').then(response => {
         listPost(response.data);
     });*/
+    document.getElementById("track_genres").open = false;
 }
 
 function getGenre(idGenre){
