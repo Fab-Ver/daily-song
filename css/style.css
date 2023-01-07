@@ -197,6 +197,21 @@ label[for="comments"]{
   height: 50vh;
 }
 
+#save_notification_button {
+  width: 50%;
+  float: right;
+}
+
+#notifications_form {
+  overflow: hidden;
+}
+
+#deselect_notification{
+  width: 35%;
+  float: left;
+  text-align: center;
+}
+
 /*-article_post--------------------------------------------*/
 
 article.post_body{
