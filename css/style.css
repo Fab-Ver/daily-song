@@ -202,21 +202,21 @@ main button.go_top {
   margin: 0%;
 }
 
-label[for="comments"]{
+label[for="comments"],label[for="post_notification"],label[for="comment_notification"],label[for="follow_notification"],label[for="account_notification"]{
   margin-bottom: var(--spacing) !important;
 }
 
-#new_post_form #genres_list {
+#new_post_form #genres_list, #profile_settings #genres_list {
   overflow-y: scroll;
-  height: 50vh;
+  height: 40vh;
 }
 
-#save_notification_button {
-  width: 50%;
+#save_notification_button, #save_profile_button{
+  width: 35%;
   float: right;
 }
 
-#notifications_form {
+#notifications_form,#profile_settings div{
   overflow: hidden;
 }
 
