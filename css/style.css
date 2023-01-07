@@ -211,12 +211,16 @@ label[for="comments"],label[for="post_notification"],label[for="comment_notifica
   height: 40vh;
 }
 
-#save_notification_button, #save_profile_button{
+#save_notification_button, #save_profile_button, #account_settings_button{
   width: 35%;
   float: right;
 }
 
-#notifications_form,#profile_settings div{
+#account_settings_button{
+  clear: both;
+}
+
+#notifications_form,#profile_settings div,#account_form{
   overflow: hidden;
 }
 
@@ -229,6 +233,16 @@ label[for="comments"],label[for="post_notification"],label[for="comment_notifica
 #delete_account_button {
   color : #b71c1c !important;
   border-color: #b71c1c !important;;
+}
+label[for="profile_picture"]{
+  float: left;
+  width: 60%;
+}
+
+#current_profile_picture {
+  float: left;
+  margin-right: 10%;
+  width: 20%;
 }
 
 /*-article_post--------------------------------------------*/
@@ -464,6 +478,12 @@ section.comment_text p {
     overflow: auto;
   }
 
+  #current_profile_picture {
+    float: left;
+    margin-right: 10%;
+    width: 10%;
+  }
+
 }
 
 @media screen and (min-width: 992px) {
@@ -503,6 +523,12 @@ section.comment_text p {
   .profile-image {
     border-radius: 40%;
     width: 30%;
+  }
+
+  #current_profile_picture {
+    float: left;
+    margin-right: 10%;
+    width: 10%;
   }
 
 }
@@ -568,4 +594,18 @@ section.comment_text p {
     margin: 0%;
   }
 
+  #current_profile_picture {
+    float: left;
+    margin-right: 10%;
+    width: 10%;
+  }
+
+}
+
+@media screen and (min-width: 1024px) {
+  #current_profile_picture {
+    float: left;
+    margin-right: 10%;
+    width: 5%;
+  }
 }
