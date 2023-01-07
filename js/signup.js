@@ -91,20 +91,22 @@ function checkSignUpEmail(){
     }
 }
 
-function checkFirstName(){
-    if(!first_name.validity.valueMissing){
-        setValid(first_name,true);
+function checkUsername(){
+    let username = document.getElementById('username');
+    if(!username.validity.valueMissing){
+        let formData = new FormData();
+        formData.append('checkUsername',username.value);
+        axios.post('registration.php',formData).then(response => {
+            if(response.data.errorMsg !== ""){
+                showError(username,response.data.errorMsg);
+                setValid(username,false);
+            } else {
+                setValid(username,true);
+            }
+        });
     } else {
-        first_name.removeAttribute("aria-invalid");
-    }
-}
-
-function checkLastName(){
-    if(!last_name.validity.valueMissing){
-        setValid(last_name,true);
-    } else {
-        last_name.removeAttribute("aria-invalid");
-    }
+        username.removeAttribute("aria-invalid");
+    }   
 }
 
 function checkBirthDate(){
@@ -123,93 +125,14 @@ function checkBirthDate(){
     }
 }
 
-function checkTelephone(){
-    let regex = /^\+?([0-9]{2})\)?[-.]?([0-9]{3})[-.]?([0-9]{7})$/;
-    if(telephone.value != ""){
-        if(!telephone.value.match(regex)){
-            showError(telephone,"Wrong telephone number format, +XX XXX XXXXXXX expected");
-            setValid(telephone,false);
-        } else {
-            setValid(telephone,true);
-        }
-    } else {
-        telephone.setCustomValidity("");
-        telephone.removeAttribute("aria-invalid");
-    } 
-}
-
-function checkUsername(){
-    if(!username.validity.valueMissing){
-        let formData = new FormData();
-        formData.append('checkUsername',username.value);
-        axios.post('registration.php',formData).then(response => {
-            if(response.data.errorMsg !== ""){
-                showError(username,response.data.errorMsg);
-                setValid(username,false);
-            } else {
-                setValid(username,true);
-            }
-        });
-    } else {
-        username.removeAttribute("aria-invalid");
-    }   
-}
-
-function checkPassword(){
-    let regex =  /^(?=.*[0-9])(?=.*[\'^£$%&*()}{@#~?><>,|=_+¬-])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9\'^£$%&*()}{@#~?><>,|=_+¬-]{8,30}$/;
-    if(!password.validity.valueMissing){
-        if(!password.value.match(regex)){
-            showError(password,"Wrong password format, should contain at least:\n- one digit\n- one upper case\n- one lower case\n- one special character \'^£$%&*()}{@#~?><>,|=_+¬-\nMin length: 8\nMax length: 30 ");
-            setValid(password,false);
-        } else {
-            if(!confirm_password.validity.valueMissing){
-                if(password.value != confirm_password.value){
-                    showError(password,"The passwords do not match");
-                    setValid(password,false);
-                } else {
-                    setValid(password,true);
-                }
-            } else {
-                setValid(password,true);
-            }
-        }
-    } else {
-        password.removeAttribute("aria-invalid");
-    }
-}
-
-function checkConfirmPassword(){
-    if(!confirm_password.validity.valueMissing){
-        if(!password.validity.valueMissing){
-            if(password.value != confirm_password.value){
-                showError(confirm_password,"The passwords do not match");
-                setValid(confirm_password,false);
-            } else {
-                setValid(confirm_password,true);
-            }
-        }
-    } else {
-        confirm_password.removeAttribute("aria-invalid");
-    }
-}
-
-function checkImage(){
-    let filePath = profile_picture.value;
-    let allowedExtensions =/(\.jpg|\.jpeg|\.png|\.gif)$/i;
-    if(profile_picture.value != ""){
-        if (!allowedExtensions.exec(filePath)) {
-            showError(profile_picture,"Wrong file extension, accepted: .jpg .jpeg .png .gif");
-            setValid(profile_picture,false);
-        } else {
-            setValid(profile_picture,true);
-        }
-    } else {
-        profile_picture.removeAttribute("aria-invalid");
-    }
-    
-}
-
 function checkSignUpForm(){
+    let first_name = document.getElementById('first_name');
+    let last_name = document.getElementById('last_name');
+    let telephone = document.getElementById('telephone');
+    let username = document.getElementById('username');
+    let password = document.getElementById('password');
+    let profile_picture = document.getElementById('profile_picture');
+    let confirm_password = document.getElementById('confirm_password');
     let errors = new Array();
     let err_element = new Array();
 
@@ -263,7 +186,7 @@ function checkSignUpForm(){
     }
 
     if(errors.length == 0){
-        submitForm();
+        submitForm(first_name,last_name,telephone,username,password,confirm_password,profile_picture);
     } else {
         err_element.forEach(element => {
             setValid(element,false);
@@ -275,7 +198,7 @@ function checkSignUpForm(){
     }
 }
 
-function submitForm(){
+function submitForm(first_name,last_name,telephone,username,password,confirm_password){
     let formData = new FormData();
     let SQL_date = birth_date.valueAsDate.toISOString().slice(0,10);
     formData.append('email',email.value);
@@ -310,14 +233,7 @@ function submitForm(){
 const main = document.querySelector("main");
 main.innerHTML = createSignUpForm();
 const email = document.getElementById('email');
-const first_name = document.getElementById('first_name');
-const last_name = document.getElementById('last_name');
 const birth_date = document.getElementById('birth_date');
-const telephone = document.getElementById('telephone');
-const username = document.getElementById('username');
-const password = document.getElementById('password');
-const confirm_password = document.getElementById('confirm_password');
-const profile_picture = document.getElementById('profile_picture');
 const notification = document.getElementById('notification');
 axios.get("genre.php?genre=get").then(response => {
     let dropdown = document.getElementById('genres_list');
