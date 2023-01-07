@@ -414,21 +414,20 @@ class DatabaseHelper{
         return $result;
     }
 
-<<<<<<< HEAD
     function getAllUsernames(){
         $query = "SELECT username FROM profile";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
-=======
+        return $result->fetch_all(MYSQLI_ASSOC);   
+    }
+    
     function deleteUser(string $username){
         $query = "DELETE FROM profile WHERE username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         return $stmt->execute();
->>>>>>> 4d1ac88358bafa6fa902b90f8fef73fc4cca41a9
-    }
+    } 
     
 }
 ?>
