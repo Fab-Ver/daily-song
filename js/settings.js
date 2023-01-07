@@ -1,7 +1,8 @@
 
 window.addEventListener('load', function(){
     const main = document.querySelector('main');
-    main.innerHTML = createFavoriteGenresForm();
+    main.innerHTML = createAccountForm();
+    main.innerHTML += createFavoriteGenresForm();
     main.innerHTML += createNotificationsForm();
     main.innerHTML += createLogoutDelete(); 
     axios.get("genre.php?genre=get").then(response => {
@@ -17,12 +18,13 @@ window.addEventListener('load', function(){
 
 function showUserSettings(){
     axios.get('api-settings.php?settings=get').then(response => {
-        if(response.data.settings !== undefined && response.data.favoriteGenres !== undefined){
+        if(response.data.settings !== undefined && response.data.favoriteGenres !== undefined && response.data.accountData !== undefined){
             let checkboxes = document.querySelectorAll('#notifications_form input[type="checkbox"]');
             response.data.settings.forEach((element,index) => {
                 checkboxes[index].checked = element;
             });
             showFavoriteGenres(response.data.favoriteGenres);
+            showAccountData(response.data.accountData);
         }
     });
 }
@@ -106,6 +108,45 @@ function createLogoutDelete(){
     return result;
 }
 
+function createAccountForm(){
+    let result = `
+        <article>
+            <hgroup>
+                <h1>Account</h1>
+                <h2>Update your personal data</h2>
+            </hgroup>
+            <div id="error_account_settings"class="error_form" tabindex="-1" hidden></div>
+            <form action="#" method="post" id="account_form">
+                <label for="username">
+                    Username:
+                    <input type="text" id="username" name="username" placeholder="Username..." onblur="checkSettingsUsername()" required></input>
+                </label>
+                <div class="grid">
+                    <div><label for="first_name">
+                        First Name:
+                        <input type ="text" id="first_name" name="first_name" placeholder="First name..." oninput="checkFirstName()" required></input>
+                    </label> </div>
+                    <div><label for="last_name">
+                        Last Name:
+                        <input type ="text" id="last_name" name="last_name" placeholder="Last name..." oninput="checkLastName()" required></input>
+                    </label></div>
+                </div>
+                <label for="telephone">
+                    Telephone:
+                    <input type ="tel" id="telephone" name="telephone" placeholder="Telephone..." oninput="checkTelephone()"></input>
+                </label>
+                <img src="" alt="profile_picture" id="current_profile_picture">
+                <label for="profile_picture">Select profile picture:
+                    <input type="file" id="profile_picture" name="profile_picture" accept="image/*" onchange="checkImage()">
+                </label>
+                <input type="button" id="account_settings_button" name="account_settings_button" value="Save" onclick="updateAccountSettings()"></input>
+            </form>
+            <p>Do you want to reset your password? <a href="reset_password.php">Click Here</a></p>
+        </article>
+    `;
+    return result;
+}
+
 function submitNotificationForm(){
     let formData = new FormData();
     formData.append('posts',document.getElementById('post_notification').checked);
@@ -176,5 +217,101 @@ function showFavoriteGenres(genres){
         genres_list.innerHTML += tag;
         document.getElementById(element['genreID']).checked = true;
     });
+}
+
+function showAccountData(accountData){
+    document.getElementById('username').value = accountData['username'];
+    document.getElementById('first_name').value = accountData['firstName'];
+    document.getElementById('last_name').value = accountData['lastName'];
+    document.getElementById('telephone').value = accountData['telephone'];
+    document.getElementById('current_profile_picture').src = accountData['profilePicture']
+}
+
+function updateAccountSettings(){
+    let first_name = document.getElementById('first_name');
+    let last_name = document.getElementById('last_name');
+    let telephone = document.getElementById('telephone');
+    let username = document.getElementById('username');
+    let profile_picture = document.getElementById('profile_picture');
+    let errors = new Array();
+    let err_element = new Array();
+
+    if(first_name.validity.valueMissing){
+        errors.push("First name required, enter first name to continue");
+        err_element.push(first_name);
+    }
+
+    if(last_name.validity.valueMissing){
+        errors.push("Last name required, enter last name to continue");
+        err_element.push(last_name);
+    }
+
+    if(telephone.getAttribute('aria-invalid') === 'true'){
+        errors.push("Wrong telephone number format, +XX XXX XXXXXXX expected");
+        err_element.push(telephone);
+    }
+
+    if(username.validity.valueMissing || username.getAttribute('aria-invalid') === 'true'){
+        errors.push("Username required, enter a valid username to continue");
+        err_element.push(username);
+    }
+
+    if(profile_picture.getAttribute('aria-invalid') === 'true'){
+        errors.push("Wrong file extension, accepted: .jpg .jpeg .png .gif");
+        err_element.push(profile_picture);
+    }
+
+    let error_div = document.getElementById('error_account_settings');
+    if(errors.length == 0){
+        let formData = new FormData();
+        formData.append('first_name',first_name.value);
+        formData.append('last_name',last_name.value);
+        formData.append('telephone',telephone.value);
+        formData.append('username',username.value);
+        if(profile_picture.value !== ''){
+            formData.append('profile_picture',profile_picture.files[0]);
+        }
+        axios.post('api-settings.php',formData).then(response => {
+            if(response.data.errorMsg !== ""){
+                error_div.innerHTML = response.data.errorMsg;
+                error_div.removeAttribute('hidden');
+                error_div.focus();
+                if(response.data.errorElem !== undefined){
+                    response.data.errorElem.forEach(element => setValid(document.getElementById(element),false));
+                }
+            }  else if(response.data.updated === true) {
+                error_div.innerHTML = "Account data have been updated successfully";
+                error_div.removeAttribute('hidden');
+                error_div.style.setProperty("border-color", "#2e7d32", "important");
+                error_div.focus();
+                showUserSettings();
+            }
+        });
+    } else {
+        err_element.forEach(element => {
+            setValid(element,false);
+        });
+        error_div.innerHTML = `While processing your data the following errors occurred:<ul>` + createError(errors);
+        error_div.removeAttribute('hidden');
+        error_div.focus();
+    }
+}
+
+function checkSettingsUsername(){
+    let username = document.getElementById('username');
+    if(!username.validity.valueMissing){
+        let formData = new FormData();
+        formData.append('checkUsername',username.value);
+        axios.post('api-settings.php',formData).then(response => {
+            if(response.data.errorMsg !== ""){
+                showError(username,response.data.errorMsg);
+                setValid(username,false);
+            } else {
+                setValid(username,true);
+            }
+        });
+    } else {
+        username.removeAttribute("aria-invalid");
+    } 
 }
 
