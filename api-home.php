@@ -64,7 +64,7 @@ if (isUserLoggedIn()) {
                 $result[$i]["reactions"] = $dbh->getReactions($post["postID"]);
                 $result[$i]["isMyReaction"] = count($dbh->checkReaction($post["postID"], $_SESSION["username"]));
                 if($result[$i]["isMyReaction"]){
-                    $result[$i]["myReaction"] = $dbh->checkReaction($post["postID"], $_SESSION["username"]);
+                    $result[$i]["myReaction"] = $dbh->checkReaction($post["postID"], $_SESSION["username"][0]["likes"]);
                 }
                 $result[$i]["numLike"] = count(array_filter($result[$i]["reactions"], function($p) { return $p["likes"]; }));
                 $result[$i]["numDislike"] = count(array_filter($result[$i]["reactions"], function($p) { return !$p["likes"]; }));

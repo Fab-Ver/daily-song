@@ -21,14 +21,14 @@ function generateFollowButton(canFollow, profileUser) {
     }
 }
 
-function updateFollowed(canFollow, profileUser){
+function updateFollowed(wantToFollow, profileUser){
     let formData = new FormData();
     formData.append('username', profileUser);
-    formData.append('value', canFollow ? "add" : "remove");
+    formData.append('value', wantToFollow ? "add" : "remove");
     axios.post('api-follower.php', formData).then(response => {
         console.log(response.data);
         if(response.data["followButton"]){
-            document.getElementById("followButton").outerHTML = generateFollowButton(!canFollow);
+            document.getElementById("followButton").outerHTML = generateFollowButton(!wantToFollow);
         }
     });
 }
