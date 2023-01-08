@@ -10,10 +10,8 @@
     <meta name="decription" content="is a digital music social that gives you the possibility to share a day song with your friends"/>
 </head>
 <body>
-    <aside class="menu">
-        <nav class="container-fluid">
-            <ul id="ul_menu"></ul>
-        </nav>
+    <aside class="menu_bar">
+        <div id="menu"></div>
     </aside>
     <div class="main-div">
         <section class="grid">

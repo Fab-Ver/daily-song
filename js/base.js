@@ -30,19 +30,14 @@ const datiMenu = [{
     "Name": "Logout"
 }]
 
-const ul_menu = document.getElementById("ul_menu");
+const menu = document.getElementById("menu");
 
 for(let i=0; i<datiMenu.length; i++) {
-    const li = `
-    <li class="li-profile">
-        <a role="button" class="contrast" href="${datiMenu[i].Link}">
-            <figure>
-                <img src="${datiMenu[i].Immagine}" alt="${datiMenu[i].Alt}">
-                <figcaption>${datiMenu[i].Name}</figcaption>
-            </figure>
-        </a>
-    </li>
+    const button = `
+    <button onclick = "window.location.href='${datiMenu[i].Link}';">
+        <img src="${datiMenu[i].Immagine}" alt="${datiMenu[i].Alt}" />
+        <span>${datiMenu[i].Name}</span>
+    </button>
     `;
-    ul_menu.innerHTML = ul_menu.innerHTML + li;
+    menu.innerHTML += button;
 }
-
