@@ -6,6 +6,7 @@ aside.menu_bar {
   left: 0;
   padding: 1% 3%;
   background-color: #1db954;
+  z-index: 1;
 }
 
 #menu {
@@ -31,7 +32,6 @@ aside.menu_bar {
       width: 15%;
       height: 100vh;
       padding: 1% 0%;
-      border-right: solid;
   }
 
   #menu {
@@ -41,7 +41,7 @@ aside.menu_bar {
 
   #menu button {
       margin-bottom: 2%;
-      padding: 15%;
+      padding: 10% 20%;
   }
 
   #menu img {
@@ -165,7 +165,7 @@ main {
 }
 
 .main-div {
-  padding-bottom: 16%;
+  padding-bottom: 18%;
 }
 
 .main-div > section h1 {
@@ -200,6 +200,13 @@ main {
 main #track_genres {
   float: left;
   width: 50%;
+  font-size: 4vw;
+}
+
+@media screen and (min-width: 354px) {
+  main #track_genres {
+    font-size: 100%;
+  }
 }
 
 main #track_genres div{
