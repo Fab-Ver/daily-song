@@ -21,13 +21,13 @@ if (isUserLoggedIn()) {
 
     }else{
         if(isset($_POST["day"])){
-            $result = $dbh->getPostOfDay($_POST["day"]);
+            $result = $dbh->getPostOfDay($_SESSION["username"],$_POST["day"]);
             $today = 0;
         }else if(isset($_POST["idGenre"])){
             $result = $dbh->getPostByIdGenre($_POST["idGenre"]);
             $today = 1;
         }else{
-            $result = $dbh->getPostOfDay(date('Y-m-d'));
+            $result = $dbh->getPostOfDay($_SESSION["username"],date('Y-m-d'));
             $today = 2;
         }
 

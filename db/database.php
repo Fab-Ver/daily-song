@@ -165,10 +165,10 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPostOfDay(string $day){
-        $query="SELECT * FROM post WHERE DATE(dateTime) = ?";
+    public function getPostOfDay(string $username, string $day){
+        $query="SELECT DISTINCT post.* FROM post JOIN friend ON friend.follower = ? WHERE DATE(post.dateTime) = ? and (post.username = friend.followed or post.username = ?);";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s', $day);
+        $stmt->bind_param('sss', $username, $day, $username);
         $stmt->execute();
         $result = $stmt->get_result();
         
@@ -177,6 +177,25 @@ class DatabaseHelper{
 
     public function getPostByIdGenre(int $idGenre){
         $query="SELECT * FROM post JOIN belongs ON belongs.genreID = ? WHERE post.postID = belongs.postID";
+        /*SELECT DISTINCT post.* FROM post JOIN belongs ON 
+            belongs.genreID = 1 or belongs.genreID = 3 or belongs.genreID = 75 
+            WHERE post.postID = belongs.postID ORDER BY postID ASC;
+
+        public function getPosts($n=-1){
+            $query = "SELECT idarticolo, titoloarticolo, imgarticolo, anteprimaarticolo, dataarticolo, nome FROM articolo, autore WHERE autore=idautore ORDER BY dataarticolo DESC";
+            if($n > 0){
+                $query .= " LIMIT ?";
+            }
+            $stmt = $this->db->prepare($query);
+            if($n > 0){
+                $stmt->bind_param('i',$n);
+            }
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+        */
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $idGenre);
         $stmt->execute();
