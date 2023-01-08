@@ -166,7 +166,7 @@ class DatabaseHelper{
     }
 
     public function getPostOfDay(string $username, string $day){
-        $query="SELECT DISTINCT post.* FROM post JOIN friend ON friend.follower = ? WHERE DATE(post.dateTime) = ? and (post.username = friend.followed or post.username = ?);";
+        $query="SELECT DISTINCT post.* FROM post JOIN friend ON friend.follower = ? WHERE DATE(post.dateTime) = ? and (post.username = friend.followed or post.username = ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sss', $username, $day, $username);
         $stmt->execute();
@@ -175,8 +175,8 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPostByIdGenre(int $idGenre){
-        $query="SELECT * FROM post JOIN belongs ON belongs.genreID = ? WHERE post.postID = belongs.postID";
+    public function getPostByIdGenre(string $username, int $idGenre){
+        $query="SELECT DISTINCT post.* FROM post JOIN belongs ON belongs.genreID = ? JOIN friend ON friend.follower = ? WHERE post.postID = belongs.postID and (post.username = friend.followed or post.username = ?)";
         /*SELECT DISTINCT post.* FROM post JOIN belongs ON 
             belongs.genreID = 1 or belongs.genreID = 3 or belongs.genreID = 75 
             WHERE post.postID = belongs.postID ORDER BY postID ASC;
@@ -197,7 +197,7 @@ class DatabaseHelper{
         }
         */
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i', $idGenre);
+        $stmt->bind_param('iss', $idGenre, $username, $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
