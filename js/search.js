@@ -31,14 +31,13 @@ function generateSearchResult(searchValue){
 function showSearchResult(){
     let formData = new FormData();
     searchValue = document.getElementById("searchBar").value;
-    let searchResult = "";
-    if(searchValue != null){
-        formData.append('searchValue', searchValue);
-        axios.post('api-search.php', formData).then(response => {
-            console.log(response.data);
-            searchResult = generateSearchResult(response.data["searchResult"]);
+    formData.append('searchValue', searchValue);
+    axios.post('api-search.php', formData).then(response => {
+        console.log(response.data);
+        searchResult = generateSearchResult(response.data["searchResult"]);
+        const main = document.querySelector('main');
+        main.innerHTML += searchResult;
     });
-    }
     return searchResult;
     
 }  
@@ -66,8 +65,7 @@ function updateFollowed(wantToFollow, profileUser){
 axios.get('api-search.php').then(response => {
     console.log(response.data);
     const searchBar = showSearchBar();
-    const searchResult = showSearchResult();
     const main = document.querySelector('main');
-    main.innerHTML = searchBar + searchResult;
+    main.innerHTML = searchBar;
 });
 

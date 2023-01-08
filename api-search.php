@@ -10,7 +10,6 @@ if(isUserLoggedIn()) {
             $temp = $dbh->getUserProfile($user["username"]);
             $user["profilePicture"] = UPLOAD_DIR.$temp["profilePicture"];
             $user["canFollow"] = canFollow($temp["username"], $dbh->getUserFollowed($_SESSION["username"]));
-
         }
     }
 }
