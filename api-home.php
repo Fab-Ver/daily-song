@@ -24,7 +24,7 @@ if (isUserLoggedIn()) {
             $result = $dbh->getPostOfDay($_SESSION["username"],$_POST["day"]);
             $today = 0;
         }else if(isset($_POST["idGenre"])){
-            $result = $dbh->getPostByIdGenre($_POST["idGenre"]);
+            $result = $dbh->getPostByIdGenre($_SESSION["username"],$_POST["idGenre"]);
             $today = 1;
         }else{
             $result = $dbh->getPostOfDay($_SESSION["username"],date('Y-m-d'));
