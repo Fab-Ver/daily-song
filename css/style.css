@@ -39,7 +39,13 @@
 
 .post-image {
   width: 30%;
-  padding: 0.5%;
+  padding: 1.0%;
+  display: inline-block;
+}
+
+#content{
+  width: 100%;
+  text-align: center;
 }
 
 .like-button {
