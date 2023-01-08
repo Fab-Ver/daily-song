@@ -39,10 +39,10 @@ function showPosts(posts){
         if(i["urlPreview"] !== "null"){
           songPreview =  ` 
             <footer class="song-preview">
-              <figure>
-              <figcaption class="left-text">Song preview: </figcaption>
-                <audio controls src="${i["urlPreview"]}"></audio>
-              </figure>
+            	<figure>
+            	<figcaption class="left-text">Song preview: </figcaption>
+            		<audio controls src="${i["urlPreview"]}"></audio>
+            	</figure>
             </footer>
           `;
         }

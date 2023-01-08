@@ -9,22 +9,22 @@ function showSearchBar(){
 
 function generateSearchResult(searchValue){
     let searchResult = "";
-        if(searchValue > 0){
-            for (let user of searchValue) {
-                let profile = `
-                    <div>
-                        <img src="${user["profilePicture"]}" alt="" width="5%"/>
-                        <a href="profile.php?user=${user["username"]}">${user["username"]}</a>
-                        ${generateFollowButton(user["canFollow"], user["username"])}
-                    </div>
-                `;
-                searchResult += profile;
-            }
-        } else {
-            searchResult = `
-                <small>No match found</small>
+    if(searchValue > 0){
+        for (let user of searchValue) {
+            let profile = `
+                <div>
+                    <img src="${user["profilePicture"]}" alt="" width="5%"/>
+                    <a href="profile.php?user=${user["username"]}">${user["username"]}</a>
+                    ${generateFollowButton(user["canFollow"], user["username"])}
+                </div>
             `;
+            searchResult += profile;
         }
+    } else {
+        searchResult = `
+            <small>No match found</small>
+        `;
+    }
     return searchResult;
 }
 
@@ -35,7 +35,6 @@ function showSearchResult(){
     axios.post('api-search.php', formData).then(response => {
         console.log(response.data);
         searchResult = generateSearchResult(response.data["searchResult"]);
-        const main = document.querySelector('main');
         main.innerHTML += searchResult;
     });
     return searchResult;
@@ -61,11 +60,11 @@ function updateFollowed(wantToFollow, profileUser){
         }
     });
 }
+const main = document.querySelector('main');
 
 axios.get('api-search.php').then(response => {
     console.log(response.data);
     const searchBar = showSearchBar();
-    const main = document.querySelector('main');
-    main.innerHTML = searchBar;
+    main.innerHTML += searchBar;
 });
 
