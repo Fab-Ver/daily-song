@@ -64,6 +64,8 @@ aside.menu_bar {
   #menu span{
       margin-left: 5%;
       display: inline-block;
+      font-weight: bold;
+      color: black;
   }
 
 }
