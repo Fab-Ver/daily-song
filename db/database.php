@@ -463,5 +463,16 @@ class DatabaseHelper{
         return $result;
     }
     
+    function checkAccountNotification(string $username){
+        $query = "SELECT username FROM settings WHERE username = ? AND accountNotification = 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        if(count($result) != 0){
+            return true;
+        }
+        return false;
+    }
 }
 ?>
