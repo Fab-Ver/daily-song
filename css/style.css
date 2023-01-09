@@ -290,6 +290,7 @@ label[for="comments"],label[for="post_notification"],label[for="comment_notifica
   color : #b71c1c !important;
   border-color: #b71c1c !important;;
 }
+
 label[for="profile_picture"]{
   float: left;
   width: 60%;
@@ -299,6 +300,10 @@ label[for="profile_picture"]{
   float: left;
   margin-right: 10%;
   width: 20%;
+}
+
+#new_post_form #description{
+  resize: vertical;
 }
 
 /*-article_post--------------------------------------------*/
