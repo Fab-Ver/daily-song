@@ -1,5 +1,6 @@
 <?php
 require_once 'bootstrap.php';
+require 'utils/mail_helper.php';
 secure_session_start();
 $result['loggedIn'] = false;
 
@@ -27,14 +28,17 @@ if(!isUserLoggedIn()){
                 if($dbh->isUserActive($username)){
                     if(login($username,$password,$remember_me)){
                         $result['loggedIn'] = true;
+                        $mail = new MailHelper();
+                        if($dbh->checkAccountNotification($username)){
+                            $mail->sendEmailNotification($email,createNewAccessEmail($username),"New access to Nome sito");
+                        }
                     } else {
                         $result['errorMsg'] = WRONG_PASSWORD;
                         $result['elemID'] = 'login_password';
                     }
                 } else {
-                    /**
-                    * Aggiungere mail all'utente disabilitato
-                    */
+                    $mail = new MailHelper();
+                    $mail->sendBlockedAccountEmail($email);
                     $result['errorMsg'] = DISABLED_USER;
                 }
             } else {
