@@ -221,8 +221,8 @@ INSERT INTO `profile` (`username`, `firstName`, `lastName`, `email`, `telephone`
 
 INSERT INTO `settings` (`username`, `postNotification`, `commentNotification`, `followerNotification`, `accountNotification`) VALUES
 ('fabio_veroli', 1, 0, 1, 0),
-('luca_bigo', 0, 0, 0, 0),
-('sara-capp', 0, 0, 0, 0),
+('luca_bigo', 1, 1, 1, 0),
+('sara-capp', 1, 1, 1, 1),
 ('test_user', 0, 0, 0, 0);
 
 INSERT INTO `friend` (`follower`, `followed`) VALUES
