@@ -7,6 +7,7 @@ aside.menu_bar {
   padding: 1% 3%;
   background-color: #1db954;
   z-index: 1;
+  overflow-y: auto;
 }
 
 #menu {
@@ -45,7 +46,7 @@ aside.menu_bar {
   }
 
   #menu img {
-      width: 80%;
+      width: 65%;
   }
   
 }
@@ -58,7 +59,7 @@ aside.menu_bar {
   }
 
   #menu img {
-      width: 28%;
+      width: 25%;
   }
 
   #menu span{
@@ -200,10 +201,15 @@ main {
 main #track_genres {
   float: left;
   width: 50%;
-  font-size: 4vw;
+  font-size: 5vw;
 }
 
-@media screen and (min-width: 354px) {
+main #track_genres summary {
+  padding-left: 1vw;
+  padding-right: 1%;
+}
+
+@media screen and (min-width: 300px) {
   main #track_genres {
     font-size: 100%;
   }
