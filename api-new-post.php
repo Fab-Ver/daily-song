@@ -1,5 +1,6 @@
 <?php
 require_once 'bootstrap.php';
+require 'utils/mail_helper.php';
 secure_session_start();
 
 if(isUserLoggedIn()){
@@ -45,6 +46,14 @@ if(isUserLoggedIn()){
             if($response){
                 $result['postInserted'] = true;
                 $dbh->insertPostGenres($postID,$genresIDs);
+                $followers = $dbh->selectPostNotification($username);
+                if(count($followers) != 0){
+                    foreach($followers as $follower){
+                        $mail = new MailHelper();
+                        $mail->sendEmailNotification($follower['email'],createNewPostEmail($follower['username'],$username),'Someone just share a post');
+                        /**Aggiungi notifiche al database */
+                    }
+                }
             } else {
                 $result['errorMsg'] .= UNDEFINED;
             }
