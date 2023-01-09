@@ -474,5 +474,29 @@ class DatabaseHelper{
         }
         return false;
     }
+
+    public function selectPostNotification(string $username){
+        $query = "SELECT profile.email,profile.username FROM profile join settings on settings.username = profile.username where settings.postNotification = 1 AND profile.username IN (SELECT follower from friend where followed = ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function checkCommentNotification(string $username_post_author){
+        $query = "SELECT profile.email,profile.username FROM profile join settings on settings.username = profile.username where settings.commentNotification = 1 AND profile.username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username_post_author);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function checkFollowerNotification(string $followed){
+        $query = "SELECT profile.email,profile.username FROM profile join settings on settings.username = profile.username where settings.followerNotification = 1 AND profile.username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$followed);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>
