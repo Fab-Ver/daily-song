@@ -186,4 +186,16 @@ function remember_me(string $username, int $day = 30){
     }
 }
 
+function createNewAccessEmail($username){
+   
+    $body='<p><h1>New access to Nome Sito</h1></p>';
+    $body.='<p>-------------------------------------------------------------</p>';
+    $body.='<p><b>'.$username.'</b> we noticed you logged in from a new device. If so, then you don\'t have to do anything about it.</p>';	
+    $body.='<p>Date & Time: '.date("Y-m-d H:i:s");	
+    $body.='<p>-------------------------------------------------------------</p>';
+    $body.='<p>Wasn\'t you? Please make sure you update your password</p>'; 	
+    $body.='<p>Progetto Web</p>';
+    return $body;
+}
+
 ?>
