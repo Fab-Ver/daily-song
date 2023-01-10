@@ -167,7 +167,7 @@ class DatabaseHelper{
     }
 
     public function getPostOfDay(string $username, string $day){
-        $query="SELECT DISTINCT post.* FROM post JOIN friend ON friend.follower = ? WHERE DATE(post.dateTime) = ? and (post.username = friend.followed or post.username = ?) AND post.archived = 0";
+        $query="SELECT DISTINCT post.* FROM post JOIN friend ON post.username = friend.followed OR post.username = ? WHERE DATE(post.dateTime) = ? AND friend.follower = ? AND post.archived = 0 ORDER BY post.dateTime DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sss', $username, $day, $username);
         $stmt->execute();
@@ -176,29 +176,25 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPostByIdGenre(string $username, int $idGenre){
-        $query="SELECT DISTINCT post.* FROM post JOIN belongs ON belongs.genreID = ? JOIN friend ON friend.follower = ? WHERE post.postID = belongs.postID and (post.username = friend.followed or post.username = ?) AND post.archived = 0";
-        /*SELECT DISTINCT post.* FROM post JOIN belongs ON 
-            belongs.genreID = 1 or belongs.genreID = 3 or belongs.genreID = 75 
-            WHERE post.postID = belongs.postID ORDER BY postID ASC;
-
-        public function getPosts($n=-1){
-            $query = "SELECT idarticolo, titoloarticolo, imgarticolo, anteprimaarticolo, dataarticolo, nome FROM articolo, autore WHERE autore=idautore ORDER BY dataarticolo DESC";
-            if($n > 0){
-                $query .= " LIMIT ?";
+    public function getPostByIdGenre(string $username, $idGenre){
+        $query="SELECT DISTINCT post.* FROM post JOIN belongs ON post.postID = belongs.postID JOIN friend ON post.username = friend.followed OR post.username = ? WHERE friend.follower = ? AND post.archived = 0";
+        
+        if(count($idGenre) !== 0){
+            $it = 0;
+            foreach($idGenre as $genre){
+                if($it === 0){
+                    $query .= " AND ( ";
+                    $it = 1;
+                }else{
+                    $query .= " OR ";
+                }
+                $query .= "belongs.genreID = '$genre' ";
             }
-            $stmt = $this->db->prepare($query);
-            if($n > 0){
-                $stmt->bind_param('i',$n);
-            }
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            return $result->fetch_all(MYSQLI_ASSOC);
         }
-        */
+        $query .= " ) ORDER BY post.dateTime DESC";
+        
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('iss', $idGenre, $username, $username);
+        $stmt->bind_param('ss', $username, $username);
         $stmt->execute();
         $result = $stmt->get_result();
 

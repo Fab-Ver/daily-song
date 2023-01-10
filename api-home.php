@@ -23,18 +23,18 @@ if (isUserLoggedIn()) {
         if(isset($_POST["day"])){
             $result = $dbh->getPostOfDay($_SESSION["username"],$_POST["day"]);
             $today = 0;
-        }else if(isset($_POST["idGenre"])){
-            $result = $dbh->getPostByIdGenre($_SESSION["username"],$_POST["idGenre"]);
+        }else if(isset($_POST["idGenres"])){
+            $result = $dbh->getPostByIdGenre($_SESSION["username"],json_decode($_POST["idGenres"]));
             $today = 1;
         }else{
             $result = $dbh->getPostOfDay($_SESSION["username"],date('Y-m-d'));
             $today = 2;
         }
-
+        
         if(count($result) <= 0 && $today === 0){
             $result["no_post"] = "Any post in " . $_POST["day"];
         }else if(count($result) <= 0 && $today === 1){
-            $result["no_post"] = "Any post of this genre";
+            $result["no_post"] = "Any post of this genres";
         }else if(count($result) <= 0 && $today === 2){
             $result["no_post"] = "Any post today ";
         }else{

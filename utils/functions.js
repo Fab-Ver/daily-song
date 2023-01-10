@@ -36,6 +36,7 @@ function getGenresID(){
             ids.push(element.id);
         }
     });
+    console.log(ids);
     return ids;
 }
 
@@ -50,13 +51,13 @@ function checkGenres(min,max){
     return count > min && count<=max
 }
 
-function createGenres(genres){
+function createGenres(genres,onclick){
     let result = ``;
     genres.forEach(element =>{
         let item = `
         <li id="li${element["genreID"]}" role="listitem">
             <label id="label${element["genreID"]}">
-                <input id="${element["genreID"]}"type="checkbox" onclick="getGenre(this.id)">
+                <input id="${element["genreID"]}"type="checkbox" ${onclick ? 'onclick="getGenre()"' : ''}></input>
             ${element["tag"]}
             </label>
         </li> `;
@@ -263,4 +264,66 @@ function checkImage(){
     } else {
         profile_picture.removeAttribute("aria-invalid");
     } 
+}
+
+/**
+ * Get comment of a post
+ */
+
+function getComment(post){
+    let ret = ``;
+    if(post["activeComments"] === 1){
+        ret  = `
+            <section class="comments">
+                <textarea id="textarea${post["postID"]}" name="comment" placeholder="Add comment"></textarea>
+                <button id="button${post["postID"]}" onclick="publishComment(this.id)">Publish</button>
+            </section>
+            <details class="show_comments">
+                <summary aria-haspopup="listbox">Show all comments</summary>
+                <ul role="listbox" class="list_comment">`
+        
+        for(let j=0; j<post["comments"].length; j++){
+            ret += addComment(post["comments"][j]);
+        }
+
+        ret +=`
+                </ul>
+            </details>
+        `;
+    }
+    return ret;
+}
+
+function addComment(comment) {
+    let li_comment = `
+    <li>
+        <div class="grid">
+            <img src="${comment["profilePicture"]}" alt="profile_picture">
+            <section class="comment_text">
+                <label for="username" class="username">${comment["username"]}</label>
+                <label for="time_comment" class="time_comment">${comment["dateTime"]}</label>
+                <p>${comment["text"]}</p>
+            </section>
+        </div>
+    </li>
+    `;
+    return li_comment;
+}
+
+function publishComment(idButton){
+    let id = idButton.replace("button", "");
+    let text_comment = document.getElementById("textarea" + id);
+    let form_data = new FormData();
+    form_data.append("comment", text_comment.value);
+    form_data.append("post_id", id);
+    if(text_comment.value !== ""){
+        axios.post("api-home.php",form_data).then(response => {
+            text_comment.value = "";
+            li_comment = document.getElementById("article"+[id]).querySelector(".list_comment");
+            li_comment.innerHTML = ``;
+            for(let j=0; j<response.data["comments"].length; j++){
+                li_comment.innerHTML += addComment(response.data["comments"][j]);
+            }
+        });
+    }
 }

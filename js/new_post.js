@@ -6,7 +6,7 @@ const description = document.getElementById('description');
 const comments = document.getElementById('comments');
 axios.get('genre.php').then(response => {
     let dropdown = document.getElementById('genres_list');
-    dropdown.innerHTML += createGenres(response.data);
+    dropdown.innerHTML += createGenres(response.data,false);
 });
 
 function createNewPostForm(){
