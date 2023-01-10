@@ -328,6 +328,14 @@ class DatabaseHelper{
         return [$result,$postID];
     }
 
+    function updatePost(int $postID, string $description, bool $activeComments) : bool{
+        $active = (int) $activeComments;
+        $query = "UPDATE post SET description = ?, activeComments = ? WHERE postID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sii',$description,$active,$postID);
+        return $stmt->execute();
+    }
+
     function insertPostGenres($postID,$genresIDs){
         foreach($genresIDs as $id){
             $query = "INSERT INTO belongs (genreID,postID) VALUES (?, ?)";
@@ -335,6 +343,13 @@ class DatabaseHelper{
             $stmt->bind_param('ss',$id,$postID);
             $stmt->execute();
         }   
+    }
+
+    function deletePostGenres(int $postID): bool{
+        $query = "DELETE FROM belongs WHERE postID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i',$postID);
+        return $stmt->execute();    
     }
 
     function insertResetRequest(string $email, string $token, string $expDate) : bool{
