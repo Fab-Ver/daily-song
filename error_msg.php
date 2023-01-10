@@ -50,5 +50,6 @@
     define('INVALID_POST_ID','<article>
                                 <h2>Invalid postID</h2>
                                 <p>The specified postID do not match any of the user posts. Try again.</p>
-                            </article>')
+                            </article>');
+    define('NUMERIC_POST_ID','Post ID must be a numeric string, enter a valid postID to continue');
 ?>
