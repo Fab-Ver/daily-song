@@ -164,6 +164,10 @@ aside.menu_bar {
   list-style: none;
 }
 
+.post-modal{
+  max-width: 90%;
+}
+
 /*-title + notification--------------------------------------------*/
 
 main {
@@ -567,6 +571,10 @@ section.comment_text p {
     width: 20%;
   }
 
+  .post-modal{
+    max-width: 70%;
+  }
+
   .main-div {
     float: right;
     height: 100vh;
@@ -591,6 +599,8 @@ section.comment_text p {
     width: 15%;
     float: right;
   }
+
+  
 }
 
 @media screen and (min-width: 992px) {
@@ -632,6 +642,10 @@ section.comment_text p {
     width: 30%;
   }
 
+  .post-modal{
+    width: 40%;
+  }
+
   #current_profile_picture {
     float: left;
     margin-right: 10%;
@@ -654,6 +668,10 @@ section.comment_text p {
   .profile-image {
     border-radius: 40%;
     width: 30%;
+  }
+
+  .post-modal{
+    width: 40%;
   }
 
   details.show_comments ul.list_comment {

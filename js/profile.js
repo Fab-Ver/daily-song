@@ -20,7 +20,7 @@ function showPosts(posts){
         let post = `
             <img class="post-image" src="${i["urlImage"]}" alt="" data-target="modal-example-${i["postID"]}" onClick="toggleModal(event)" />
             <dialog id="modal-example-${i["postID"]}">
-                <article>
+                <article class="post-modal">
                     <div class="grid">
                       <div>
                           <p class="title">${i["title"]}</p>
@@ -45,7 +45,7 @@ function showPosts(posts){
             	</figure>
           `;
         }
-		let comments = `<div class="div_comment"></div>`;
+		let comments = `<div class="div_comment_${i}"></div>`;
         let endOfPost = `
 					</footer>
         		</article>
