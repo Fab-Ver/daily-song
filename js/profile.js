@@ -20,7 +20,7 @@ function showPosts(posts){
         let post = `
             <img class="post-image" src="${i["urlImage"]}" alt="" data-target="modal-example-${i["postID"]}" onClick="toggleModal(event)" />
             <dialog id="modal-example-${i["postID"]}">
-                <article>
+                <article class="post-modal">
                     <div class="grid">
                       <div>
                           <p class="title">${i["title"]}</p>
@@ -31,6 +31,7 @@ function showPosts(posts){
                     <p>${i["description"]}</p>
                     <p><a href="${i["urlSpotify"]}"> Link Spotify</a></p>
                     <img class="modal-image" src="${i["urlImage"]}" alt=""/>
+					<footer class="song-preview">
         `;
 
         let likes = showLikes(i["postID"], i["numLike"], i["numDislike"], i["isMyReaction"], i["myReaction"]);
@@ -38,21 +39,22 @@ function showPosts(posts){
         let songPreview = "";
         if(i["urlPreview"] !== "null"){
           songPreview =  ` 
-            <footer class="song-preview">
             	<figure>
             	<figcaption class="left-text">Song preview: </figcaption>
             		<audio controls src="${i["urlPreview"]}"></audio>
             	</figure>
-            </footer>
           `;
         }
+		let comments = `<div class="div_comment_${i}"></div>`;
         let endOfPost = `
+					</footer>
         		</article>
         	</dialog>
         `;
 
         post += likes;
         post += songPreview;
+		post += comments;
         post += endOfPost;
 
         result += post;
