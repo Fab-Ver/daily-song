@@ -47,4 +47,8 @@
     define('INVALID_URL','must be a valid url, enter valid url to continue');
     define('ID_MISMATCH','The trackID must be the same specified in the spotify url');
     define('TRACK_ID_IN_USE','Track ID already registered, bad request.');
+    define('INVALID_POST_ID','<article>
+                                <h2>Invalid postID</h2>
+                                <p>The specified postID do not match any of the user posts. Try again.</p>
+                            </article>')
 ?>

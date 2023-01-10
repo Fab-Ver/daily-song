@@ -73,7 +73,7 @@ if (isUserLoggedIn()) {
                     $result[$i]["track"] = $dbh->getTrack($post["trackID"])[0];
                 }
         
-                $result[$i]["genre"] = $dbh->getPostPreferredGenres($post["postID"]);
+                $result[$i]["genre"] = $dbh->getPostGenres($post["postID"]);
     
                 $result[$i]["comments"] = $dbh->getPostComments($post["postID"]);
     

@@ -315,10 +315,10 @@ label[for="profile_picture"]{
 article.single_post img {
   width: 30%;
   float: right;
-  margin: 2.5%;
+  margin: 1.5% 2.5% 2.5%;
 }
 
-article.single_post div.info_post, .buttons_post {
+article.single_post div.info_post, .buttons_post, #form_body_modify {
   clear: both;
 }
 
@@ -334,8 +334,35 @@ article.single_post table{
   float: left;
 }
 
-article.single_post{
+article.single_post, #modify_post{
   overflow: hidden;
+}
+
+#modify_post hgroup{
+  width: 70%;
+  float: left;
+}
+
+#modify_post img {
+  width: 20%;
+  float: right;
+}
+
+#modify_post #cancel {
+  width: 50%;
+  float: left;
+}
+
+#modify_post #cancel {
+  width: 45%;
+  float: left;
+  margin-right: 1.5%;
+}
+
+#modify_post #modify_post_button{
+  width: 45%;
+  float: right;
+  margin-left: 1.5%;
 }
 
 /*-article_post--------------------------------------------*/
@@ -555,6 +582,10 @@ section.comment_text p {
     width: 10%;
   }
 
+  #modify_post img {
+    width: 15%;
+    float: right;
+  }
 }
 
 @media screen and (min-width: 992px) {
@@ -602,6 +633,11 @@ section.comment_text p {
     width: 10%;
   }
 
+  #modify_post img {
+    width: 10%;
+    float: right;
+  }
+
 }
 
 @media screen and (min-width: 1024px) {
@@ -640,5 +676,10 @@ section.comment_text p {
     float: left;
     margin-right: 10%;
     width: 5%;
+  }
+
+  #modify_post img {
+    width: 10%;
+    float: right;
   }
 }
