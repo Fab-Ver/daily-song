@@ -1,16 +1,17 @@
 window.addEventListener('load', function(){
-    let main = document.querySelector('main');
-    createModifyForm(this.location.search).then(response => main.innerHTML = response);
+    createModifyForm();
 });
 
-function createModifyForm(variable){
+function createModifyForm(){
+    let error_div = document.getElementById('error_modify_post');
+    let main = document.querySelector('main');
     let formData = new FormData();
-    let postID = variable.replace("?postID=","");
+    let postID = getPostID();
     formData.append('postID',postID);
-    return axios.post('modify-post.php',formData).then(response => {
-        let post = response.data.post[0];
-        console.log(post);
-        let modify_form = `<article id="modify_post">
+    axios.post('modify-post.php',formData).then(response => {
+        if(response.data.post !== undefined){
+            let post = response.data.post;
+            main.innerHTML =  `<article id="modify_post">
                                 <hgroup>
                                     <h1>Post #${post['postID']}</h1>
                                     <h2>Modify your post</h2>
@@ -18,6 +19,16 @@ function createModifyForm(variable){
                                 <img src="${post['urlImage']}" alt="album_covert_art">
                                 <div id="form_body_modify">
                                 <div id="error_modify_post"class="error_form" tabindex="-1" hidden></div>
+                                <label for="track_genres">
+                                        Select track music genres (max 3):
+                                        <details id="post_genres" role="list">
+                                            <summary aria-haspopup="listbox">Track music genres...</summary>
+                                                <ul id="genres_list" role="listbox">
+                                                <li><button class="contrast outline" onclick="clearAllGenres()">Clear All</button></li>
+                                                <li><input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></li>
+                                            </ul>
+                                        </details>
+                                </label>
                                 <form action="#" method="post" id="modify_post_form">
                                     <label for="title">
                                         Title:
@@ -39,10 +50,7 @@ function createModifyForm(variable){
                                         Created:
                                         <input type="text" id="datePost" name="datePost" value="${post['date']}" readonly disabled></input>
                                     </label>
-                                    <label for="datePost">
-                                        Created:
-                                        <input type="text" id="datePost" name="datePost" value="${post['date']}" readonly disabled></input>
-                                    </label>
+                                    
                                     <label for="description">
                                         Description:
                                         <textarea id="description" name="description" placeHolder="Insert here post description..." maxlength="500">${post['description']}</textarea>
@@ -56,10 +64,59 @@ function createModifyForm(variable){
                                 </form>
                                 </div>
                             </article>`;
-        return modify_form;
+            axios.get("genre.php?genre=get").then(response => {
+                let dropdown = document.getElementById('genres_list');
+                if(response.data.length !== undefined){
+                    dropdown.innerHTML += createGenres(response.data,false);
+                } else {
+                    dropdown.innerHTML += `<li>No genres available</li>`
+                }
+                showPostGenres(post['genres']);
+            });
+        } else {
+            error_div.innerHTML = "An undefined error occurred while trying to process your data, try later.";
+            error_div.removeAttribute('hidden');
+            error_div.focus();
+        }
     });
 }
 
 function back(){
     window.location.replace("post_manager.php");
+}
+
+function showPostGenres(genres){
+    genres.forEach(element => {
+        document.getElementById(element['genreID']).checked = true;
+    });
+}
+
+function getPostID(){
+    return window.location.search.replace("?postID=","");
+}
+
+function updatePost(){
+    let error_div = document.getElementById('error_modify_post');
+    if(!checkGenres(0,3)){
+        error_div.innerHTML = "Wrong number of selected genresID, please select between 1 and 3 genres";
+        error_div.removeAttribute('hidden');
+        error_div.focus();
+    } else {
+        let formData = new FormData();
+        let description = document.getElementById('description');
+        let activeComments = document.getElementById('comments');
+        formData.append('postID',getPostID());
+        formData.append('description',description.value);
+        formData.append('activeComments',activeComments.checked);
+        formData.append('genresID',JSON.stringify(getGenresID()));
+        axios.post('modify-post.php',formData).then(response => {
+            if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
+                error_div.innerHTML = response.data.errorMsg;
+                error_div.removeAttribute('hidden');
+                error_div.focus();
+            } else if (response.data.updated === true){
+                window.location.replace('./post_manager.php');
+            }
+        });
+    }
 }
