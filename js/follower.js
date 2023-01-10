@@ -15,20 +15,21 @@ function showSearchResult(searchResult){
 
 function generateFollowButton(canFollow, profileUser) {
     if (canFollow) {
-        return `<button id="followButton" name="follow" onclick="updateFollowed(true, ${profileUser})">Follow</button>`;
+        return `<button id="followButton_${profileUser}" name="follow" onclick="updateFollowed(true, this.id)"> Follow</button>`;
     } else {
-        return `<button id="followButton" class="secondary" name="unfollow" onclick="updateFollowed(false, ${profileUser})">Unfollow</button>`;
+        return `<button id="followButton_${profileUser}" class="secondary" name="unfollow" onclick="updateFollowed(false, this.id)">Unfollow</button>`;
     }
 }
 
-function updateFollowed(wantToFollow, profileUser){
+function updateFollowed(wantToFollow, id){
+    let profileUsername = id.replace("followButton_", "");
     let formData = new FormData();
-    formData.append('username', profileUser);
+    formData.append('username', profileUsername);
     formData.append('value', wantToFollow ? "add" : "remove");
     axios.post('api-follower.php', formData).then(response => {
         console.log(response.data);
         if(response.data["followButton"]){
-            document.getElementById("followButton").outerHTML = generateFollowButton(!wantToFollow);
+            document.getElementById(id).outerHTML = generateFollowButton(!wantToFollow, profileUsername);
         }
     });
 }
