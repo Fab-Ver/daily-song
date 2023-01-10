@@ -2,7 +2,7 @@
 window.addEventListener('load', function(){
     const main = document.querySelector('main');
     main.innerHTML = createAccountForm();
-    main.innerHTML += createFavoriteGenresForm();
+    main.innerHTML += createProfileForm();
     main.innerHTML += createNotificationsForm();
     main.innerHTML += createLogoutDelete(); 
     axios.get("genre.php?genre=get").then(response => {
@@ -29,12 +29,12 @@ function showUserSettings(){
     });
 }
 
-function createFavoriteGenresForm(){
+function createProfileForm(){
     let genres_form = `
         <article id ="profile_settings">
             <hgroup>
                 <h1>Profile</h1>
-                <h2>Change your favorite music genres</h2>
+                <h2>Change your favorite music genres, manage your posts</h2>
             </hgroup>
             Your favorite genres:
             <ul id="current_favorite_genres"></ul>
@@ -50,6 +50,7 @@ function createFavoriteGenresForm(){
                 </details>
             </label>
             <div><button id="save_profile_button" name="save_profile_settings" onclick="updateFavoriteGenres()">Save</input></div>
+            <a href="post_manager.php" role="button" class="contrast outline">Go to Post Manager</a>
         </article>
     `;
     return genres_form;

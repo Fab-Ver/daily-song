@@ -147,7 +147,7 @@ class DatabaseHelper{
     }
 
     public function getUserPostsDate(string $username){
-        $query="SELECT DATE(dateTime) as postDate FROM post WHERE username = ?";
+        $query="SELECT DATE(dateTime) as postDate FROM post WHERE username = ? AND archived = 0";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();
@@ -166,7 +166,7 @@ class DatabaseHelper{
     }
 
     public function getPostOfDay(string $username, string $day){
-        $query="SELECT DISTINCT post.* FROM post JOIN friend ON friend.follower = ? WHERE DATE(post.dateTime) = ? and (post.username = friend.followed or post.username = ?)";
+        $query="SELECT DISTINCT post.* FROM post JOIN friend ON friend.follower = ? WHERE DATE(post.dateTime) = ? and (post.username = friend.followed or post.username = ?) AND post.archived = 0";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sss', $username, $day, $username);
         $stmt->execute();
@@ -176,7 +176,7 @@ class DatabaseHelper{
     }
 
     public function getPostByIdGenre(string $username, int $idGenre){
-        $query="SELECT DISTINCT post.* FROM post JOIN belongs ON belongs.genreID = ? JOIN friend ON friend.follower = ? WHERE post.postID = belongs.postID and (post.username = friend.followed or post.username = ?)";
+        $query="SELECT DISTINCT post.* FROM post JOIN belongs ON belongs.genreID = ? JOIN friend ON friend.follower = ? WHERE post.postID = belongs.postID and (post.username = friend.followed or post.username = ?) AND post.archived = 0";
         /*SELECT DISTINCT post.* FROM post JOIN belongs ON 
             belongs.genreID = 1 or belongs.genreID = 3 or belongs.genreID = 75 
             WHERE post.postID = belongs.postID ORDER BY postID ASC;
@@ -215,7 +215,20 @@ class DatabaseHelper{
     }
 
     public function getUserPosts(string $username){
-        $query = "SELECT  postID, description, activeComments, dateTime, urlSpotify, urlImage, urlPreview, title, artists, albumName FROM post JOIN track ON post.trackID = track.trackID WHERE username = ?";
+        $query = "SELECT  postID, description, activeComments, dateTime, urlSpotify, urlImage, urlPreview, title, artists, albumName FROM post JOIN track ON post.trackID = track.trackID WHERE username = ? AND post.archived = 0";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Get all the user post even the archived ones.
+     */
+    public function getAllUserPosts(string $username){
+        $query = "SELECT  postID, description, activeComments, DATE(dateTime) AS `date`, urlImage, title, artists, albumName,archived FROM post JOIN track ON post.trackID = track.trackID WHERE username = ? ORDER BY `date` DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();
@@ -300,9 +313,10 @@ class DatabaseHelper{
     function insertPost(string $username, string $trackID, string $description, bool $activeComments, string $datetime) : array{
         $postID = $this->getMaxPostID();
         $active = (int) $activeComments;
-        $query = "INSERT INTO post (postID,description,activeComments,dateTime,trackID,username) VALUES (?,?,?,?,?,?)";
+        $archived = 0;
+        $query = "INSERT INTO post (postID,description,activeComments,dateTime,trackID,username,archived) VALUES (?,?,?,?,?,?,?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('isisss',$postID,$description,$active,$datetime,$trackID,$username);
+        $stmt->bind_param('isisssi',$postID,$description,$active,$datetime,$trackID,$username,$archived);
         $result = $stmt->execute();
         return [$result,$postID];
     }
@@ -463,5 +477,55 @@ class DatabaseHelper{
         return $result;
     }
     
+    function checkAccountNotification(string $username){
+        $query = "SELECT username FROM settings WHERE username = ? AND accountNotification = 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        if(count($result) != 0){
+            return true;
+        }
+        return false;
+    }
+
+    public function selectPostNotification(string $username){
+        $query = "SELECT profile.email,profile.username FROM profile join settings on settings.username = profile.username where settings.postNotification = 1 AND profile.username IN (SELECT follower from friend where followed = ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function checkCommentNotification(string $username_post_author){
+        $query = "SELECT profile.email,profile.username FROM profile join settings on settings.username = profile.username where settings.commentNotification = 1 AND profile.username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username_post_author);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function checkFollowerNotification(string $followed){
+        $query = "SELECT profile.email,profile.username FROM profile join settings on settings.username = profile.username where settings.followerNotification = 1 AND profile.username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$followed);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function deletePost(int $postID) : bool{
+        $query = "DELETE FROM post WHERE postID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $postID);
+        return $stmt->execute();
+    }
+
+    public function updatePostStatus(int $postID, bool $archived) : bool {
+        $archived = (int) $archived;
+        $query = "UPDATE post SET archived = ? WHERE postID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ii',$archived,$postID);
+        return $stmt->execute();
+    }
 }
 ?>
