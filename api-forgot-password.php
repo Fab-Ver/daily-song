@@ -15,8 +15,13 @@ if(!isUserLoggedIn()){
                 if(!$dbh->insertResetRequest($email,$token,$expDate)){
                     $result['errorMsg'] = UNDEFINED;
                 } else {
-                    $mail = new MailHelper();
-                    if(!$mail->sendResetPasswordEmail($email,$token)){
+                    try{
+                        $mail = new MailHelper();
+                        if(!$mail->sendResetPasswordEmail($email,$token)){
+                            $result['errorMsg'] = MAIL_NOT_SENT;
+                        }
+                    } catch (Exception $e){
+                        /**Mail doesn't work because config.php variables not set*/
                         $result['errorMsg'] = MAIL_NOT_SENT;
                     }
                 }

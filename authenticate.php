@@ -31,10 +31,10 @@ if(!isUserLoggedIn()){
                         try {
                             $mail = new MailHelper();
                             if($dbh->checkAccountNotification($username)){
-                                $mail->sendEmailNotification($email,createNewAccessEmail($username),"New access to Nome sito");
+                                $mail->sendEmailNotification($email,createNewAccessEmail($username),"New access to DailySong");
                             }
                         } catch (Exception $e) {
-                            /**Mail doesn't work because config.php variables not set */
+                            /**Mail doesn't work because config.php variables not set,no action required */
                         }
                         
                     } else {
@@ -42,8 +42,12 @@ if(!isUserLoggedIn()){
                         $result['elemID'] = 'login_password';
                     }
                 } else {
-                    $mail = new MailHelper();
-                    $mail->sendBlockedAccountEmail($email);
+                    try{
+                        $mail = new MailHelper();
+                        $mail->sendBlockedAccountEmail($email);
+                    } catch (Exception $e){
+                        /**Mail doesn't work because config.php variables not set, no action required*/
+                    }
                     $result['errorMsg'] = DISABLED_USER;
                 }
             } else {

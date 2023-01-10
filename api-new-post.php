@@ -49,9 +49,13 @@ if(isUserLoggedIn()){
                 $followers = $dbh->selectPostNotification($username);
                 if(count($followers) != 0){
                     foreach($followers as $follower){
-                        $mail = new MailHelper();
-                        $mail->sendEmailNotification($follower['email'],createNewPostEmail($follower['username'],$username),'Someone just share a post');
                         /**Aggiungi notifiche al database */
+                        try {
+                            $mail = new MailHelper();
+                            $mail->sendEmailNotification($follower['email'],createNewPostEmail($follower['username'],$username),'Someone just share a post');
+                        } catch (Exception $e) {
+                            /**Mail doesn't work because config.php variables not set,no action required */
+                        }
                     }
                 }
             } else {
