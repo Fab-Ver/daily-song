@@ -66,6 +66,14 @@ function createGenres(genres,onclick){
     return result;
 }
 
+function clearAllGenres(){
+    let checkboxes = document.querySelectorAll('#genres_list input[type="checkbox"]');
+    let search = document.getElementById('search');
+    search.value = '';
+    filterGenre();
+    checkboxes.forEach(element => element.checked = false);
+}
+
 function createError(errors){
     let result = ``;
     errors.forEach(e => {
