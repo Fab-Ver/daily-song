@@ -106,6 +106,7 @@ function archivePost(id,archived){
 
 function modifyPost(id){
     let postID = id.replace("modify","");
+    window.location.href = `./modify-post.php?postID=${postID}`;
 }
 
 function setButton(postID,archived){
