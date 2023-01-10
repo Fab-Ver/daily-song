@@ -155,6 +155,16 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getUserByPost(int $postID){
+        $query="SELECT username FROM post WHERE postID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $postID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function getPostGenres(string $postID){
         $postID = intval($postID);
         $query = "SELECT genre.genreID,tag FROM belongs JOIN genre ON belongs.genreID = genre.genreID WHERE belongs.postID = ?";
@@ -529,6 +539,16 @@ class DatabaseHelper{
         $query = "SELECT  postID, description, activeComments, DATE(dateTime) as `date`, urlSpotify, urlImage, title, artists, albumName FROM post JOIN track ON post.trackID = track.trackID WHERE post.username = ? AND post.postID = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('si', $username,$postID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getNotification(string $username){
+        $query = "SELECT * FROM notification WHERE usernameRec = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
 

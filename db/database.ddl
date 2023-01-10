@@ -62,9 +62,9 @@ create table login_attempts (
 create table notification (
      notificationID int not null auto_increment,
      text varchar(100) not null,
-     readStatus boolean not null,
      dateTime datetime not null,
-     username varchar(50) not null,
+     usernameRec varchar(50) not null,
+     usernameSed varchar(50) not null,
      constraint ID_notification primary key (notificationID));
 
 create table post (
@@ -163,8 +163,14 @@ alter table login_attempts add constraint FKmake
      ON DELETE CASCADE
      ON UPDATE CASCADE;
 
+alter table notification add constraint FKsends
+     foreign key (usernameSed)
+     references profile (username)
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
+
 alter table notification add constraint FKreceives
-     foreign key (username)
+     foreign key (usernameRec)
      references profile (username)
      ON DELETE CASCADE
      ON UPDATE CASCADE;

@@ -4,7 +4,7 @@ secure_session_start();
 
 if (isUserLoggedIn()) {
 
-    if(isset($_POST["comment"])){
+    if(isset($_POST["comment"],$_POST["post_id"])){
         $username = $_SESSION["username"];
         $text = Input::filter_string($_POST["comment"]);
         $text = strlen($text > 250) ? substr($text,0,250) : $text;
@@ -12,6 +12,7 @@ if (isUserLoggedIn()) {
         $date = date('Y-m-d H:i:s');
 
         $dbh->insertPostComment($text, $date, $username, $postID);
+        //$dbh->insertNotification($text, $_SESSION["username"], $dbh->getUserByPost($postID)[0]["username"]);
 
         $result["comments"] = $dbh->getPostComments($postID);
 

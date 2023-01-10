@@ -93,7 +93,7 @@ function listPost(data){
             </article>
         `;
     }else{
-        let posts = data.reverse();
+        let posts = data;
         if(posts.length > $afterPostGoTopButton){
             document.querySelector(".go_top").style.display = "block";
         }

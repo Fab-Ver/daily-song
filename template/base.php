@@ -17,11 +17,8 @@
         <section class="grid">
             <h1>Title</h1>
             <details id="notification" role="list">
-                <summary aria-haspopup="listbox">3 Notification</summary>
-                <ul id="notification_list" role="listbox">
-                    <li>Text shbyhdbsw hxcbuxusnx uhxhs</li>
-                    <li>Text shbyhdbsw hxcbuxusnx uhxhs</li>
-                </ul>
+                <summary id="notification_summury" aria-haspopup="listbox"></summary>
+                <ul id="notification_list" role="listbox"></ul>
             </details>
         </section>
         <main>
@@ -43,6 +40,7 @@
         
         ?>
         <script src="js/base.js" type="text/javascript"></script>
+        <script src="js/notification.js" type="text/javascript"></script>
         
     </div>
 </body>
