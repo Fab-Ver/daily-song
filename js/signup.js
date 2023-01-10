@@ -237,7 +237,7 @@ const birth_date = document.getElementById('birth_date');
 const notification = document.getElementById('notification');
 axios.get("genre.php?genre=get").then(response => {
     let dropdown = document.getElementById('genres_list');
-    dropdown.innerHTML += createGenres(response.data);
+    dropdown.innerHTML += createGenres(response.data,false);
 });
 email.focus();
 

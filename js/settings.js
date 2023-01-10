@@ -8,7 +8,7 @@ window.addEventListener('load', function(){
     axios.get("genre.php?genre=get").then(response => {
         let dropdown = document.getElementById('genres_list');
         if(response.data.length !== undefined){
-            dropdown.innerHTML += createGenres(response.data);
+            dropdown.innerHTML += createGenres(response.data,false);
         } else {
             dropdown.innerHTML += `<li>No genres available</li>`
         }
@@ -200,14 +200,6 @@ function deselectAllNotification(){
 
 function logout(){
     window.location.replace("logout.php");
-}
-
-function clearAllGenres(){
-    let checkboxes = document.querySelectorAll('#genres_list input[type="checkbox"]');
-    let search = document.getElementById('search');
-    search.value = '';
-    filterGenre();
-    checkboxes.forEach(element => element.checked = false);
 }
 
 function showFavoriteGenres(genres){
