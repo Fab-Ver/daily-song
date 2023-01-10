@@ -106,9 +106,11 @@ if(isUserLoggedIn()){
          * Check for username validity
         */
         if(!empty($username)){
-            if(count($dbh->findUserByUsername($username)) != 0){
-                $result['errorMsg'] .= '<li>'.USERNAME_IN_USE.'</li>';
-                array_push($result['errorElem'],'username');
+            if($username !== $current_username){
+                if(count($dbh->findUserByUsername($username)) != 0){
+                    $result['errorMsg'] .= '<li>'.USERNAME_IN_USE.'</li>';
+                    array_push($result['errorElem'],'username');
+                }
             }
         } else {
             $result['errorMsg'] .= '<li>'.USERNAME_REQUIRED.'</li>';
