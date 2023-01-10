@@ -282,7 +282,7 @@ label[for="comments"],label[for="post_notification"],label[for="comment_notifica
   clear: both;
 }
 
-#notifications_form,#profile_settings div,#account_form{
+#notifications_form,#profile_settings div,#account_form,#post_manager{
   overflow: hidden;
 }
 
@@ -292,7 +292,7 @@ label[for="comments"],label[for="post_notification"],label[for="comment_notifica
   text-align: center;
 }
 
-#delete_account_button {
+#delete_account_button,.delete_post_button {
   color : #b71c1c !important;
   border-color: #b71c1c !important;;
 }
@@ -310,6 +310,32 @@ label[for="profile_picture"]{
 
 #new_post_form #description{
   resize: vertical;
+}
+
+article.single_post img {
+  width: 30%;
+  float: right;
+  margin: 2.5%;
+}
+
+article.single_post div.info_post, .buttons_post {
+  clear: both;
+}
+
+article.single_post table{
+  float: left;
+  width: 50%;
+}
+
+.buttons_post button {
+  width: 30%;
+  margin-left: 1.5%;
+  margin-right: 1.5%;
+  float: left;
+}
+
+article.single_post{
+  overflow: hidden;
 }
 
 /*-article_post--------------------------------------------*/
