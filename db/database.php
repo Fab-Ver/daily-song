@@ -455,8 +455,8 @@ class DatabaseHelper{
         return $result;
     }
 
-    function getAllUsernames(){
-        $query = "SELECT username FROM profile";
+    function getAllUsers(){
+        $query = "SELECT username, profilePicture FROM profile";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();

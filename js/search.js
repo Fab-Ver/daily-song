@@ -1,44 +1,39 @@
-function showSearchBar(){
+let users;
+
+function generateSearchBar(){
     return `
-        <form>
-            <input type="text" id="searchBar" name="searchBar" placeholder="Search by username" required>
-            <button type="submit" onClick="showSearchResult()">Search</button>
-        </form>
+        <input type="search" id="searchBar" name="searchBar" placeholder="Search by username" oninput="filterProfile()">
+        <ul id="profileList"></ul>
     `;
 }  
 
+function filterProfile(){
+    axios.get('api-search.php?searchValue=' + searchBar.value).then(response => {
+        const list = document.getElementById('profileList');
+        const searchResult = generateSearchResult(response.data);
+        list.innerHTML = searchResult;
+    });
+
+}
+
 function generateSearchResult(searchValue){
-    let searchResult = "";
-    if(searchValue > 0){
+    let searchResult = '';
+    if(searchValue.length > 0){
         for (let user of searchValue) {
             let profile = `
-                <div>
-                    <img src="${user["profilePicture"]}" alt="" width="5%"/>
-                    <a href="profile.php?user=${user["username"]}">${user["username"]}</a>
-                    ${generateFollowButton(user["canFollow"], user["username"])}
-                </div>
+                <li class="profileList" role="listitem">
+                        <img src="${user["profilePicture"]}" alt="" width="5%"/>
+                        <a href="profile.php?user=${user["username"]}">${user["username"]}</a>
+                </li>
             `;
             searchResult += profile;
         }
     } else {
-        searchResult = `
+        searchResult += `
             <small>No match found</small>
         `;
     }
     return searchResult;
-}
-
-function showSearchResult(){
-    let formData = new FormData();
-    searchValue = document.getElementById("searchBar").value;
-    formData.append('searchValue', searchValue);
-    axios.post('api-search.php', formData).then(response => {
-        console.log(response.data);
-        searchResult = generateSearchResult(response.data["searchResult"]);
-        main.innerHTML += searchResult;
-    });
-    return searchResult;
-    
 }  
 
 function generateFollowButton(canFollow) {
@@ -60,11 +55,7 @@ function updateFollowed(wantToFollow, profileUser){
         }
     });
 }
+
 const main = document.querySelector('main');
-
-axios.get('api-search.php').then(response => {
-    console.log(response.data);
-    const searchBar = showSearchBar();
-    main.innerHTML += searchBar;
-});
-
+main.innerHTML = generateSearchBar();
+filterProfile();
