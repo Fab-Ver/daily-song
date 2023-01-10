@@ -28,10 +28,15 @@ if(!isUserLoggedIn()){
                 if($dbh->isUserActive($username)){
                     if(login($username,$password,$remember_me)){
                         $result['loggedIn'] = true;
-                        $mail = new MailHelper();
-                        if($dbh->checkAccountNotification($username)){
-                            $mail->sendEmailNotification($email,createNewAccessEmail($username),"New access to Nome sito");
+                        try {
+                            $mail = new MailHelper();
+                            if($dbh->checkAccountNotification($username)){
+                                $mail->sendEmailNotification($email,createNewAccessEmail($username),"New access to Nome sito");
+                            }
+                        } catch (Exception $e) {
+                            /**Mail doesn't work because config.php variables not set */
                         }
+                        
                     } else {
                         $result['errorMsg'] = WRONG_PASSWORD;
                         $result['elemID'] = 'login_password';
