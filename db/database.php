@@ -244,7 +244,7 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    function insertPostComment(string $text, string $dateTime, string $username, int $postID) : bool{
+    public function insertPostComment(string $text, string $dateTime, string $username, int $postID) : bool{
         $query = "INSERT INTO comment (text, dateTime, username, postID) VALUES (?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sssi',$text, $dateTime, $username, $postID);
@@ -252,8 +252,16 @@ class DatabaseHelper{
         return $result;
     }
 
+    public function deletePostComment(int $commentID){
+        $query = "DELETE FROM comment WHERE commentID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i',$commentID);
+        $result=$stmt->execute();
+        return $result;
+    }
+
     public function getPostComments(int $postID){
-        $query = "SELECT text, dateTime, comment.username, profilePicture FROM comment JOIN profile ON profile.username = comment.username WHERE postID = ?";
+        $query = "SELECT comment.*, profilePicture FROM comment JOIN profile ON profile.username = comment.username WHERE postID = ? ORDER BY comment.dateTime DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $postID);
         $stmt->execute();

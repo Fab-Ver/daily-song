@@ -36,7 +36,6 @@ function getGenresID(){
             ids.push(element.id);
         }
     });
-    console.log(ids);
     return ids;
 }
 
@@ -277,8 +276,9 @@ function checkImage(){
 /**
  * Get comment of a post
  */
-
+let user;
 function getComment(post){
+    user = post["user"];
     let ret = ``;
     if(post["activeComments"] === 1){
         ret  = `
@@ -288,7 +288,7 @@ function getComment(post){
             </section>
             <details class="show_comments">
                 <summary aria-haspopup="listbox">Show all comments</summary>
-                <ul role="listbox" class="list_comment">`
+                <ul role="listbox" id="list_comment${post["postID"]}">`
         
         for(let j=0; j<post["comments"].length; j++){
             ret += addComment(post["comments"][j]);
@@ -308,13 +308,19 @@ function addComment(comment) {
         <div class="grid">
             <img src="${comment["profilePicture"]}" alt="profile_picture">
             <section class="comment_text">
-                <label for="username" class="username">${comment["username"]}</label>
+                <label for="username" class="username">${comment["username"]}</label>`;
+                
+    if(user === comment["username"]){
+        li_comment += `<button id="delete" onclick="return deleteComment(\'' + ${comment["commentID"]} + '\',\'' + ${comment["postID"]} + '\')"><img src="./upload/trash.png" alt="delete_image"></button>`;
+    }
+    
+    
+    li_comment += `
                 <label for="time_comment" class="time_comment">${comment["dateTime"]}</label>
                 <p>${comment["text"]}</p>
             </section>
         </div>
-    </li>
-    `;
+    </li>`;
     return li_comment;
 }
 
@@ -327,11 +333,24 @@ function publishComment(idButton){
     if(text_comment.value !== ""){
         axios.post("api-home.php",form_data).then(response => {
             text_comment.value = "";
-            li_comment = document.getElementById("article"+[id]).querySelector(".list_comment");
+            li_comment = document.getElementById("list_comment" + id);
             li_comment.innerHTML = ``;
             for(let j=0; j<response.data["comments"].length; j++){
                 li_comment.innerHTML += addComment(response.data["comments"][j]);
             }
         });
     }
+}
+
+function deleteComment(idComment, idPost){
+    let form_data = new FormData();
+    form_data.append("idComment", idComment);
+    form_data.append("idPost", idPost);
+    axios.post("api-home.php", form_data).then(response => {
+        li_comment = document.getElementById("list_comment" + idPost);
+        li_comment.innerHTML = ``;
+        for(let j=0; j<response.data["comments"].length; j++){
+            li_comment.innerHTML += addComment(response.data["comments"][j]);
+        }
+    });
 }

@@ -518,15 +518,15 @@ article.post_body details.show_comments {
   padding-bottom: 1%;
 }
 
-details.show_comments ul.list_comment {
-  max-height: 25vh;
+details.show_comments ul {
+  max-height: 40vh;
   overflow: scroll;
   margin: 0%;
   padding-left: 0%;
 }
 
 details.show_comments li > div {
-  grid-template-columns: 10% 80%;
+  grid-template-columns: 10% 88%;
   grid-gap: 2%;
 }
 
@@ -541,7 +541,7 @@ section.comment_text, section.comment_text label{
 
 section.comment_text label.username {
   float: left;
-  width: 70%;
+  width: 65%;
   font-size: 90%;
 }
 
@@ -550,6 +550,23 @@ section.comment_text label.time_comment {
   width: 25%;
   font-size: 50%;
   text-align: center;
+}
+
+details.show_comments button {
+  float: right;
+  width: 10%;
+  padding: 0%;
+  padding-bottom: 4%;
+  margin-bottom: 0%;
+  max-height: 25px;
+  border: none;
+  background-color: transparent;
+}
+
+details.show_comments button img {
+  max-height: 15px;
+  max-width: 15px;
+  filter: invert(100%);
 }
 
 section.comment_text p {
@@ -679,7 +696,7 @@ section.comment_text p {
     width: 40%;
   }
 
-  details.show_comments ul.list_comment {
+  details.show_comments ul {
     max-height: 35vh;
   }
 
