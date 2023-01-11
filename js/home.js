@@ -106,8 +106,6 @@ function listPost(data){
     }
 }
 
-let li_comment;
-
 axios.get('api-home.php').then(response => {
     //console.log(response.data);
     listPost(response.data);
@@ -141,7 +139,7 @@ axios.get("genre.php").then(response => {
 function clearGenres() {
     document.querySelectorAll('#genres_list input[type="checkbox"]').forEach(element =>{
         element.checked = false;
-    })
+    });
 
     axios.get('api-home.php').then(response => {
         listPost(response.data);

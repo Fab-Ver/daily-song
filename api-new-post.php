@@ -1,6 +1,6 @@
 <?php
 require_once 'bootstrap.php';
-//require 'utils/mail_helper.php';
+require 'utils/mail_helper.php';
 secure_session_start();
 
 if(isUserLoggedIn()){

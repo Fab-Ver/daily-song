@@ -394,7 +394,8 @@ INSERT INTO `track` (`trackID`, `urlSpotify`, `urlImage`, `urlPreview`, `title`,
 ('5gXKDmafOQ8i4lYr62wxTk', 'https://open.spotify.com/track/5gXKDmafOQ8i4lYr62wxTk', 'https://i.scdn.co/image/ab67616d00001e0231b0f8c9ee642bbb120ee3fd', 'https://p.scdn.co/mp3-preview/4e1ef619354e8cdf4c80352ebe3f77374476e2e7?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Deep Jungle Walk', 'Astrix', 'He.art'),
 ('0iGPqIcglmqPUTMv7X2VEb', 'https://open.spotify.com/track/0iGPqIcglmqPUTMv7X2VEb', 'https://i.scdn.co/image/ab67616d00001e0262a64b9388cdff21e97ccac5', 'https://p.scdn.co/mp3-preview/1b1e4267b3fae3bc5b71c70bd94b8293237911cf?cid=4467e6ad0f484420be8e1546bc0d3a60', 'The Pretender', 'Infected Mushroom', 'Army of Mushrooms'),
 ('1IBCR7sEQwU9P88AP4xcOn', 'https://open.spotify.com/track/1IBCR7sEQwU9P88AP4xcOn', 'https://i.scdn.co/image/ab67616d00001e02259d113181490d7de9141f03', 'https://p.scdn.co/mp3-preview/f1d0780f353a57e1c44f1d6994cad6b602bda426?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Saeed', 'Infected Mushroom', 'The Legend Of The Black Shawarma'),
-('2Ms9rXvqIqCzn9BYkhVoYA', 'https://open.spotify.com/track/2Ms9rXvqIqCzn9BYkhVoYA', 'https://i.scdn.co/image/ab67616d00001e0237233abcff297b770d93ad8d', 'https://p.scdn.co/mp3-preview/43746f050703e4183a5412041f9588ccb68c449e?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Louna', 'Sam Shure', 'Laconia');
+('2Ms9rXvqIqCzn9BYkhVoYA', 'https://open.spotify.com/track/2Ms9rXvqIqCzn9BYkhVoYA', 'https://i.scdn.co/image/ab67616d00001e0237233abcff297b770d93ad8d', 'https://p.scdn.co/mp3-preview/43746f050703e4183a5412041f9588ccb68c449e?cid=4467e6ad0f484420be8e1546bc0d3a60', 'Louna', 'Sam Shure', 'Laconia'),
+('4Y4ChepTcFHxd3jd2LeOKo', 'https://open.spotify.com/track/4Y4ChepTcFHxd3jd2LeOKo', 'https://i.scdn.co/image/ab67616d00001e029fb175c4bdffcbf004019ef4', 'null', 'Marmellata#25', 'Cesare Cremonini', '1999 - 2010 The Greatest Hits');
 
 
 
@@ -415,7 +416,8 @@ INSERT INTO `post` (`postID`, `description`, `activeComments`, `dateTime`, `trac
 (13, 'My favorite musical duo !!! Love their music :)', 1, '2023-01-05 23:57:21', '1IBCR7sEQwU9P88AP4xcOn', 'fabio_veroli',0),
 (14, 'Love this Foo Fighters cover !!! Which is better this or the original ?', 1, '2023-01-06 00:03:33', '0iGPqIcglmqPUTMv7X2VEb', 'fabio_veroli',0),
 (15, 'Love this song!!!', 1, '2023-01-07 00:12:13', '2Ms9rXvqIqCzn9BYkhVoYA', 'fabio_veroli',0),
-(16, '', 0, '2023-01-08 00:17:20', '5gXKDmafOQ8i4lYr62wxTk', 'fabio_veroli',0);
+(16, '', 0, '2023-01-08 00:17:20', '5gXKDmafOQ8i4lYr62wxTk', 'fabio_veroli',0),
+(17, 'wow che bella', 1, '2023-01-011 10:17:20', '4Y4ChepTcFHxd3jd2LeOKo', 'luca_bigo',0);
 
 INSERT INTO `belongs` (`genreID`, `postID`) VALUES
 (42, 3),
@@ -454,7 +456,9 @@ INSERT INTO `belongs` (`genreID`, `postID`) VALUES
 (97, 13),
 (97, 14),
 (108, 15),
-(111, 16);
+(111, 16),
+(80, 17),
+(3, 17);
 
 INSERT INTO `user_tokens` (`tokenID`, `selector`, `hashed_validator`, `expiry`, `username`) VALUES
 (5, 'd84a6480a02da00e7c4c0840b88872e7', '$2y$10$TVUbD5B8zOb.9NPgDp2nFuDQuVYuBNTP/IZ06L5BGPkVhg6Bimnpi', '2023-02-06 23:46:32', 'fabio_veroli');
@@ -471,3 +475,9 @@ INSERT INTO `reaction` (`postID`, `username`, `likes`) VALUES
 (14, 'fabio_veroli', 1),
 (15, 'fabio_veroli', 1),
 (16, 'fabio_veroli', 1);
+
+INSERT INTO `comment` (`commentID`, `text`, `dateTime`, `username`, `postID`) VALUES
+(1,'adoro questa canzone', '2023-01-011 11:17:20', 'luca_bigo', '17'),
+(2,'odio questa canzone', '2023-01-011 12:17:20', 'luca_bigo', '17'),
+(3,'adoro questa canzone', '2023-01-011 11:17:20', 'sara-capp', '17'),
+(4,'odio questa canzone', '2023-01-011 12:17:20', 'sara-capp', '17');

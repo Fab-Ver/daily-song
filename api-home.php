@@ -19,7 +19,12 @@ if (isUserLoggedIn()) {
         for ($j = 0; $j < count($result["comments"]);$j++){
             $result["comments"][$j]["profilePicture"] = UPLOAD_DIR . $result["comments"][$j]["profilePicture"];
         }
-
+    }else if(isset($_POST["idComment"])){
+        $dbh->deletePostComment($_POST["idComment"]);
+        $result["comments"] = $dbh->getPostComments($_POST["idPost"]);
+        for ($j = 0; $j < count($result["comments"]);$j++){
+            $result["comments"][$j]["profilePicture"] = UPLOAD_DIR . $result["comments"][$j]["profilePicture"];
+        }
     }else{
         if(isset($_POST["day"])){
             $result = $dbh->getPostOfDay($_SESSION["username"],$_POST["day"]);
@@ -81,7 +86,8 @@ if (isUserLoggedIn()) {
                 for ($j = 0; $j < count($result[$i]["comments"]);$j++){
                     $result[$i]["comments"][$j]["profilePicture"] = UPLOAD_DIR . $result[$i]["comments"][$j]["profilePicture"];
                 }
-        
+                
+                $result[$i]["user"] = $_SESSION["username"];
                 $i++;
             }
         }
