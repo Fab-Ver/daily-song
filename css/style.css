@@ -225,6 +225,34 @@ main {
   text-align: left;
 }
 
+#notification_list div {
+  grid-template-columns: 65% 15% 10%;
+}
+
+#notification_list #not_text, #notification_list #not_time {
+  display: flex;
+  align-items: center;
+}
+
+#notification_list li:hover {
+  background-color: #11191f;
+}
+
+#notification_list div p {
+  text-align: left;
+  margin-bottom: 0%;
+}
+
+#notification_list div button {
+  border: none;
+  background-color: transparent;
+  margin-bottom: 0%;
+}
+
+#notification_list div img {
+  filter: invert(100%);
+}
+
 /*-selector genere and date home-----------------------------------*/
 
 main #track_genres {

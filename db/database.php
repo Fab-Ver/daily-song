@@ -569,13 +569,30 @@ class DatabaseHelper{
     }
 
     public function getNotification(string $username){
-        $query = "SELECT * FROM notification WHERE usernameRec = ?";
+        $query = "SELECT * FROM notification WHERE usernameRec = ? "; //AND usernameRec != usernameSed
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function insertNotification(string $text, string $date, int $type, string $userSed, string $userRec){
+        //if($userRec !== $userSed){
+            $query = "INSERT INTO notification (text, dateTime, type, usernameRec, usernameSed) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param('ssiss', $text, $date, $type, $userRec, $userSed);
+            $result = $stmt->execute();
+            return $result;
+        //}
+    }
+
+    public function removeNotification($id){
+        $query = "DELETE FROM notification WHERE notificationID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i',$id);
+        $stmt->execute();
     }
 }
 ?>
