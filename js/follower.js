@@ -1,23 +1,34 @@
-function showSearchResult(searchResult){
+function showSearchResult(data){
     let result = "";
-    for (let user of searchResult) {
-        let profile = `
-            <div>
-                <img src="${user["profilePicture"]}" alt="" width="5%"/>
-                <a href="profile.php?user=${user["username"]}">${user["username"]}</a>
-                ${generateFollowButton(user["canFollow"], user["username"])}
+    for (let user of data["searchResult"]) {
+        let startProfile = `
+            <div class="follower left-text">
+                <div class="followerDiv">
+                    <img class="followerImage" src="${user["profilePicture"]}" alt=""/>
+                    <a href="profile.php?user=${user["username"]}">${user["username"]}</a>
+                </div>
+                <div class="followerDiv">
+        `;
+        let isNotMe = "";
+        if(data["sessionUser"] != user["username"]){
+            isNotMe = generateFollowButton(user["canFollow"], user["username"]);
+        }
+        let endProfile = `
+            </div>
             </div>
         `;
-        result += profile;
+        startProfile += isNotMe;
+        startProfile += endProfile
+        result += startProfile;
     }
     return result;
 }
 
 function generateFollowButton(canFollow, profileUser) {
     if (canFollow) {
-        return `<button id="followButton_${profileUser}" name="follow" onclick="updateFollowed(true, this.id)"> Follow</button>`;
+        return `<button class="followerButton" id="followButton_${profileUser}" name="follow" onclick="updateFollowed(true, this.id)"> Follow</button>`;
     } else {
-        return `<button id="followButton_${profileUser}" class="secondary" name="unfollow" onclick="updateFollowed(false, this.id)">Unfollow</button>`;
+        return `<button class="followerButton" id="followButton_${profileUser}" class="secondary" name="unfollow" onclick="updateFollowed(false, this.id)">Unfollow</button>`;
     }
 }
 
@@ -36,7 +47,7 @@ function updateFollowed(wantToFollow, id){
 
 axios.get('api-follower.php'+location.search).then(response => {
     console.log(response.data);
-    const searchResult = showSearchResult(response.data["searchResult"]);
+    const searchResult = showSearchResult(response.data);
     const content = document.querySelector("#content");
     content.innerHTML = searchResult;
 });

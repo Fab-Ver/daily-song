@@ -168,6 +168,26 @@ aside.menu_bar {
   max-width: 90%;
 }
 
+.follower{
+  display: flex !important;
+}
+
+.followerImage{
+ width: 5%;
+}
+
+.followerButton{
+  width: 40%;
+  height: 70%;
+  text-align: center;
+  padding: 1%;
+}
+
+.followerDiv{
+  width: 45%;
+  align-self: center;
+}
+
 /*-title + notification--------------------------------------------*/
 
 main {
