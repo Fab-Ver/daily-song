@@ -60,12 +60,17 @@ if(isUserLoggedIn()){
             $result['errorMsg'] = 'While processing your data the following errors occurred: '.'<ul>'. $result['errorMsg'].'<ul>';
         }
     } else if(isset($_POST['checkUsername'])){
+        $result['valid'] = false;
         $username = Input::filter_string($_POST['checkUsername']);
         if(!empty($username)){
             if($username !== Input::filter_string($_SESSION['username'])){
                 if(count($dbh->findUserByUsername($username)) != 0){
                     $result['errorMsg'] = USERNAME_IN_USE;
+                } else {
+                    $result['valid'] = true;
                 }
+            } else {
+                $result['valid'] = true;
             }
         } else {
             $result['errorMsg'] = USERNAME_REQUIRED;

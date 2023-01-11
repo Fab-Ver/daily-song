@@ -8,10 +8,13 @@ if(!isUserLoggedIn()){
     $result['errorMsg'] = "";
     $result['elemID'] = "";
     if(isset($_POST["checkEmail"])){
+        $result['valid'] = false;
         $email = Input::filter_string($_POST['checkEmail']);
         if(Input::validate_email($email)){
             if(count($dbh->findUsernameByEmail($email)) == 0){
                 $result['errorMsg'] = NO_USER;
+            } else {
+                $result['valid'] = true;
             }
         } else {
             $result['errorMsg'] = INVALID_EMAIL;

@@ -95,7 +95,7 @@ function submitNewPostForm(){
     formID.append('checkTrackID',track_id);
     axios.post('api-track.php',formID).then(response => {
         let error_div = document.querySelector('div.error_form');
-        if(response.data.errorMsg !== ""){
+        if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
             error_div.innerHTML = response.data.errorMsg;
             error_div.removeAttribute('hidden');
             error_div.focus();
@@ -120,7 +120,7 @@ function submitNewPostForm(){
                         formNewTrack.append('artist',artists_names.toString());
                         formNewTrack.append('albumName',track_data.album.name);
                         axios.post('api-track.php',formNewTrack).then(new_track_response => {
-                            if(new_track_response.data.errorMsg !== ""){
+                            if(new_track_response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
                                 error_div.innerHTML = new_track_response.data.errorMsg;
                                 error_div.removeAttribute('hidden');
                                 error_div.focus();
@@ -144,7 +144,7 @@ function createPost(track_id){
     formPost.append('genresID',JSON.stringify(getGenresID()));
     axios.post('api-new-post.php',formPost).then(response => {
         let error_div = document.querySelector('div.error_form');
-        if(response.data.errorMsg !== ""){
+        if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
             error_div.innerHTML = response.data.errorMsg;
             error_div.removeAttribute('hidden');
             error_div.focus();

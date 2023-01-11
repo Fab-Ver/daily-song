@@ -7,6 +7,7 @@ secure_session_start();
 if(!isUserLoggedIn()){
     if(isset($_POST['email'])){
         $result['errorMsg'] = "";
+        $result['sent'] = false;
         $email = Input::filter_string($_POST['email']);
         if(Input::validate_email($email)){
             if(count($dbh->findUsernameByEmail($email)) != 0){
@@ -19,6 +20,8 @@ if(!isUserLoggedIn()){
                         $mail = new MailHelper();
                         if(!$mail->sendResetPasswordEmail($email,$token)){
                             $result['errorMsg'] = MAIL_NOT_SENT;
+                        } else {
+                            $result['sent'] = true;
                         }
                     } catch (Exception $e){
                         /**Mail doesn't work because config.php variables not set*/

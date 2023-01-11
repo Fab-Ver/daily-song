@@ -63,13 +63,13 @@ function resetPassword(password,confirm_password){
     formData.append('confirmPassword',confirm_password);
     axios.post('reset_password.php',formData).then(response => {
         let error_div = document.querySelector('div.error_form');
-        if(response.data.errorMsg !== ""){
+        if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
             error_div.innerHTML = response.data.errorMsg;
             error_div.style.setProperty("border-color", "#b71c1c", "important");
             error_div.removeAttribute('hidden');
             error_div.focus();
-        } else {
-            error_div.innerHTML = 'Your password has been updated successfully';
+        } else if(response.data.reset === true) {
+            error_div.innerHTML = 'Your password has been updated successfully. <a href="./index.php">Back to Login</a>';
             error_div.removeAttribute('hidden');
             error_div.style.setProperty("border-color", "#2e7d32", "important");
             error_div.focus();

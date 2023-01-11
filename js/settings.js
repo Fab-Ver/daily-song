@@ -156,7 +156,7 @@ function submitNotificationForm(){
     formData.append('account',document.getElementById('account_notification').checked);
     axios.post('api-settings.php',formData).then(response => {
         let error_div = document.getElementById('error_notification');
-        if(response.data.errorMsg !== ""){
+        if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
             error_div.innerHTML = response.data.errorMsg;
             error_div.removeAttribute('hidden');
             error_div.focus();
@@ -179,7 +179,7 @@ function updateFavoriteGenres(){
         let formData = new FormData();
         formData.append('favoriteGenres',JSON.stringify(getGenresID()));
         axios.post('api-settings.php',formData).then(response => {
-            if(response.data.errorMsg !== ""){
+            if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
                 error_div.innerHTML = response.data.errorMsg;
                 error_div.removeAttribute('hidden');
                 error_div.focus();
@@ -265,7 +265,7 @@ function updateAccountSettings(){
             formData.append('profile_picture',profile_picture.files[0]);
         }
         axios.post('api-settings.php',formData).then(response => {
-            if(response.data.errorMsg !== ""){
+            if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
                 error_div.innerHTML = response.data.errorMsg;
                 error_div.removeAttribute('hidden');
                 error_div.focus();
@@ -296,10 +296,10 @@ function checkSettingsUsername(){
         let formData = new FormData();
         formData.append('checkUsername',username.value);
         axios.post('api-settings.php',formData).then(response => {
-            if(response.data.errorMsg !== ""){
+            if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
                 showError(username,response.data.errorMsg);
                 setValid(username,false);
-            } else {
+            } else if(response.data.valid === true) {
                 setValid(username,true);
             }
         });

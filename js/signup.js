@@ -78,10 +78,10 @@ function checkSignUpEmail(){
             let formData = new FormData();
             formData.append('checkEmail',email.value);
             axios.post('registration.php',formData).then(response => {
-                if(response.data.errorMsg !== ""){
+                if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
                     showError(email,response.data.errorMsg);
                     setValid(email,false);
-                } else {
+                } else if(response.data.valid === true){
                     setValid(email,true);
                 }
             });
@@ -97,10 +97,10 @@ function checkUsername(){
         let formData = new FormData();
         formData.append('checkUsername',username.value);
         axios.post('registration.php',formData).then(response => {
-            if(response.data.errorMsg !== ""){
+            if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
                 showError(username,response.data.errorMsg);
                 setValid(username,false);
-            } else {
+            } else if(response.data.valid === true){
                 setValid(username,true);
             }
         });
@@ -217,11 +217,11 @@ function submitForm(first_name,last_name,telephone,username,password,confirm_pas
 
     axios.post('registration.php',formData).then(response => {
         let error_div = document.querySelector('div.error_form');
-        if(response.data.errorMsg !== ""){
+        if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
             error_div.innerHTML = response.data.errorMsg;
             error_div.removeAttribute('hidden');
             error_div.focus();
-            if(response.data.errorElem !== undefined){
+            if(response.data.errorElem !== undefined && response.data.errorElem !== undefined){
                 response.data.errorElem.forEach(element => setValid(document.getElementById(element),false));
             }
         }  else if(response.data.loggedIn === true) {

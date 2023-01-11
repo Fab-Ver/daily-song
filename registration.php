@@ -7,19 +7,25 @@ $result['loggedIn'] = false;
 if(!isUserLoggedIn()){
     $result['errorMsg'] = "";
     if(isset($_POST['checkEmail'])){
+        $result['valid'] = false;
         $email = Input::filter_string($_POST["checkEmail"]);
         if(Input::validate_email($email)){
             if(count($dbh->findUsernameByEmail($email)) != 0){
                 $result['errorMsg'] = EMAIL_IN_USE;
+            } else {
+                $result['valid'] = true;
             }
         } else {
             $result['errorMsg'] = INVALID_EMAIL;
         }
     } else if(isset($_POST['checkUsername'])){
+        $result['valid'] = false;
         $username = Input::filter_string($_POST['checkUsername']);
         if(!empty($username)){
             if(count($dbh->findUserByUsername($username)) != 0){
                 $result['errorMsg'] = USERNAME_IN_USE;
+            } else {
+                $result['valid'] = true;
             }
         } else {
             $result['errorMsg'] = USERNAME_REQUIRED;

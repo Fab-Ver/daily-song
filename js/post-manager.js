@@ -12,7 +12,7 @@ function createPostManager(){
     return axios.get('./post_manager.php?action=getPost').then(response => {
         if(response.data.post.length !== undefined){
             if(response.data.post.length === 0){
-                manager += `<h2>No published posts</h2><p>Post something to use the post manager</p>`
+                manager += `<hgroup><h3>No published posts</h3><small>Post something to use the post manager</small><hgroup>`
             } else {
                 response.data.post.forEach(element => {
                     manager += createSinglePost(element);
