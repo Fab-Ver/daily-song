@@ -188,13 +188,13 @@ function remember_me(string $username, int $day = 30){
 
 function createNewAccessEmail(string $username) : string{
    
-    $body='<p><h1>New access to Nome Sito</h1></p>';
+    $body='<p><h1>New access to DailySong </h1></p>';
     $body.='<p>-------------------------------------------------------------</p>';
     $body.='<p><b>'.$username.'</b> we noticed you logged in from a new device. If so, then you don\'t have to do anything about it.</p>';	
     $body.='<p>Date & Time: '.date("Y-m-d H:i:s");	
     $body.='<p>-------------------------------------------------------------</p>';
     $body.='<p>Wasn\'t you? Please make sure you update your password</p>'; 	
-    $body.='<p>Progetto Web</p>';
+    $body.='<p>by DailySong</p>';
     return $body;
 }
 
@@ -204,17 +204,17 @@ function createNewPostEmail(string $my_username, string $post_username) : string
     $body.='<p>Date & Time: '.date("Y-m-d H:i:s");	
     $body.='<p>-------------------------------------------------------------</p>';
     $body.='<p>We send this email when one of your follower publish a new post, you can disable this email in your account settings.</p>'; 
-    $body.='<p>by Progetto Web</p>';
+    $body.='<p>by DailySong</p>';
     return $body;
 }
 
 function createNewFollowerEmail(string $my_username, string $follower_username) : string{
     $body='<p>Hey there, '.$my_username.'</p>';
-    $body.='<p>You have a new follower on Nome Sito :<b>'.$follower_username.'</b>!</p>';	
+    $body.='<p>You have a new follower on DailySong  :<b>'.$follower_username.'</b>!</p>';	
     $body.='<p>Date & Time: '.date("Y-m-d H:i:s");	
     $body.='<p>-------------------------------------------------------------</p>';
-    $body.='<p>We send this email when people follow you on Nome Sito, you can disable this email in your account settings.</p>'; 
-    $body.='<p>by Progetto Web</p>';
+    $body.='<p>We send this email when people follow you on DailySong, you can disable this email in your account settings.</p>'; 
+    $body.='<p>by DailySong </p>';
     return $body;
 }
 

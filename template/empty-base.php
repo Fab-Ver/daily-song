@@ -4,6 +4,7 @@
     <meta charset='utf-8'/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo $templateParams["title"]; ?></title>
+    <link rel="icon" href="<?php echo UPLOAD_DIR.'logo.png'?>">
     <link rel="stylesheet" type="text/css" href="./css/form_style.css" />
     
     <!--Pico.css-->
@@ -14,7 +15,8 @@
     <?php
         if(!isset($templateParams["error"])){
             echo '<header>
-                <h1>Nome sito</h1>
+                <img src="'.UPLOAD_DIR.'logo.png" alt=""></img>
+                <h1>DailySong</h1>
             </header>';
         }
     ?>

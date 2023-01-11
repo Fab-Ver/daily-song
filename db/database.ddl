@@ -2,13 +2,13 @@
 -- Database Section
 -- ________________ 
 
-create database progetto_web;
-use progetto_web;
+create database daily_songDB;
+use daily_songDB;
 
 -- drop user 'secure_user'@'localhost';
 flush privileges;
 CREATE USER 'secure_user'@'localhost' IDENTIFIED BY 'p5N3RHN9fWE5QRvxxuPcpJXZ';
-GRANT SELECT, INSERT, UPDATE, DELETE ON `progetto_web`.* TO 'secure_user'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `daily_songDB`.* TO 'secure_user'@'localhost';
 
 
 -- Tables Section

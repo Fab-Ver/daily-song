@@ -11,7 +11,7 @@ if(isUserLoggedIn()){
         }
     }
     if($alreadyPost){
-        $templateParams['title'] = "Nome sito - New Post";
+        $templateParams['title'] = "DailySong - New Post";
         $templateParams['error'] = '
             <article>
                 <h2>You already posted</h2>
@@ -20,7 +20,7 @@ if(isUserLoggedIn()){
         ';
         require 'template/base.php';
     } else {
-        $templateParams['title'] = 'Nome sito - New Post';
+        $templateParams['title'] = 'DailySong - New Post';
         $templateParams["js"] = array("js/config.js","https://unpkg.com/axios/dist/axios.min.js","utils/functions.js","js/new_post.js");
     
         require 'template/base.php';

@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title><?php echo $templateParams["title"]; ?></title>
+    <link rel="icon" href="<?php echo UPLOAD_DIR.'logo.png'?>">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
     <link rel="stylesheet" type="text/css" href="./css/default_style.css" />
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
@@ -15,7 +16,7 @@
     </aside>
     <div class="main-div">
         <section class="grid">
-            <h1>Title</h1>
+            <h1>DailySong</h1>
             <details id="notification" role="list">
                 <summary id="notification_summury" aria-haspopup="listbox"></summary>
                 <ul id="notification_list" role="listbox"></ul>

@@ -28,10 +28,16 @@ header h1{
     text-align: center;
 }
 
+header {
+    text-align: center;
+}
+
 #genres_list {
     overflow-y: scroll;
     height: 40vh;
 }
+
+
 
 @media screen and (max-width: 1024px) {
     #genres_list {

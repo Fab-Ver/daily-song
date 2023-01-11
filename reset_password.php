@@ -2,7 +2,7 @@
 require_once 'bootstrap.php';
 secure_session_start();
 
-$templateParams["title"] = "Nome sito - Reset Password";
+$templateParams["title"] = "DailySong - Reset Password";
 
 if(!isUserLoggedIn()){
     if(isset($_GET['token'])){

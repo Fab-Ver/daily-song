@@ -35,7 +35,7 @@ if(isUserLoggedIn()){
         header('Content-Type: application/json');
         echo json_encode($result);
     } else {
-        $templateParams['title'] = 'Nome sito - Post Manager';
+        $templateParams['title'] = 'DailySong   - Post Manager';
         $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","utils/functions.js","js/modal.js","js/post-manager.js");
     
         require 'template/base.php';

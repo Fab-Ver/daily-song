@@ -20,7 +20,7 @@ require 'vendor/autoload.php';
                 $this->mail->Password   = PASSWORD;            //SMTP password
                 $this->mail->SMTPSecure = 'tls';               //Enable implicit TLS encryption
                 $this->mail->Port       = 587; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-                $this->mail->setFrom('from@example.com', 'Progetto Web'); 
+                $this->mail->setFrom('from@example.com', 'DailySong'); 
                 $this->mail->isHTML(true); //Set email format to HTML
             } else {
                 throw new Exception('Invalid email or password');
@@ -35,7 +35,7 @@ require 'vendor/autoload.php';
             $body.='<p>-------------------------------------------------------------</p>';
             $body.='<p>The link will expire after 1 day for security reason.</p>';
             $body.='<p>If you did not request this forgotten password email, no action is needed, your password will not be reset.</p>';   	
-            $body.='<p>Progetto Web</p>';
+            $body.='<p>by DailySong</p>';
             $this->mail->Body = $body;
             $this->mail->addAddress($recipient);
             try{
@@ -67,7 +67,7 @@ require 'vendor/autoload.php';
             $body.='<p>Was it you? Then try to <a href="http://localhost/progetto_web/forgot_password.php">reset the password</a>.</p>';	
             $body.='<p>Wasn\'t it you? Make sure you reset your password as soon as your account is unlocked (about 3 hours)</p>';	
             $body.='<p>-------------------------------------------------------------</p>';  	
-            $body.='<p>Progetto Web</p>';
+            $body.='<p>DailySong</p>';
             $this->mail->Body = $body;
             $this->mail->addAddress($recipient);
             try{
