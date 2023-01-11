@@ -165,7 +165,7 @@ aside.menu_bar {
 }
 
 .post-modal{
-  max-width: 90%;
+  width: 90%;
 }
 
 .follower{
@@ -614,7 +614,7 @@ section.comment_text p {
   }
 
   .post-modal{
-    max-width: 70%;
+    width: 50%;
   }
 
   .main-div {
@@ -713,7 +713,7 @@ section.comment_text p {
   }
 
   .post-modal{
-    width: 40%;
+    width: 45%;
   }
 
   details.show_comments ul {
