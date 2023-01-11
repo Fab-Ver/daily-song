@@ -30,6 +30,7 @@ header h1{
 
 header {
     text-align: center;
+    padding-bottom: 0% !important;
 }
 
 #genres_list {
