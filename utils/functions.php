@@ -218,4 +218,14 @@ function createNewFollowerEmail(string $my_username, string $follower_username) 
     return $body;
 }
 
+function createNewCommentEmail(string $usernameReceiver, string $usernameSender) : string {
+    $body='<p>Hey there, '.$usernameReceiver.'</p>';
+    $body.='<p><b>'.$usernameSender.'</b> just comments one of your posts. </p>';	
+    $body.='<p>Date & Time: '.date("Y-m-d H:i:s");	
+    $body.='<p>-------------------------------------------------------------</p>';
+    $body.='<p>We send this email when someone comments one of your posts on DailySong, you can disable this email in your account settings.</p>'; 
+    $body.='<p>by DailySong </p>';
+    return $body;
+}
+
 ?>
