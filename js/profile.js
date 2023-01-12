@@ -15,10 +15,12 @@ function showGenres(genresArray){
 
 function showPosts(posts, sessionUsername){
     let result = "";
+    tabIndex = 0;
     reversePosts = posts.reverse();
     for(let i of reversePosts){
+        tabIndex++;
         let post = `
-            <img class="post-image" src="${i["urlImage"]}" alt="" data-target="modal-example-${i["postID"]}" onClick="toggleModal(event)" />
+            <img class="post-image" src="${i["urlImage"]}" alt="" data-target="modal-example-${i["postID"]}" tabindex="${tabIndex}" onClick="toggleModal(event)" />
             <dialog id="modal-example-${i["postID"]}">
                 <article class="post-modal">
                     <div class="grid">
