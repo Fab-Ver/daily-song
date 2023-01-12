@@ -8,7 +8,7 @@ We use Gamil to test the email notification functionality on our local website. 
 5. Insert your email and password in [config.php](config.php)
 6. Now you can use the email functionality
 
-##Test new post functionality
+## Test new post functionality
 We use Spotify API to retrive our post tracks data. By default, the js/config.js ClientID and ClientSecret are null, so when try to get data from spotify API, an error is thrown. To be able to test the new post functionality you have to: 
 1. Go to [Spotify for Developers](https://developer.spotify.com/)
 2. Access with your Spotify credentials or create a Spotify account 
