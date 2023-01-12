@@ -51,7 +51,7 @@ if (isUserLoggedIn()) {
             foreach($result as $post){
                 $time_ago = $dbh->getTimePost($post["postID"]);
                 if($today === 0){
-                    $result[$i]["time_ago"] = $time_ago["hour"] . ":" . $time_ago["minute"];
+                    $result[$i]["time_ago"] = ($time_ago["hour"] < 10 ? '0'.$time_ago["hour"] : $time_ago["hour"]). ":" . ($time_ago["minute"] < 10 ? '0'.$time_ago["minute"] : $time_ago["minute"]);
                 }else if($today === 1){
                     $result[$i]["time_ago"] = (string)$time_ago["day"];
                 }else{
