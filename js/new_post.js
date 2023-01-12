@@ -14,8 +14,8 @@ function createNewPostForm(){
     <article class="grid">
         <div>
         <hgroup>
-            <h1>New Post</h1>
-            <h2>Enter Spotify track URL to generate post info</h2>
+            <h2>New Post</h2>
+            <small>Enter Spotify track URL to generate post info</small>
         </hgroup>
         <div class="error_form" tabindex="-1" hidden></div>
         <form action="#" method="post" id="new_post_form">
@@ -27,8 +27,8 @@ function createNewPostForm(){
                         Select track music genres (max 3):
                         <details id="post_genres" role="list">
                             <summary aria-haspopup="listbox">Track music genres...</summary>
-                            <ul id="genres_list" role="listbox">
-                                <li><input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></li>
+                            <ul id="genres_list" role="group" title="List of music genres">
+                                <li><input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></input></li>
                             </ul>
                         </details>
             </label>
@@ -37,10 +37,10 @@ function createNewPostForm(){
                 <textarea id="description" name="description" placeHolder="Insert here post description..." maxlength="500"></textarea>
             </label>
             <label for="comments">
-                <input type="checkbox" id="comments" name="comments" role="switch" checked>
+                <input type="checkbox" id="comments" name="comments" role="switch" checked></input>
                 Allow comments
             </label>
-            <input type="button" name="publish" value="Publish" onclick="checkNewPostForm()"></input>
+            <input type="button" id="publish_post" name="publish" value="Publish" onclick="checkNewPostForm()"></input>
         </form>
         </div>
     </article>
@@ -64,6 +64,8 @@ function checkURL(){
 }
 
 function checkNewPostForm(){
+    let button = document.getElementById('publish_post');
+    button.setAttribute('disabled','true');
     let errors = new Array();
     let err_element = new Array();
 
@@ -79,6 +81,7 @@ function checkNewPostForm(){
     if(errors.length == 0){
         submitNewPostForm();
     } else {
+        button.removeAttribute('disabled');
         err_element.forEach(element => {
             setValid(element,false);
         });
@@ -90,18 +93,21 @@ function checkNewPostForm(){
 }
 
 function submitNewPostForm(){
+    let button = document.getElementById('publish_post');
     let formID = new FormData();
     let track_id = url_box.value.match(regex)[2];
     formID.append('checkTrackID',track_id);
     axios.post('api-track.php',formID).then(response => {
         let error_div = document.querySelector('div.error_form');
         if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
+            button.removeAttribute('disabled');
             error_div.innerHTML = response.data.errorMsg;
             error_div.removeAttribute('hidden');
             error_div.focus();
         } else if(response.data.checkTrackID === false){
                 retrieveData(track_id).then(track_data => {
                     if(track_data.error_string !== undefined){
+                        button.removeAttribute('disabled');
                         error_div.innerHTML = 'SPOTIFY: ' + track_data.error_string.toUpperCase() + ', try later.';
                         error_div.removeAttribute('hidden');
                         error_div.focus();
@@ -121,6 +127,7 @@ function submitNewPostForm(){
                         formNewTrack.append('albumName',track_data.album.name);
                         axios.post('api-track.php',formNewTrack).then(new_track_response => {
                             if(new_track_response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
+                                button.removeAttribute('disabled');
                                 error_div.innerHTML = new_track_response.data.errorMsg;
                                 error_div.removeAttribute('hidden');
                                 error_div.focus();
@@ -138,6 +145,7 @@ function submitNewPostForm(){
 
 function createPost(track_id){
     let formPost = new FormData();
+    let button = document.getElementById('publish_post');
     formPost.append('description',description.value);
     formPost.append('activeComments',comments.checked.toString());
     formPost.append('trackID',track_id);
@@ -145,6 +153,7 @@ function createPost(track_id){
     axios.post('api-new-post.php',formPost).then(response => {
         let error_div = document.querySelector('div.error_form');
         if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
+            button.removeAttribute('disabled');
             error_div.innerHTML = response.data.errorMsg;
             error_div.removeAttribute('hidden');
             error_div.focus();
