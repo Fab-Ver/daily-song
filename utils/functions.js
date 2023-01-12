@@ -278,6 +278,7 @@ function checkImage(){
  */
 let user;
 function getComment(post){
+    console.log(post);
     user = post["user"];
     let ret = ``;
     if(post["activeComments"] === 1){

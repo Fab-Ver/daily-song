@@ -17,11 +17,11 @@ function showLikes(postID, numLike, numDislike, isMyReaction, myReaction){
 	let result =`
 		<button class="like-button" onclick="updateLike(true, ${postID})">
 			${likeImg}
-			<label class"caption" id="like${postID}">${numLike}</label>
+			<label class="caption" id="like${postID}">${numLike}</label>
 		</button>
 		<button class="like-button dislike-button" onclick="updateLike(false, ${postID})">
 			${dislikeImg}
-			<label class"caption" id="dislike${postID}">${numDislike}</label>
+			<label class="caption" id="dislike${postID}">${numDislike}</label>
 		</button>
 	`;
 			

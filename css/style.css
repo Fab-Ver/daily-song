@@ -133,11 +133,13 @@ aside.menu_bar {
 
 .like-button > img {
   max-width: 2em;
+  display: inline-block;
 }
 
 .dislike-button > img {
   max-width: 2em;
   transform: rotate(180deg);
+  display: inline-block;
 }
 
 .modal-image{
@@ -147,12 +149,13 @@ aside.menu_bar {
 
 .song-preview {
   clear: both;
+  margin-bottom: 0%;
 }
 
 .caption {
   display: inline-block;
   width: 5%;
-  margin: 0 !important;
+  margin: 1%;
 }
 
 .followButton{
@@ -167,6 +170,11 @@ aside.menu_bar {
 
 .post-modal{
   width: 90%;
+}
+
+.comment-footer{
+  text-align: left;
+  margin-top: 0%;
 }
 
 .follower{
@@ -205,6 +213,11 @@ aside.menu_bar {
 
 .followedImage{
  border-radius: 40%;
+}
+
+.post-comments{
+  clear: both;
+  margin-top: 15%;
 }
 
 /*-title + notification--------------------------------------------*/
@@ -784,7 +797,7 @@ section.comment_text p {
   }
 
   .post-modal{
-    width: 35%;
+    width: 40%;
   }
 
   details.show_comments ul {

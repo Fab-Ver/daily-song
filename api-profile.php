@@ -4,6 +4,7 @@ secure_session_start();
 
 if(isUserLoggedIn()){
     $result["username"] = isset($_GET["user"]) ? $_GET["user"] : $_SESSION["username"];
+    $result["sessionUsername"] = $_SESSION["username"];
     $result["isMyProfile"] = $_SESSION["username"] == $result["username"];
     $result["canFollow"] = $result["isMyProfile"] ? false : canFollow($result["username"], $dbh->getUserFollowed($_SESSION["username"]));
     $user = $dbh->getUserProfile($result["username"]);
@@ -15,6 +16,10 @@ if(isUserLoggedIn()){
     $result["preferredGenres"] = $dbh->getUserPreferredGenres($result["username"]);
     $result["posts"] = $dbh->getUserPosts($result["username"]);
     foreach($result["posts"] as &$post){
+        $post["comments"] = $dbh->getPostComments($post["postID"]);
+        for ($j = 0; $j < count($post["comments"]); $j++){
+            $post["comments"][$j]["profilePicture"] = UPLOAD_DIR.$post["comments"][$j]["profilePicture"];
+        }
         $post["reactions"] = $dbh->getReactions($post["postID"]);
         $post["isMyReaction"] = count($dbh->checkReaction($post["postID"], $_SESSION["username"]));
         if($post["isMyReaction"]){

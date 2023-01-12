@@ -13,7 +13,7 @@ function showGenres(genresArray){
 	return result + genres;
 }
 
-function showPosts(posts){
+function showPosts(posts, sessionUsername){
     let result = "";
     reversePosts = posts.reverse();
     for(let i of reversePosts){
@@ -31,7 +31,7 @@ function showPosts(posts){
                     <p>${i["description"]}</p>
                     <p><a href="${i["urlSpotify"]}"> Link Spotify</a></p>
                     <img class="modal-image" src="${i["urlImage"]}" alt=""/>
-					<footer class="song-preview">
+					<footer class="comment-footer">
         `;
 
         let likes = showLikes(i["postID"], i["numLike"], i["numDislike"], i["isMyReaction"], i["myReaction"]);
@@ -39,13 +39,24 @@ function showPosts(posts){
         let songPreview = "";
         if(i["urlPreview"] !== "null"){
           songPreview =  ` 
-            	<figure>
-            	<figcaption class="left-text"> Song preview: </figcaption>
+            	<figure class="song-preview">
+            	    <figcaption> Song preview: </figcaption>
             		<audio controls src="${i["urlPreview"]}"></audio>
             	</figure>
           `;
         }
-		let comments = `<div class="div_comment_${i}"></div>`;
+
+		let startOfComments = `<div class="div_comment_${i} post-comments" id="comments">`;
+        let comment = new Array();
+        comment["user"] = sessionUsername;
+        comment["activeComments"] = i["activeComments"];
+        comment["postID"] = i["postID"];
+        comment["comments"] = i["comments"];
+        let comments = getComment(comment);
+        let endOfComments = `</div>`;
+        startOfComments += comments;
+        startOfComments += endOfComments;
+
         let endOfPost = `
 					</footer>
         		</article>
@@ -54,7 +65,7 @@ function showPosts(posts){
 
         post += likes;
         post += songPreview;
-		post += comments;
+		post += startOfComments;
         post += endOfPost;
 
         result += post;
