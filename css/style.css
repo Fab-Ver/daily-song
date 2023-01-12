@@ -203,6 +203,10 @@ aside.menu_bar {
   align-items: center;
 }
 
+.followedImage{
+ border-radius: 40%;
+}
+
 /*-title + notification--------------------------------------------*/
 
 main {
