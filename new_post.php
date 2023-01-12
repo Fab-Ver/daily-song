@@ -13,9 +13,12 @@ if(isUserLoggedIn()){
     if($alreadyPost){
         $templateParams['title'] = "DailySong - New Post";
         $templateParams['error'] = '
-            <article>
+            <article id="already_post">
+                <img src="'.UPLOAD_DIR.'logo.png" alt=""></img>
+                <hgroup>
                 <h2>You already posted</h2>
-                <p>Come back here tomorrow to post your new song of the day</p>
+                <small>Come back here tomorrow to post your new song of the day</small>
+                <hgroup>
             </article>
         ';
         require 'template/base.php';

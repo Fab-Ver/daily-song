@@ -3,8 +3,8 @@ function createLoginForm() {
         <article class="grid">
             <div>
             <hgroup>
-                <h1>Log In</h1>
-                <h2>Enter your email and password to access the website</h2>
+                <h2>Log In</h2>
+                <small>Enter your email and password to access the website</small>
             </hgroup>
             <div class="error_form" tabindex="-1" hidden></div>
             <form action="#" method="post" id="login_form">
@@ -50,10 +50,10 @@ function checkLoginEmail() {
       let formData = new FormData();
       formData.append('checkEmail',email.value);
       axios.post('authenticate.php',formData).then(response => {
-        if(response.data.errorMsg !== ""){
+        if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
           showError(email,response.data.errorMsg);
           setValid(email,false);
-        } else {
+        } else if(response.data.valid === true) {
           setValid(email,true);
         }
       });
@@ -94,15 +94,15 @@ function login(email,password) {
   formData.append('remember_me',remember_me.checked);
   axios.post('authenticate.php', formData).then(response => {
       let error_div = document.querySelector('div.error_form');
-      if(response.data.errorMsg !== ""){
+      if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
         clearForm();
         error_div.innerHTML = response.data.errorMsg;
         error_div.removeAttribute('hidden');
         error_div.focus();
-        if(response.data.elemID !== ""){
+        if(response.data.elemID !== "" && response.data.elemID !== undefined){
           setValid(document.getElementById(response.data.elemID),false);
         }
-      } else if(response.data.loggedIn){
+      } else if(response.data.loggedIn === true){
         window.location.replace('homepage.php');
       }
   });

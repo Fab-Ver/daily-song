@@ -13,8 +13,8 @@ function createModifyForm(){
             let post = response.data.post;
             main.innerHTML =  `<article id="modify_post">
                                 <hgroup>
-                                    <h1>Post #${post['postID']}</h1>
-                                    <h2>Modify your post</h2>
+                                    <h2>Post #${post['postID']}</h2>
+                                    <small>Modify your post</small>
                                 </hgroup>
                                 <img src="${post['urlImage']}" alt="album_covert_art">
                                 <div id="form_body_modify">
@@ -23,7 +23,7 @@ function createModifyForm(){
                                         Select track music genres (max 3):
                                         <details id="post_genres" role="list">
                                             <summary aria-haspopup="listbox">Track music genres...</summary>
-                                                <ul id="genres_list" role="listbox">
+                                            <ul id="genres_list" role="group" title="List of music genres">
                                                 <li><button class="contrast outline" onclick="clearAllGenres()">Clear All</button></li>
                                                 <li><input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></li>
                                             </ul>

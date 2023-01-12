@@ -6,13 +6,17 @@
     define('UNDEFINED','An undefined error occurred while trying to process your data, try later.');
     define('MAIL_NOT_SENT','Message could not be sent, try later');
     define('INVALID_LINK','<article>
+                                <hgroup>
                         		<h2>Invalid Link</h2>
-                           		<p>The link is invalid/expired. Either you did not copy the correct link from the email, or you have already used the token (in this case it is has been disabled).</p>
+                           		<small>The link is invalid/expired. Either you did not copy the correct link from the email, or you have already used the token (in this case it is has been disabled).</small>
+                                </hgroup>
                            		<p><a href="forgot_password.php">Click here</a> to reset password.</p>
                            </article>');
     define('EXPIRED_LINK', '<article>
+                                <hgroup>
                                 <h2>Expired Link</h2>
-        						<p>The link is expired. You are trying to use an expired link, which is valid for only 24 hours (1 days after request).</p>
+        						<small>The link is expired. You are trying to use an expired link, which is valid for only 24 hours (1 days after request).</small>
+                                </hgroup>
         						<p><a href="forgot_password.php">Click here</a> to reset password.</p>
    							 </article>');
     define('INVALID_TOKEN','Invalid token: the token does not exist or you already use the token');

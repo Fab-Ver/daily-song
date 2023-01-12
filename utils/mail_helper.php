@@ -3,6 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 //use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+require_once 'utils/functions.php';
 require_once 'config.php';
 require 'vendor/autoload.php';
 
@@ -31,7 +32,7 @@ require 'vendor/autoload.php';
             $this->mail->Subject = 'Reset Password';
             $body='<p>Please click on the following link to reset your password.</p>';
             $body.='<p>-------------------------------------------------------------</p>';
-            $body.='<p><a href="http://localhost/progetto_web/reset_password.php?token='.$token.'">"http://localhost/progetto_web/reset_password.php?token='.$token.'"</a></p>';		
+            $body.='<p><a href="'.dir_name().'/reset_password.php?token='.$token.'">"'.dir_name().'/reset_password.php?token='.$token.'"</a></p>';		
             $body.='<p>-------------------------------------------------------------</p>';
             $body.='<p>The link will expire after 1 day for security reason.</p>';
             $body.='<p>If you did not request this forgotten password email, no action is needed, your password will not be reset.</p>';   	
@@ -64,7 +65,7 @@ require 'vendor/autoload.php';
             $this->mail->Subject = 'Blocked Account';
             $body='<p>Your account has been blocked due to too many failed login attempts.</p>';
             $body.='<p>-------------------------------------------------------------</p>';
-            $body.='<p>Was it you? Then try to <a href="http://localhost/progetto_web/forgot_password.php">reset the password</a>.</p>';	
+            $body.='<p>Was it you? Then try to <a href="'.dir_name().'/forgot_password.php">reset the password</a>.</p>';	
             $body.='<p>Wasn\'t it you? Make sure you reset your password as soon as your account is unlocked (about 3 hours)</p>';	
             $body.='<p>-------------------------------------------------------------</p>';  	
             $body.='<p>DailySong</p>';

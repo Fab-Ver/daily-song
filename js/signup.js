@@ -3,8 +3,8 @@ function createSignUpForm(){
         <article class="grid">
             <div>
             <hgroup>
-                <h1>Sign Up</h1>
-                <h2>Enter your email and other personal information to create your account</h2>
+                <h2>Sign Up</h2>
+                <small>Enter your email and other personal information to create your account</small>
             </hgroup>
             <div class="error_form" tabindex="-1" hidden></div>
             <form action="#" method="post" id="signup_form">
@@ -26,7 +26,7 @@ function createSignUpForm(){
                     </div>
                     <label for="birth_date">
                         Birth date:
-                        <input type="date" id="birth_date" name="birth_date"  onchange="checkBirthDate()" required>
+                        <input type="date" id="birth_date" name="birth_date"  onchange="checkBirthDate()" required></input>
                     </label>
                     <label for="telephone">
                         Telephone:
@@ -45,19 +45,19 @@ function createSignUpForm(){
                         <input type ="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password..." oninput="checkConfirmPassword()" required></input>
                     </label>
                     <label for="profile_picture">Select profile picture:
-                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*" onchange="checkImage()">
+                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*" onchange="checkImage()"></input>
                     </label>
                     <label for="favorite_genre">
                         Select favorite music genres (max 5):
                         <details id="favorite_genre" role="list">
                             <summary aria-haspopup="listbox">Favorite music genres...</summary>
-                            <ul id="genres_list" role="listbox" title="List of music genres">
-                                <li><input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></li>
+                            <ul id="genres_list" role="group" title="List of music genres">
+                                <li><input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></input></li>
                             </ul>
                         </details>
                     </label>
                     <label for="notification">
-                        <input type="checkbox" id="notification" name="notification" role="switch" checked>
+                        <input type="checkbox" id="notification" name="notification" role="switch" checked></input>
                         Allow notification
                     </label>
                 <input type="button" name="signup" value="Sign Up" onclick="checkSignUpForm()"></input>
@@ -78,10 +78,10 @@ function checkSignUpEmail(){
             let formData = new FormData();
             formData.append('checkEmail',email.value);
             axios.post('registration.php',formData).then(response => {
-                if(response.data.errorMsg !== ""){
+                if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
                     showError(email,response.data.errorMsg);
                     setValid(email,false);
-                } else {
+                } else if(response.data.valid === true){
                     setValid(email,true);
                 }
             });
@@ -97,10 +97,10 @@ function checkUsername(){
         let formData = new FormData();
         formData.append('checkUsername',username.value);
         axios.post('registration.php',formData).then(response => {
-            if(response.data.errorMsg !== ""){
+            if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
                 showError(username,response.data.errorMsg);
                 setValid(username,false);
-            } else {
+            } else if(response.data.valid === true){
                 setValid(username,true);
             }
         });
@@ -217,11 +217,11 @@ function submitForm(first_name,last_name,telephone,username,password,confirm_pas
 
     axios.post('registration.php',formData).then(response => {
         let error_div = document.querySelector('div.error_form');
-        if(response.data.errorMsg !== ""){
+        if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
             error_div.innerHTML = response.data.errorMsg;
             error_div.removeAttribute('hidden');
             error_div.focus();
-            if(response.data.errorElem !== undefined){
+            if(response.data.errorElem !== undefined && response.data.errorElem !== undefined){
                 response.data.errorElem.forEach(element => setValid(document.getElementById(element),false));
             }
         }  else if(response.data.loggedIn === true) {

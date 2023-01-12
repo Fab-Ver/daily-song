@@ -6,8 +6,8 @@ function createForgotPasswordForm(){
     <article class="grid">
         <div>
         <hgroup>
-            <h1>Forgot Password</h1>
-            <h2>An email will be sent to the specified address if an account is registered under it</h2>
+            <h2>Forgot Password</h2>
+            <small>An email will be sent to the specified address if an account is registered under it</small>
         </hgroup>
         <div class="error_form" tabindex="-1" hidden></div>
         <form action="#" method="post" id="forgot_password_form">
@@ -55,11 +55,11 @@ function submitForgotPassword(){
     formData.append('email',email.value);
     axios.post('api-forgot-password.php',formData).then(response => {
         let error_div = document.querySelector('div.error_form');
-        if(response.data.errorMsg !== ""){
+        if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
             error_div.innerHTML = response.data.errorMsg;
             error_div.removeAttribute('hidden');
             error_div.focus();
-        } else {
+        } else if(response.data.sent === true){
             error_div.innerHTML = "An email has been sent to you with instructions on how to reset your password.";
             error_div.removeAttribute('hidden');
             error_div.style.setProperty("border-color", "#2e7d32", "important");

@@ -61,8 +61,8 @@ create table login_attempts (
 
 create table notification (
      notificationID int not null auto_increment,
-     text varchar(100) not null,
      dateTime datetime not null,
+     type int not null,
      usernameRec varchar(50) not null,
      usernameSed varchar(50) not null,
      constraint ID_notification primary key (notificationID));
@@ -401,23 +401,23 @@ INSERT INTO `track` (`trackID`, `urlSpotify`, `urlImage`, `urlPreview`, `title`,
 
 
 INSERT INTO `post` (`postID`, `description`, `activeComments`, `dateTime`, `trackID`, `username`,`archived`) VALUES
-(1, 'Il mio primo post :)', 0, '2023-01-04 21:15:59', '0TI8TP4FitVPoEHPTySx48', 'fabio_veroli',0),
-(2, 'Il mio secondo post', 1, '2023-01-03 21:19:49', '0nLiqZ6A27jJri2VCalIUs', 'fabio_veroli',0),
-(3, '', 0, '2023-01-02 21:22:43', '5CQ30WqJwcep0pYcV4AMNc', 'fabio_veroli',0),
-(4, 'Ciao\r\nQuesto è un post\r\n:)', 0, '2023-01-01 21:25:36', '3YYnFEXCLNbaWuC0hIEnIS', 'fabio_veroli',0),
-(5, '', 0, '2022-12-31 21:28:23', '3gVhsZtseYtY1fMuyYq06F', 'fabio_veroli',0),
-(6, 'Questo è il mio primo post !!!', 1, '2023-01-04 21:33:32', '5USVtbBrftHgHASbNYqtOV', 'sara-capp',0),
-(7, 'Questo è un brano pop...', 1, '2023-01-03 21:35:47', '6Qs4SXO9dwPj5GKvVOv8Ki', 'sara-capp',0),
-(8, 'Che bella canzone !!!', 0, '2023-01-02 21:38:44', '2svcZXmmAYPo1JKr7KFbK7', 'sara-capp',0),
-(9, 'Questa canzone mi piace molto ! Ascoltatela tutti.', 1, '2023-01-01 21:40:31', '08Hacl2rWl6GD6TKUyaKIy', 'sara-capp',0),
-(10, 'Questa è la prima prova !!', 1, '2023-01-06 10:00:33', '1HNE2PX70ztbEl6MLxrpNL', 'luca_bigo',0),
-(11, 'Prova la mia numero 2', 0, '2023-01-02 21:00:44', '4Ryw3Qv9CpkfX8NaPViEjF', 'luca_bigo',0),
-(12, 'Odio questa canzone!!', 0, '2023-01-05 10:00:34', '49gdfYsDIgpP0lAJJnp3E4', 'luca_bigo',0),
-(13, 'My favorite musical duo !!! Love their music :)', 1, '2023-01-05 23:57:21', '1IBCR7sEQwU9P88AP4xcOn', 'fabio_veroli',0),
-(14, 'Love this Foo Fighters cover !!! Which is better this or the original ?', 1, '2023-01-06 00:03:33', '0iGPqIcglmqPUTMv7X2VEb', 'fabio_veroli',0),
-(15, 'Love this song!!!', 1, '2023-01-07 00:12:13', '2Ms9rXvqIqCzn9BYkhVoYA', 'fabio_veroli',0),
-(16, '', 0, '2023-01-08 00:17:20', '5gXKDmafOQ8i4lYr62wxTk', 'fabio_veroli',0),
-(17, 'wow che bella', 1, '2023-01-011 10:17:20', '4Y4ChepTcFHxd3jd2LeOKo', 'luca_bigo',0);
+(1, 'Il mio primo post :)', 0, '2023-01-05 21:15:59', '0TI8TP4FitVPoEHPTySx48', 'fabio_veroli',0),
+(2, 'Il mio secondo post', 1, '2023-01-08 21:19:49', '0nLiqZ6A27jJri2VCalIUs', 'fabio_veroli',0),
+(3, '', 0, '2023-01-10 21:22:43', '5CQ30WqJwcep0pYcV4AMNc', 'fabio_veroli',0),
+(4, 'Ciao\r\nQuesto è un post\r\n:)', 0, '2023-01-10 21:25:36', '3YYnFEXCLNbaWuC0hIEnIS', 'fabio_veroli',0),
+(5, '', 0, '2022-12-11 21:28:23', '3gVhsZtseYtY1fMuyYq06F', 'fabio_veroli',0),
+(6, 'Questo è il mio primo post !!!', 1, '2023-01-05 21:33:32', '5USVtbBrftHgHASbNYqtOV', 'sara-capp',0),
+(7, 'Questo è un brano pop...', 1, '2023-01-08 21:35:47', '6Qs4SXO9dwPj5GKvVOv8Ki', 'sara-capp',0),
+(8, 'Che bella canzone !!!', 0, '2023-01-10 21:38:44', '2svcZXmmAYPo1JKr7KFbK7', 'sara-capp',0),
+(9, 'Questa canzone mi piace molto ! Ascoltatela tutti.', 1, '2023-01-11 21:40:31', '08Hacl2rWl6GD6TKUyaKIy', 'sara-capp',0),
+(10, 'Questa è la prima prova !!', 1, '2023-01-10 10:00:33', '1HNE2PX70ztbEl6MLxrpNL', 'luca_bigo',0),
+(11, 'Prova la mia numero 2', 0, '2023-01-11 21:00:44', '4Ryw3Qv9CpkfX8NaPViEjF', 'luca_bigo',0),
+(12, 'Odio questa canzone!!', 0, '2023-01-11 10:00:34', '49gdfYsDIgpP0lAJJnp3E4', 'luca_bigo',0),
+(13, 'My favorite musical duo !!! Love their music :)', 1, '2023-01-09 23:57:21', '1IBCR7sEQwU9P88AP4xcOn', 'fabio_veroli',0),
+(14, 'Love this Foo Fighters cover !!! Which is better this or the original ?', 1, '2023-01-09 00:03:33', '0iGPqIcglmqPUTMv7X2VEb', 'fabio_veroli',0),
+(15, 'Love this song!!!', 1, '2023-01-11 00:12:13', '2Ms9rXvqIqCzn9BYkhVoYA', 'fabio_veroli',0),
+(16, '', 0, '2023-01-12 00:17:20', '5gXKDmafOQ8i4lYr62wxTk', 'fabio_veroli',0),
+(17, 'wow che bella', 1, '2023-01-012 05:17:20', '4Y4ChepTcFHxd3jd2LeOKo', 'luca_bigo',0);
 
 INSERT INTO `belongs` (`genreID`, `postID`) VALUES
 (42, 3),
@@ -481,3 +481,10 @@ INSERT INTO `comment` (`commentID`, `text`, `dateTime`, `username`, `postID`) VA
 (2,'odio questa canzone', '2023-01-011 12:17:20', 'luca_bigo', '17'),
 (3,'adoro questa canzone', '2023-01-011 11:17:20', 'sara-capp', '17'),
 (4,'odio questa canzone', '2023-01-011 12:17:20', 'sara-capp', '17');
+
+
+INSERT INTO `notification` (`notificationID`, `dateTime`, `type`, `usernameRec`, `usernameSed`) VALUES
+(1, '2023-01-011 12:17:20', 0, 'luca_bigo', 'luca_bigo'),
+(2, '2023-01-011 12:18:20', 0, 'sara-capp', 'luca_bigo'),
+(3, '2023-01-011 12:19:20', 0, 'luca_bigo', 'sara-capp'),
+(4, '2023-01-011 12:20:20', 1, 'luca_bigo', 'sara-capp');

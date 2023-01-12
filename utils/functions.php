@@ -10,7 +10,7 @@ function isActive($pagename){
 
 function secure_session_start(){
     $session_name = 'secure_session_id';
-    $secure = false; /** Set to true to use HTTPS protocol */
+    $secure = true; /** Set to true to use HTTPS protocol */
     $http_only = true;
     ini_set('session.use_only_cookies',1);
     $cookieParams = session_get_cookie_params();
@@ -216,6 +216,46 @@ function createNewFollowerEmail(string $my_username, string $follower_username) 
     $body.='<p>We send this email when people follow you on DailySong, you can disable this email in your account settings.</p>'; 
     $body.='<p>by DailySong </p>';
     return $body;
+}
+
+function createNewCommentEmail(string $usernameReceiver, string $usernameSender) : string {
+    $body='<p>Hey there, '.$usernameReceiver.'</p>';
+    $body.='<p><b>'.$usernameSender.'</b> just comments one of your posts. </p>';	
+    $body.='<p>Date & Time: '.date("Y-m-d H:i:s");	
+    $body.='<p>-------------------------------------------------------------</p>';
+    $body.='<p>We send this email when someone comments one of your posts on DailySong, you can disable this email in your account settings.</p>'; 
+    $body.='<p>by DailySong </p>';
+    return $body;
+}
+
+/**
+ * Get server URL origin
+ */
+function url_origin( $s, $use_forwarded_host = false ): string {
+    $ssl      = ( ! empty( $s['HTTPS'] ) && $s['HTTPS'] == 'on' );
+    $sp       = strtolower( $s['SERVER_PROTOCOL'] );
+    $protocol = substr( $sp, 0, strpos( $sp, '/' ) ) . ( ( $ssl ) ? 's' : '' );
+    $port     = $s['SERVER_PORT'];
+    $port     = ( ( ! $ssl && $port=='80' ) || ( $ssl && $port=='443' ) ) ? '' : ':'.$port;
+    $host     = ( $use_forwarded_host && isset( $s['HTTP_X_FORWARDED_HOST'] ) ) ? $s['HTTP_X_FORWARDED_HOST'] : ( isset( $s['HTTP_HOST'] ) ? $s['HTTP_HOST'] : null );
+    $host     = isset( $host ) ? $host : $s['SERVER_NAME'] . $port;
+    return $protocol . '://' . $host;
+}
+
+/**
+ * Get page full URL
+ */
+function full_url( $s, $use_forwarded_host = false ) : string{
+    return url_origin( $s, $use_forwarded_host ). $s['REQUEST_URI'];
+}
+
+/**
+ * Get current file directory name
+ */
+function dir_name() : string{
+    $absolute_url = full_url( $_SERVER );
+    $info=pathinfo($absolute_url);
+    return $info['dirname'];
 }
 
 ?>

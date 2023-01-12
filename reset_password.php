@@ -28,6 +28,7 @@ if(!isUserLoggedIn()){
         }
     } else if (isset($_POST['password'], $_POST['confirmPassword'])){
         $result['errorMsg'] = "";
+        $result['reset'] = false;
         $password = Input::filter_string($_POST['password']);
         $confirmPassword = Input::filter_string($_POST['confirmPassword']);
         [$secure,$errorPassword] = Input::is_secure_password($password);
@@ -41,6 +42,7 @@ if(!isUserLoggedIn()){
                             $email = $request[0]['email'];
                             $hash_password = password_hash($password,PASSWORD_DEFAULT);
                             if($dbh->resetPassword($email,$hash_password)){
+                                $result['reset'] = true;
                                 $dbh->removeTokens($email);
                                 unset($_SESSION['token']);
                             } else {
