@@ -29,7 +29,7 @@ function showPosts(posts, sessionUsername){
                           <a href="#close" aria-label="Close" class="close" data-target="modal-example-${i["postID"]}" onClick="toggleModal(event)"></a>
                       </div>
                     </div>
-                    <p>${i["artists"]}</p>
+                    <p>${i["artists"]} - ${i["albumName"]}</p>
                     <p>${i["description"]}</p>
                     <p><a href="${i["urlSpotify"]}"> Link Spotify</a></p>
                     <img class="modal-image" src="${i["urlImage"]}" alt=""/>
