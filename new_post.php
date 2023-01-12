@@ -21,6 +21,7 @@ if(isUserLoggedIn()){
                 <hgroup>
             </article>
         ';
+        $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","utils/functions.js");
         require 'template/base.php';
     } else {
         $templateParams['title'] = 'DailySong - New Post';

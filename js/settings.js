@@ -71,7 +71,7 @@ function createNotificationsForm(){
             </label>
             <label for="comment_notification">
                 <input type="checkbox" id="comment_notification" name="comment_notification" role="switch" checked></input>
-                COMMENTS: Receive notifications when someone publish a comment on one of your posts
+                COMMENTS & LIKE: Receive notifications when someone publish a comment or add a reaction to your posts.
             </label>
             <label for="follow_notification">
                 <input type="checkbox" id="follow_notification" name="follow_notification" role="switch" checked></input>
