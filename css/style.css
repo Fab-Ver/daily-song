@@ -457,7 +457,7 @@ article.single_post, #modify_post{
   margin-left: 1.5%;
 }
 
-#modify_post #genres_list, #new_post_form #genres_list, #profile_settings #genres_list{
+#modify_post #genres_list, #new_post_form #genres_list, #profile_settings #genres_list, #notification ul, main #track_genres ul {
   z-index: 1;
 }
 
