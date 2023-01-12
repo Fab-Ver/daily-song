@@ -255,6 +255,7 @@ main {
   border: none;
   background-color: transparent;
   margin-bottom: 0%;
+  max-width: 60px;
 }
 
 #notification_list div img {

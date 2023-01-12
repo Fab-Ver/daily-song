@@ -5,9 +5,11 @@ function addNotification(not){
     if(not["type"] === 0){
         text = " started following you."
     }else if(not["type"] === 1){
-        text = " liked your post."
+        text = " add a reaction to your post."
     }else if(not["type"] === 2){
         text = " commented your post."
+    }else if(not["type"] === 3){
+        text = " add a new post."
     }
 
     let notify = `

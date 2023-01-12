@@ -578,11 +578,11 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function insertNotification(string $text, string $date, int $type, string $userSed, string $userRec){
+    public function insertNotification(string $date, int $type, string $userSed, string $userRec){
         //if($userRec !== $userSed){
-            $query = "INSERT INTO notification (text, dateTime, type, usernameRec, usernameSed) VALUES (?, ?, ?, ?, ?)";
+            $query = "INSERT INTO notification (dateTime, type, usernameRec, usernameSed) VALUES (?, ?, ?, ?)";
             $stmt = $this->db->prepare($query);
-            $stmt->bind_param('ssiss', $text, $date, $type, $userRec, $userSed);
+            $stmt->bind_param('siss', $date, $type, $userRec, $userSed);
             $result = $stmt->execute();
             return $result;
         //}
