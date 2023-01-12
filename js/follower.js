@@ -40,7 +40,6 @@ function updateFollower(wantToFollow, id){
     formData.append('username', profileUsername);
     formData.append('value', wantToFollow ? "add" : "remove");
     axios.post('api-follower.php', formData).then(response => {
-        console.log(response.data);
         if(response.data["followButton"]){
             document.getElementById(id).outerHTML = generateFollowerButton(!wantToFollow, profileUsername);
         }
@@ -48,7 +47,6 @@ function updateFollower(wantToFollow, id){
 }
 
 axios.get('api-follower.php'+location.search).then(response => {
-    console.log(response.data);
     const searchResult = showSearchResult(response.data);
     const content = document.querySelector("#content");
     content.innerHTML = searchResult;

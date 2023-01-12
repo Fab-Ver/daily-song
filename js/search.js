@@ -49,7 +49,6 @@ function updateFollowed(wantToFollow, profileUser){
     formData.append('username', profileUser);
     formData.append('value', wantToFollow ? "add" : "remove");
     axios.post('api-follower.php', formData).then(response => {
-        console.log(response.data);
         if(response.data["followButton"]){
             document.getElementById("followButton").outerHTML = generateFollowButton(!wantToFollow);
         }

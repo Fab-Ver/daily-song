@@ -33,7 +33,6 @@ function updateLike(likeValue, postID){
 	formData.append('postID', postID);
 	formData.append('likeValue', likeValue ? 1 : 0);
 	axios.post('api-post.php', formData).then(response => {
-		console.log(response.data);
 		if(response.data["updateLike"]){
 			updateLikeImg(response.data["isMyReaction"], likeValue, postID);
 			document.getElementById("like"+postID).innerText = response.data["numLike"];

@@ -76,7 +76,6 @@ function showPosts(posts, sessionUsername){
 }
 
 axios.get('api-profile.php'+location.search).then(response => {
-    console.log(response.data);
     const posts = showPosts(response.data["posts"], response.data["sessionUsername"]);
     const genres = showGenres(response.data["preferredGenres"]);
     const paragraph = document.querySelector('#genres');

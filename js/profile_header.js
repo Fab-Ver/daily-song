@@ -41,10 +41,8 @@ function updateFollowed(canFollow){
     let formData = new FormData();
     username = document.getElementById("profileUsername").innerText;
     formData.append('username', username);
-    console.log(username);
     formData.append('value', canFollow ? "add" : "remove");
     axios.post('api-follower.php', formData).then(response => {
-        console.log(response.data);
         if(response.data["followButton"]){
             document.getElementById("followButton").outerHTML = generateFollowButton(!canFollow);
         }
@@ -59,7 +57,6 @@ main.innerHTML = `
                 `;
 
 axios.get('api-profile.php'+location.search).then(response => {
-    console.log(response.data);
     const profileHeader = showProfileHeader(response.data);
     const header = document.querySelector('#header');
     header.innerHTML = profileHeader;
