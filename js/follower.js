@@ -28,7 +28,7 @@ function generateFollowButton(canFollow, profileUser) {
     if (canFollow) {
         return `<button class="followerButton" id="followButton_${profileUser}" name="follow" onclick="updateFollowed(true, this.id)"> Follow </button>`;
     } else {
-        return `<button class="followerButton" id="followButton_${profileUser}" class="secondary" name="unfollow" onclick="updateFollowed(false, this.id)"> Unfollow </button>`;
+        return `<button class="followerButton secondary unfollowerButton" id="followButton_${profileUser}" name="unfollow" onclick="updateFollowed(false, this.id)"> Unfollow </button>`;
     }
 }
 

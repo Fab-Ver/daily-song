@@ -158,6 +158,7 @@ aside.menu_bar {
 .followButton{
   width: 40%;
   height: 70%;
+  color: black;
 }
 
 .profileList{
@@ -174,12 +175,18 @@ aside.menu_bar {
 
 .followerImage{
  width: 15%;
+ border-radius: 40%;
 }
 
 .followerButton{
   width: 40%;
   text-align: center;
   margin: 3%;
+  color: black;
+}
+
+.unfollowerButton{
+  color: white !important;
 }
 
 .followerDiv{
@@ -194,6 +201,10 @@ aside.menu_bar {
   width: 45%;
   justify-content: center;
   align-items: center;
+}
+
+.followedImage{
+ border-radius: 40%;
 }
 
 /*-title + notification--------------------------------------------*/
@@ -762,7 +773,7 @@ section.comment_text p {
   }
 
   .post-modal{
-    width: 45%;
+    width: 35%;
   }
 
   details.show_comments ul {
