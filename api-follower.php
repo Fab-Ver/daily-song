@@ -9,12 +9,13 @@ if (isUserLoggedIn()){
     if(isset($_POST["username"]) && isset($_POST["value"])){
         if($_POST["value"] == "add"){
             $result["followButton"] = $dbh->insertFollowed($_POST["username"], $result["username"]);
-            if($result["followButton"]){
+            if($result["followButton"]){     
                 $check = $dbh->checkFollowerNotification($_POST["username"]);
                 if(count($check) != 0){
                     try{
                         $mail = new MailHelper();
                         $mail->sendEmailNotification($check[0]["email"], createNewFollowerEmail($check[0]["username"], $_SESSION["username"]), "Someone started following you");
+                        $dbh->insertNotification(date('Y-m-d H-i-s'), 0, $_SESSION["username"], $_POST["username"]);
                     } catch(Exception $e){
                         /**Mail doesn't work because config.php variables not set,no action required */
                     }
