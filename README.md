@@ -142,5 +142,5 @@ We use Spotify API to retrieve post tracks data. By default, the [js/config.js](
 2. Access with your Spotify credentials or create a Spotify account 
 3. Go to your Dashboard and click to 'Create an App'
 4. Enter an App Name and App Description of your choice, put a tick in the Developer Terms of Service checkbox and finally click on CREATE. Your application is now registered, and you’ll be redirected to the app overview page.
-5. Insert the obtained ClientID e ClientSecret in js/config.js
+5. Insert the obtained ClientID e ClientSecret in [js/config.js](js/config.js)
 6. Now you can use the new post functionality
