@@ -289,7 +289,7 @@ function getComment(post){
             </section>
             <details class="show_comments">
                 <summary aria-haspopup="listbox">Show all comments</summary>
-                <ul role="listbox" id="list_comment${post["postID"]}">`
+                <ul role="group" id="list_comment${post["postID"]}" title="comment list">`
         
         for(let j=0; j<post["comments"].length; j++){
             ret += addComment(post["comments"][j]);
@@ -312,7 +312,7 @@ function addComment(comment) {
                 <label for="username" class="username">${comment["username"]}</label>`;
                 
     if(user === comment["username"]){
-        li_comment += `<button id="delete" onclick="return deleteComment(\'' + ${comment["commentID"]} + '\',\'' + ${comment["postID"]} + '\')"><img src="./upload/trash.png" alt="delete_image"></button>`;
+        li_comment += `<button onclick="return deleteComment(\'' + ${comment["commentID"]} + '\',\'' + ${comment["postID"]} + '\')"><img src="./upload/trash.png" alt="delete_image"></button>`;
     }
     
     

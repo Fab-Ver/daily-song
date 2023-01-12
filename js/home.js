@@ -1,9 +1,9 @@
 const main = document.querySelector("main");
-const $afterPostGoTopButton = 3; /*change with 5 */
+const $afterPostGoTopButton = 3;
 main.innerHTML = `
 <details id="track_genres" role="list">
     <summary aria-haspopup="listbox">Select music genres</summary>
-    <ul id="genres_list" role="listbox">
+    <ul id="genres_list" role="group" title="genres list">
         <li>
             <div class="grid">
                 <input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></input>
@@ -47,7 +47,7 @@ function addPost(post) {
             <section class="post_text">
                 <hgroup class="song">
                     <h2>${post["track"]["title"]}</h2>
-                    <h3><p>Author: ${post["track"]["artists"]} - Album: ${post["track"]["albumName"]} - Genres: ${post["genre"]}</p></h3>
+                    <small>Author: ${post["track"]["artists"]} - Album: ${post["track"]["albumName"]} - Genres: ${post["genre"]}</small>
                 </hgroup>
                 <section class="grid">
     `;

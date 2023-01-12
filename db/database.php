@@ -569,7 +569,7 @@ class DatabaseHelper{
     }
 
     public function getNotification(string $username){
-        $query = "SELECT * FROM notification WHERE usernameRec = ? "; //AND usernameRec != usernameSed
+        $query = "SELECT * FROM notification WHERE usernameRec = ? AND usernameRec != usernameSed";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();
@@ -579,13 +579,13 @@ class DatabaseHelper{
     }
 
     public function insertNotification(string $date, int $type, string $userSed, string $userRec){
-        //if($userRec !== $userSed){
+        if($userRec !== $userSed){
             $query = "INSERT INTO notification (dateTime, type, usernameRec, usernameSed) VALUES (?, ?, ?, ?)";
             $stmt = $this->db->prepare($query);
             $stmt->bind_param('siss', $date, $type, $userRec, $userSed);
             $result = $stmt->execute();
             return $result;
-        //}
+        }
     }
 
     public function removeNotification($id){

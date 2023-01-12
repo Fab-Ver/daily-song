@@ -19,7 +19,7 @@
             <h1>DailySong</h1>
             <details id="notification" role="list">
                 <summary id="notification_summury" aria-haspopup="listbox"></summary>
-                <ul id="notification_list" role="listbox"></ul>
+                <ul id="notification_list" role="group" title="notification list"></ul>
             </details>
         </section>
         <main>
