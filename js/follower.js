@@ -7,7 +7,7 @@ function showSearchResult(data){
                     <img class="followerImage" src="${user["profilePicture"]}" alt=""/>
                     <a href="profile.php?user=${user["username"]}">${user["username"]}</a>
                 </div>
-                <div class="followerDiv">
+                <div class="followerButtonDiv">
         `;
         let isNotMe = "";
         if(data["sessionUser"] != user["username"]){
@@ -26,9 +26,9 @@ function showSearchResult(data){
 
 function generateFollowButton(canFollow, profileUser) {
     if (canFollow) {
-        return `<button class="followerButton" id="followButton_${profileUser}" name="follow" onclick="updateFollowed(true, this.id)"> Follow</button>`;
+        return `<button class="followerButton" id="followButton_${profileUser}" name="follow" onclick="updateFollowed(true, this.id)"> Follow </button>`;
     } else {
-        return `<button class="followerButton" id="followButton_${profileUser}" class="secondary" name="unfollow" onclick="updateFollowed(false, this.id)">Unfollow</button>`;
+        return `<button class="followerButton" id="followButton_${profileUser}" class="secondary" name="unfollow" onclick="updateFollowed(false, this.id)"> Unfollow </button>`;
     }
 }
 

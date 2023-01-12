@@ -173,19 +173,27 @@ aside.menu_bar {
 }
 
 .followerImage{
- width: 5%;
+ width: 15%;
 }
 
 .followerButton{
   width: 40%;
-  height: 70%;
   text-align: center;
-  padding: 1%;
+  margin: 3%;
 }
 
 .followerDiv{
-  width: 45%;
+  width: 35%;
   align-self: center;
+}
+
+.followerButtonDiv{
+  /*width: 45%;
+  align-self: center;*/
+  display: flex;
+  width: 45%;
+  justify-content: center;
+  align-items: center;
 }
 
 /*-title + notification--------------------------------------------*/
