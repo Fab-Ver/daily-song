@@ -331,7 +331,7 @@ label[for="comments"],label[for="post_notification"],label[for="comment_notifica
 }
 
 #save_notification_button, #save_profile_button, #account_settings_button{
-  width: 35%;
+  width: 40%;
   float: right;
 }
 
@@ -344,14 +344,14 @@ label[for="comments"],label[for="post_notification"],label[for="comment_notifica
 }
 
 #deselect_notification{
-  width: 35%;
+  width: 40%;
   float: left;
   text-align: center;
 }
 
 #delete_account_button,.delete_post_button {
-  color : #b71c1c !important;
-  border-color: #b71c1c !important;;
+  color : #690C0C !important;
+  border-color: #690C0C !important;;
 }
 
 label[for="profile_picture"]{
@@ -422,19 +422,19 @@ article.single_post, #modify_post{
   margin-left: 1.5%;
 }
 
-#modify_post #genres_list, #new_post_form #genres_list {
+#modify_post #genres_list, #new_post_form #genres_list, #profile_settings #genres_list{
   z-index: 1;
 }
 
-article#already_post{
+article#already_post,article#no_post_manager{
   text-align: center;
 }
 
-#post_genres summary{
+#post_genres summary, #profile_settings summary, input#profile_picture{
   color: white !important
 }
 
-#new_post_form input[name="publish"]{
+#new_post_form input[name="publish"], #account_settings_button, #save_profile_button, #save_notification_button{
   color: #151515 !important;
 }
 

@@ -50,7 +50,7 @@ function createProfileForm(){
                 </details>
             </label>
             <div><button id="save_profile_button" name="save_profile_settings" onclick="updateFavoriteGenres()">Save</input></div>
-            <a href="post_manager.php" role="button" class="contrast outline">Go to Post Manager</a>
+            <a href="post_manager.php" role="button" class="contrast outline">Post Manager</a>
         </article>
     `;
     return genres_form;
@@ -113,8 +113,8 @@ function createAccountForm(){
     let result = `
         <article>
             <hgroup>
-                <h1>Account</h1>
-                <h2>Update your personal data</h2>
+                <h2>Account</h2>
+                <small>Update your personal data</small>
             </hgroup>
             <div id="error_account_settings"class="error_form" tabindex="-1" hidden></div>
             <form action="#" method="post" id="account_form">

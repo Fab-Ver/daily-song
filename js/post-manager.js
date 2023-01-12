@@ -5,14 +5,19 @@ window.addEventListener('load',function(){
 
 function createPostManager(){
     let manager = `<article id="post_manager"><hgroup>
-                    <h1>Post Manager</h1>
-                    <h2>Delete, archive or modify your posts</h2>
+                    <h2>Post Manager</h2>
+                    <small>Delete, archive or modify your posts</small>
                    </hgroup>
                    <div id="error_manager"class="error_form" tabindex="-1" hidden></div>`;
     return axios.get('./post_manager.php?action=getPost').then(response => {
         if(response.data.post.length !== undefined){
             if(response.data.post.length === 0){
-                manager += `<hgroup><h3>No published posts</h3><small>Post something to use the post manager</small><hgroup>`
+                manager = `<article id="no_post_manager">
+                        <img src="res/logo.png" alt=""></img>
+                        <hgroup>
+                        <h2>No published posts</h2>
+                        <small>Post something to use the post manager</small>
+                        <hgroup></article>`
             } else {
                 response.data.post.forEach(element => {
                     manager += createSinglePost(element);
