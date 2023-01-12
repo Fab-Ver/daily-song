@@ -72,6 +72,7 @@ if(!isUserLoggedIn()){
 } else {
     if(isset($_POST['password'], $_POST['confirmPassword'])) {
         $result['errorMsg'] = "";
+        $result['reset'] = false;
         $password = Input::filter_string($_POST['password']);
         $confirmPassword = Input::filter_string($_POST['confirmPassword']);
         $email = Input::filter_string($_SESSION['email']);
@@ -81,6 +82,7 @@ if(!isUserLoggedIn()){
             if(strcmp($password,$confirmPassword) === 0){
                 $hash_password = password_hash($password,PASSWORD_DEFAULT);
                 if($dbh->resetPassword($email,$hash_password)){
+                    $result['reset'] = true;
                     $user = $dbh->findUserByUsername($username)[0];
                     registerLoggedUser($user['username'],$user['email'],$user['passwordHash']);
                 } else {
