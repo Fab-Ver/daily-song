@@ -22,7 +22,7 @@ function generateSearchResult(searchValue){
         for (let user of searchValue) {
             let profile = `
                 <li class="profileList" role="listitem">
-                        <img class="followeImage" src="${user["profilePicture"]}" alt="" width="5%"/>
+                        <img class="followerImage" src="${user["profilePicture"]}" alt="" width="5%"/>
                         <a href="profile.php?user=${user["username"]}">${user["username"]}</a>
                 </li>
             `;
