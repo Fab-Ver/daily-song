@@ -31,7 +31,7 @@ function generateFollowButton(canFollow) {
     if (canFollow) {
         return '<button id="followButton" class="followButton" name="follow" onclick="updateFollowed(true)">Follow</button>';
     } else {
-        return '<button id="followButton" class="secondary followButton" name="unfollow" onclick="updateFollowed(false)">Unfollow</button>';
+        return '<button id="followButton" class="secondary followButton unfollowerButton" name="unfollow" onclick="updateFollowed(false)">Unfollow</button>';
     }
 }
 

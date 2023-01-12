@@ -40,7 +40,7 @@ function showPosts(posts){
         if(i["urlPreview"] !== "null"){
           songPreview =  ` 
             	<figure>
-            	<figcaption class="left-text">Song preview: </figcaption>
+            	<figcaption class="left-text"> Song preview: </figcaption>
             		<audio controls src="${i["urlPreview"]}"></audio>
             	</figure>
           `;
