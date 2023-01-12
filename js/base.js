@@ -1,31 +1,31 @@
 const datiMenu = [{
     "Link": "profile.php",
-    "Immagine": "./upload/user.png",
+    "Immagine": "./res/user.png",
     "Alt": "profile user",
     "Name": "Profile"
 },{
     "Link": "homepage.php",
-    "Immagine": "./upload/home.png",
+    "Immagine": "./res/home.png",
     "Alt": "home",
     "Name": "Home"
 },{
     "Link": "new_post.php",
-    "Immagine": "./upload/add.png",
+    "Immagine": "./res/add.png",
     "Alt": "add new post",
     "Name": "New Post"
 },{
     "Link": "search.php",
-    "Immagine": "./upload/search.png",
+    "Immagine": "./res/search.png",
     "Alt": "search profile",
     "Name": "Search"
 },{
     "Link": "settings.php",
-    "Immagine": "./upload/settings.png",
+    "Immagine": "./res/settings.png",
     "Alt": "settings",
     "Name": "Settings"
 },{
     "Link": "logout.php",
-    "Immagine": "./upload/logout.png",
+    "Immagine": "./res/logout.png",
     "Alt": "logout",
     "Name": "Logout"
 }]

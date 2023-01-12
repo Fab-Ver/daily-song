@@ -21,7 +21,7 @@ function addNotification(not){
                 <div id="not_time">
                     <span>${time}</span>
                 </div>
-                <button id="not${not["notificationID"]}" onclick="clearNot(this.id)"><img src="./upload/close.png" alt="clear notification"/></button>
+                <button id="not${not["notificationID"]}" onclick="clearNot(this.id)"><img src="./res/close.png" alt="clear notification"/></button>
             </div>
         </li>
     `;

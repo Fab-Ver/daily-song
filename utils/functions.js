@@ -312,7 +312,7 @@ function addComment(comment) {
                 <label for="username" class="username">${comment["username"]}</label>`;
                 
     if(user === comment["username"]){
-        li_comment += `<button onclick="return deleteComment(\'' + ${comment["commentID"]} + '\',\'' + ${comment["postID"]} + '\')"><img src="./upload/trash.png" alt="delete_image"></button>`;
+        li_comment += `<button onclick="return deleteComment(\'' + ${comment["commentID"]} + '\',\'' + ${comment["postID"]} + '\')"><img src="./res/trash.png" alt="delete_image"></button>`;
     }
     
     

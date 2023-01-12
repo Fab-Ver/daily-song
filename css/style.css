@@ -300,7 +300,7 @@ main {
     max-width: 60px;
   }
 
-  #notification_list #not_text {
+  #notification_list #not_text a {
     font-size: 100%;
   }
   
