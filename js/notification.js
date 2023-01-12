@@ -42,7 +42,6 @@ function printNotification(data){
 }
 
 axios.get("api-notification.php").then(response =>{
-    //console.log(response.data);
     printNotification(response.data);
 });
 

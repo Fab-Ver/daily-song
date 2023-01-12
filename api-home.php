@@ -12,7 +12,10 @@ if (isUserLoggedIn()) {
         $date = date('Y-m-d H:i:s');
 
         $dbh->insertPostComment($text, $date, $username, $postID);
-        $dbh->insertNotification(date('Y-m-d H-i-s'), 2, $_SESSION["username"], $dbh->getUserByPost($postID)[0]["username"]);
+        $temp = $dbh->getUserByPost($postID)[0]["username"];
+        if(count($dbh->checkCommentNotification($temp)) !== 0){
+            $dbh->insertNotification(date('Y-m-d H-i-s'), 2, $_SESSION["username"], $temp);
+        }
 
         $result["comments"] = $dbh->getPostComments($postID);
 

@@ -13,7 +13,7 @@ main.innerHTML = `
     </ul>
 </details>
 
-<input type="date" id="date" name="date" onchange="selectDate()">
+<input type="date" id="date" name="date" onchange="selectDate()"></input>
 <div id="div_posts"></div>
 <div id="button_top">
     <button class="go_top" onclick="goTop()">Go top</button>
@@ -107,7 +107,6 @@ function listPost(data){
 }
 
 axios.get('api-home.php').then(response => {
-    //console.log(response.data);
     listPost(response.data);
 });
 
@@ -117,7 +116,6 @@ function selectDate() {
     formData.append("day",day);
     axios.post("api-home.php",formData).then(response => {
         listPost(response.data);
-        //console.log(response.data);
     });
 }
 
@@ -127,7 +125,6 @@ function getGenre(){
 
     axios.post("api-home.php",formData).then(response => {
         listPost(response.data);
-        //console.log(response.data);
     });
 }
 

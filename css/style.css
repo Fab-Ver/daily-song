@@ -227,6 +227,10 @@ main {
   text-align: center;
 }
 
+.main-div > section summary, main #track_genres summary {
+  color: #FFF !important;
+}
+
 .main-div > section summary::after, main #track_genres summary::after {
   display: none !important;
 }
