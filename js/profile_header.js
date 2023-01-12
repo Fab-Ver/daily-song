@@ -36,9 +36,12 @@ function generateFollowButton(canFollow) {
 }
 
 function updateFollowed(canFollow){
+    let button = document.getElementById("followButton");
+    button.disabled = true;
     let formData = new FormData();
     username = document.getElementById("profileUsername").innerText;
     formData.append('username', username);
+    console.log(username);
     formData.append('value', canFollow ? "add" : "remove");
     axios.post('api-follower.php', formData).then(response => {
         console.log(response.data);

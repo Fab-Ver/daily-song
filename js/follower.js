@@ -11,7 +11,7 @@ function showSearchResult(data){
         `;
         let isNotMe = "";
         if(data["sessionUser"] != user["username"]){
-            isNotMe = generateFollowButton(user["canFollow"], user["username"]);
+            isNotMe = generateFollowerButton(user["canFollow"], user["username"]);
         }
         let endProfile = `
             </div>
@@ -24,23 +24,25 @@ function showSearchResult(data){
     return result;
 }
 
-function generateFollowButton(canFollow, profileUser) {
+function generateFollowerButton(canFollow, profileUser) {
     if (canFollow) {
-        return `<button class="followerButton" id="followButton_${profileUser}" name="follow" onclick="updateFollowed(true, this.id)"> Follow </button>`;
+        return `<button class="followerButton" id="followerButton_${profileUser}" name="follow" onclick="updateFollower(true, this.id)"> Follow </button>`;
     } else {
-        return `<button class="followerButton secondary unfollowerButton" id="followButton_${profileUser}" name="unfollow" onclick="updateFollowed(false, this.id)"> Unfollow </button>`;
+        return `<button class="followerButton secondary unfollowerButton" id="followerButton_${profileUser}" name="unfollow" onclick="updateFollower(false, this.id)"> Unfollow </button>`;
     }
 }
 
-function updateFollowed(wantToFollow, id){
-    let profileUsername = id.replace("followButton_", "");
+function updateFollower(wantToFollow, id){
+    let button = document.getElementById(id);
+    button.disabled = true;
+    let profileUsername = id.replace("followerButton_", "");
     let formData = new FormData();
     formData.append('username', profileUsername);
     formData.append('value', wantToFollow ? "add" : "remove");
     axios.post('api-follower.php', formData).then(response => {
         console.log(response.data);
         if(response.data["followButton"]){
-            document.getElementById(id).outerHTML = generateFollowButton(!wantToFollow, profileUsername);
+            document.getElementById(id).outerHTML = generateFollowerButton(!wantToFollow, profileUsername);
         }
     });
 }
