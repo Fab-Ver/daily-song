@@ -135,7 +135,7 @@ if(isUserLoggedIn()){
                 $profile_picture = $msg;
             }
         } else {
-            $profile_picture = 'default.png';
+            $profile_picture = $dbh->getUserProfile($username)['profilePicture'];
         }
 
         if(empty($result['errorMsg'])){
