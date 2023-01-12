@@ -6,8 +6,8 @@ function createResetPasswordForm(){
     <article class="grid">
         <div>
         <hgroup>
-            <h1>Reset Password</h1>
-            <h2>Insert your new password</h2>
+            <h2>Reset Password</h2>
+            <small>Insert your new password</small>
         </hgroup>
         <div class="error_form" tabindex="-1" hidden></div>
         <form action="#" method="post" id="reset_password_form">

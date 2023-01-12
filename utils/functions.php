@@ -10,7 +10,7 @@ function isActive($pagename){
 
 function secure_session_start(){
     $session_name = 'secure_session_id';
-    $secure = false; /** Set to true to use HTTPS protocol */
+    $secure = true; /** Set to true to use HTTPS protocol */
     $http_only = true;
     ini_set('session.use_only_cookies',1);
     $cookieParams = session_get_cookie_params();

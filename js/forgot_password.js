@@ -6,8 +6,8 @@ function createForgotPasswordForm(){
     <article class="grid">
         <div>
         <hgroup>
-            <h1>Forgot Password</h1>
-            <h2>An email will be sent to the specified address if an account is registered under it</h2>
+            <h2>Forgot Password</h2>
+            <small>An email will be sent to the specified address if an account is registered under it</small>
         </hgroup>
         <div class="error_form" tabindex="-1" hidden></div>
         <form action="#" method="post" id="forgot_password_form">

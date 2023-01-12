@@ -33,8 +33,8 @@ function createProfileForm(){
     let genres_form = `
         <article id ="profile_settings">
             <hgroup>
-                <h1>Profile</h1>
-                <h2>Change your favorite music genres, manage your posts</h2>
+                <h2>Profile</h2>
+                <small>Change your favorite music genres, manage your posts</small>
             </hgroup>
             Your favorite genres:
             <ul id="current_favorite_genres"></ul>
@@ -43,9 +43,9 @@ function createProfileForm(){
                 Select favorite music genres (max 5):
                 <details id="favorite_genre" role="list">
                     <summary aria-haspopup="listbox">Favorite music genres...</summary>
-                    <ul id="genres_list" role="listbox" title="List of music genres">
+                    <ul id="genres_list" role="group" title="List of music genres">
                         <li><button class="contrast outline" onclick="clearAllGenres()">Clear All</button></li>
-                        <li><input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></li>
+                        <li><input type="search" id="search" name="search" placeholder="Search" oninput="filterGenre()"></input></li>
                     </ul>
                 </details>
             </label>
@@ -60,25 +60,25 @@ function createNotificationsForm(){
     let notification = `
         <article>
             <hgroup>
-                <h1>Notifications</h1>
-                <h2>Update your notifications settings</h2>
+                <h2>Notifications</h2>
+                <small>Update your notifications settings</small>
             </hgroup>
             <div id="error_notification" class="error_form" tabindex="-1" hidden></div>
             <form action="#" method="post" id="notifications_form">
             <label for="post_notification">
-                <input type="checkbox" id="post_notification" name="post_notification" role="switch" checked>
+                <input type="checkbox" id="post_notification" name="post_notification" role="switch" checked></input>
                 POSTS: Receive notifications when some you follow publish a new post
             </label>
             <label for="comment_notification">
-                <input type="checkbox" id="comment_notification" name="comment_notification" role="switch" checked>
+                <input type="checkbox" id="comment_notification" name="comment_notification" role="switch" checked></input>
                 COMMENTS: Receive notifications when someone publish a comment on one of your posts
             </label>
             <label for="follow_notification">
-                <input type="checkbox" id="follow_notification" name="follow_notification" role="switch" checked>
+                <input type="checkbox" id="follow_notification" name="follow_notification" role="switch" checked></input>
                 FOLLOWERS: Receive notifications when someone starts to follow you
             </label>
             <label for="account_notification">
-                <input type="checkbox" id="account_notification" name="account_notification" role="switch" checked>
+                <input type="checkbox" id="account_notification" name="account_notification" role="switch" checked></input>
                 ACCOUNT: Receive notifications when someone access your account
             </label>
             <input type="button" id="deselect_notification" name="deselect_notification" value="Deselect All" onclick="deselectAllNotification()" class="contrast outline"></input>

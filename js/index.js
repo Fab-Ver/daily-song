@@ -3,8 +3,8 @@ function createLoginForm() {
         <article class="grid">
             <div>
             <hgroup>
-                <h1>Log In</h1>
-                <h2>Enter your email and password to access the website</h2>
+                <h2>Log In</h2>
+                <small>Enter your email and password to access the website</small>
             </hgroup>
             <div class="error_form" tabindex="-1" hidden></div>
             <form action="#" method="post" id="login_form">

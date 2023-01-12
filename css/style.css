@@ -422,8 +422,20 @@ article.single_post, #modify_post{
   margin-left: 1.5%;
 }
 
-#modify_post #genres_list {
+#modify_post #genres_list, #new_post_form #genres_list {
   z-index: 1;
+}
+
+article#already_post{
+  text-align: center;
+}
+
+#post_genres summary{
+  color: white !important
+}
+
+#new_post_form input[name="publish"]{
+  color: #151515 !important;
 }
 
 
