@@ -22,14 +22,7 @@ if(isUserLoggedIn()) {
             $userToNotificate = $dbh->getUserByPost($_POST["postID"]);
             $check = $dbh->checkCommentNotification($userToNotificate[0]["username"]);
             if(count($check) != 0){
-                try{
-                    $mail = new MailHelper();
-                    $mail->sendEmailNotification($check[0]["email"], createNewCommentEmail($check[0]["username"], $_SESSION["username"]), "Someone added a reaction to your post");
-                    $dbh->insertNotification(date('Y-m-d H-i-s'), 1, $_SESSION["username"], $userToNotificate[0]["username"]);
-
-                } catch(Exception $e){
-                    /**Mail doesn't work because config.php variables not set,no action required */
-                }
+                $dbh->insertNotification(date('Y-m-d H-i-s'), 1, $_SESSION["username"], $userToNotificate[0]["username"]);
             }
         }
         //aggiorno il numero dei like e dislike del post
