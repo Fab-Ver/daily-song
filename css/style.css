@@ -333,6 +333,7 @@ main #track_genres button, main button.go_top {
   padding-left: 0%;
   padding-right: 0%;
   margin-bottom: 0%;
+  color: #151515;
 }
 
 main #date {
@@ -550,11 +551,6 @@ section.post_text {
 section.post_text hgroup {
   margin-bottom: 1%;
   width: 90%;
-}
-
-section.post_text hgroup p {
-  font-size: 100%;
-  margin: 0%;
 }
 
 section.post_text section {
