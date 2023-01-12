@@ -260,16 +260,27 @@ main {
 #notification_list div p {
   text-align: left;
   margin-bottom: 0%;
+  font-size: 3vw;
+}
+
+@media screen and (min-width: 425px){
+
+  #notification_list div p {
+    font-size: 100%;
+  }
+
 }
 
 #notification_list div button {
   border: none;
   background-color: transparent;
   margin-bottom: 0%;
+  min-width: 30px;
   max-width: 60px;
 }
 
 #notification_list div img {
+  min-width: 15px;
   filter: invert(100%);
 }
 
