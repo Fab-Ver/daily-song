@@ -1,5 +1,6 @@
 <?php
 require("bootstrap.php");
+require("utils/mail_helper.php");
 secure_session_start();
 
 if(isUserLoggedIn()) {
@@ -16,6 +17,18 @@ if(isUserLoggedIn()) {
         } else {
             $result["updateLike"] = $dbh->insertLike($_POST["postID"], $_SESSION["username"], $likeValue);
             $result["isMyReaction"] = true;
+        }
+        if($result["updateLike"]){
+            $userToNotificate = $dbh->getUserByPost($_POST["postID"]);
+            $check = $dbh->checkCommentNotification($userToNotificate[0]["username"]);
+            if(count($check) != 0){
+                try{
+                    $mail = new MailHelper();
+                    $mail->sendEmailNotification($check[0]["email"], createNewCommentEmail($check[0]["username"], $_SESSION["username"]), "Someone added a reaction to your post");
+                } catch(Exception $e){
+                    /**Mail doesn't work because config.php variables not set,no action required */
+                }
+            }
         }
         //aggiorno il numero dei like e dislike del post
         $result["reactions"] = $dbh->getReactions($_POST["postID"]);

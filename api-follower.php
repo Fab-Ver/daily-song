@@ -1,5 +1,6 @@
 <?php
 require("bootstrap.php");
+require("utils/mail_helper.php");
 secure_session_start();
 
 if (isUserLoggedIn()){
@@ -8,6 +9,17 @@ if (isUserLoggedIn()){
     if(isset($_POST["username"]) && isset($_POST["value"])){
         if($_POST["value"] == "add"){
             $result["followButton"] = $dbh->insertFollowed($_POST["username"], $result["username"]);
+            if($result["followButton"]){
+                $check = $dbh->checkFollowerNotification($_POST["username"]);
+                if(count($check) != 0){
+                    try{
+                        $mail = new MailHelper();
+                        $mail->sendEmailNotification($check[0]["email"], createNewFollowerEmail($check[0]["username"], $_SESSION["username"]), "Someone started following you");
+                    } catch(Exception $e){
+                        /**Mail doesn't work because config.php variables not set,no action required */
+                    }
+                }
+            }
         } else if($_POST["value"] == "remove"){
             $result["followButton"] = $dbh->removeFollowed($_POST["username"], $result["username"]);
         }
