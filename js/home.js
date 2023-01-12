@@ -122,10 +122,13 @@ function selectDate() {
 function getGenre(){
     let formData = new FormData();
     formData.append("idGenres",JSON.stringify(getGenresID()));
-
-    axios.post("api-home.php",formData).then(response => {
-        listPost(response.data);
-    });
+    if(getGenresID().length !== 0){
+        axios.post("api-home.php",formData).then(response => {
+            listPost(response.data);
+        });
+    } else {
+        clearGenres();
+    }  
 }
 
 axios.get("genre.php").then(response => {
