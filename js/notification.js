@@ -16,7 +16,7 @@ function addNotification(not){
         <li>
             <div class="grid">
                 <div id="not_text">
-                    <p>${not["usernameSed"]} ${text}</p>
+                    <a href="profile.php?user=${not["usernameSed"]}">${not["usernameSed"]}${text}</a>
                 </div>
                 <div id="not_time">
                     <span>${time}</span>

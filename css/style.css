@@ -263,7 +263,7 @@ main {
 }
 
 #notification_list div {
-  grid-template-columns: 65% 15% 10%;
+  grid-template-columns: 65% 10% 15%;
 }
 
 #notification_list #not_text, #notification_list #not_time {
@@ -271,30 +271,47 @@ main {
   align-items: center;
 }
 
+#notification_list #not_time {
+  justify-content: center;
+}
+
 #notification_list li:hover {
   background-color: #11191f;
 }
 
-#notification_list div p {
+#notification_list #not_text a {
   text-align: left;
   margin-bottom: 0%;
   font-size: 3vw;
 }
 
-@media screen and (min-width: 425px){
+#notification_list #not_text a:hover {
+  text-decoration: underline;
+  background-color: #11191f;
+}
 
-  #notification_list div p {
-    font-size: 100%;
+@media screen and (min-width: 450px){
+
+  #notification_list div {
+    grid-template-columns: 65% 15% 10%;
   }
 
+  #notification_list div button {
+    max-width: 60px;
+  }
+
+  #notification_list #not_text {
+    font-size: 100%;
+  }
+  
 }
 
 #notification_list div button {
   border: none;
   background-color: transparent;
   margin-bottom: 0%;
-  min-width: 30px;
-  max-width: 60px;
+  min-width: 20px;
+  max-width: 40px;
 }
 
 #notification_list div img {
