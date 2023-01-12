@@ -99,7 +99,8 @@ aside.menu_bar {
 
 .profile-image {
   border-radius: 40%;
-  max-width: 20%;
+  width: 20%;
+  height: 100%;
 }
 
 .header-div {
@@ -133,11 +134,13 @@ aside.menu_bar {
 
 .like-button > img {
   max-width: 2em;
+  display: inline-block;
 }
 
 .dislike-button > img {
   max-width: 2em;
   transform: rotate(180deg);
+  display: inline-block;
 }
 
 .modal-image{
@@ -147,12 +150,13 @@ aside.menu_bar {
 
 .song-preview {
   clear: both;
+  margin-bottom: 0%;
 }
 
 .caption {
   display: inline-block;
   width: 5%;
-  margin: 0 !important;
+  margin: 1%;
 }
 
 .followButton{
@@ -167,6 +171,11 @@ aside.menu_bar {
 
 .post-modal{
   width: 90%;
+}
+
+.comment-footer{
+  text-align: left;
+  margin-top: 0%;
 }
 
 .follower{
@@ -207,6 +216,11 @@ aside.menu_bar {
  border-radius: 40%;
 }
 
+.post-comments{
+  clear: both;
+  margin-top: 15%;
+}
+
 /*-title + notification--------------------------------------------*/
 
 main {
@@ -227,6 +241,10 @@ main {
   text-align: center;
 }
 
+.main-div > section summary, main #track_genres summary {
+  color: #FFF !important;
+}
+
 .main-div > section summary::after, main #track_genres summary::after {
   display: none !important;
 }
@@ -245,7 +263,7 @@ main {
 }
 
 #notification_list div {
-  grid-template-columns: 65% 15% 10%;
+  grid-template-columns: 65% 10% 15%;
 }
 
 #notification_list #not_text, #notification_list #not_time {
@@ -253,30 +271,47 @@ main {
   align-items: center;
 }
 
+#notification_list #not_time {
+  justify-content: center;
+}
+
 #notification_list li:hover {
   background-color: #11191f;
 }
 
-#notification_list div p {
+#notification_list #not_text a {
   text-align: left;
   margin-bottom: 0%;
   font-size: 3vw;
 }
 
-@media screen and (min-width: 425px){
+#notification_list #not_text a:hover {
+  text-decoration: underline;
+  background-color: #11191f;
+}
 
-  #notification_list div p {
-    font-size: 100%;
+@media screen and (min-width: 450px){
+
+  #notification_list div {
+    grid-template-columns: 65% 15% 10%;
   }
 
+  #notification_list div button {
+    max-width: 60px;
+  }
+
+  #notification_list #not_text a {
+    font-size: 100%;
+  }
+  
 }
 
 #notification_list div button {
   border: none;
   background-color: transparent;
   margin-bottom: 0%;
-  min-width: 30px;
-  max-width: 60px;
+  min-width: 20px;
+  max-width: 40px;
 }
 
 #notification_list div img {
@@ -316,6 +351,7 @@ main #track_genres button, main button.go_top {
   padding-left: 0%;
   padding-right: 0%;
   margin-bottom: 0%;
+  color: #151515;
 }
 
 main #date {
@@ -453,7 +489,7 @@ article.single_post, #modify_post{
   margin-left: 1.5%;
 }
 
-#modify_post #genres_list, #new_post_form #genres_list, #profile_settings #genres_list{
+#modify_post #genres_list, #new_post_form #genres_list, #profile_settings #genres_list, #notification ul, main #track_genres ul {
   z-index: 1;
 }
 
@@ -533,11 +569,6 @@ section.post_text {
 section.post_text hgroup {
   margin-bottom: 1%;
   width: 90%;
-}
-
-section.post_text hgroup p {
-  font-size: 100%;
-  margin: 0%;
 }
 
 section.post_text section {
@@ -682,6 +713,7 @@ section.comment_text p {
   .profile-image {
     border-radius: 40%;
     width: 20%;
+    height: 100%;
   }
 
   .post-modal{
@@ -753,6 +785,7 @@ section.comment_text p {
   .profile-image {
     border-radius: 40%;
     width: 30%;
+    height: 100%;
   }
 
   .post-modal{
@@ -781,10 +814,11 @@ section.comment_text p {
   .profile-image {
     border-radius: 40%;
     width: 30%;
+    height: 100%;
   }
 
   .post-modal{
-    width: 35%;
+    width: 40%;
   }
 
   details.show_comments ul {
