@@ -29,8 +29,8 @@ You can share your favorite song of the day with your friends and interact with 
 
 ## Registration & Login
 
-User can only use the social network functionalities if logged in. If not logged in user can eather login or create a new account.  
-Login page includes also the possibility to reset the user password, usign a link send via mail and the possibility to remind the user when they logged in for a period of 30 days. 
+User can only use the social network functionalities if logged in. If not logged in user can either login or create a new account.  
+Login page includes also the possibility to reset the user password, using a link send via mail and the possibility to remind the user when they logged in for a period of 30 days. 
 
 ## User Profile
 
@@ -38,7 +38,7 @@ User profile contains profile picture, username, name, surname, user favorite mu
 
 ### Follow
 
-Each profile contains the list of follower/followed profiles. In the list there is a button to follow a user and a link to visit their profile. 
+Each profile contains the list of follower/followed profiles. In each list there is a button to follow a user and a link to visit their profile. 
 
 ## Home
 
@@ -48,7 +48,7 @@ Home contains followed users posts. By default it display the current day post, 
 
 ### New Post
 
-In the new post page user can insert post by adding a Spotify URL, then the data are automatically retrived from Spotify API. Then, user can specify their post music genres (from 1 to 3) and add a description (optional). User can decide to deactive comments for every post. User can post only once a day.
+In the new post page user can insert post by adding a Spotify URL, then the data are automatically retrieved from Spotify API. Then, user can specify their post music genres (from 1 to 3) and add a description (optional). User can decide to deactivate comments for every post. User can post only once a day.
 
 ### Post Elements
 
@@ -60,7 +60,7 @@ Each post contains:
 - Album name
 - Genres of the post
 - Song preview (if available)
-- Like/dislike button
+- Like/Dislike button
 - Description
 - Spotify's song link
 - Comments section (if active)
@@ -71,19 +71,21 @@ In the comment section (if active) user can post a comment, see all comments and
 
 ## Notifications
 
-There two kind of notifications, inside the website or by email.  
+There are two kind of notifications, inside the website or by email.  
+
 First includes notifications sent when:
 - New follower
 - New reaction (like/dislike) to user posts
 - New comments under user post
 - New post published by follower  
+
 The second instead includes notifications sent when:
 - New follower
 - New post published by follower
 - New access to user account
 - Blocked account due to too many failed login attempts
 
-See below on how to use email notifications. 
+See below on [how to use email feature](#test-email-functionality). 
 
 ## Search
 
@@ -93,13 +95,13 @@ In the search page, user can search for every other user in the website, by user
 
 Settings includes:
 - **Account settings**: user can change their username, name, surname, telephone, profile picture or reset their password.
-- **Profile settings**: user can change his favorite music genres and manage their posts.
-- **Notifications settings**: user can decide which type of notification he want to recieve. All type of notifications can be disabled, except for blocked account email, that are always sent. 
+- **Profile settings**: user can change their favorite music genres and manage their posts.
+- **Notifications settings**: user can decide which type of notification he want to receive. All type of notifications can be disabled, except for blocked account email, that are always sent. 
 - **Logout and Delete Account**
 
 ### Post Manager
 
-In the post manager user can see all their posts status and infos. User can delete, archive and modify post. The archived post will not be dispalyed in home and profile. In the modify page user can change post music genres, description and comments active status. 
+In the post manager user can see all their posts status and infos. User can delete, archive and modify post. The archived post will not be displayed in home and profile. In the modify page user can change post music genres, description and comments active status. 
 
 ## Security
 
@@ -135,10 +137,10 @@ We use Gmail to test the email notification functionality on our local website. 
 
 ### Test new post functionality
 
-We use Spotify API to retrive post tracks data. By default, the js/config.js ClientID and ClientSecret are `undefined`, so when try to get data from spotify API, an error is thrown. In this case you can only post track that are already in our local database. To be able to test the new post functionality, using Spotify API you have to: 
+We use Spotify API to retrieve post tracks data. By default, the [js/config.js](js/config.js) ClientID and ClientSecret are `undefined`, so when trying to get data from spotify API, an error is thrown. In this case you can only post track that are already in our local database. To be able to test the new post functionality, using Spotify API you have to: 
 1. Go to [Spotify for Developers](https://developer.spotify.com/)
 2. Access with your Spotify credentials or create a Spotify account 
 3. Go to your Dashboard and click to 'Create an App'
 4. Enter an App Name and App Description of your choice, put a tick in the Developer Terms of Service checkbox and finally click on CREATE. Your application is now registered, and you’ll be redirected to the app overview page.
-5. Insert the obtained ClientID e CliendSecret in js/config.js
+5. Insert the obtained ClientID e ClientSecret in js/config.js
 6. Now you can use the new post functionality
