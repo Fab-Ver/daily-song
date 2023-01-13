@@ -231,7 +231,7 @@ function createNewPostEmail(string $my_username, string $post_username) : string
  */
 function createNewFollowerEmail(string $my_username, string $follower_username) : string{
     $body='<p>Hey there, '.$my_username.'</p>';
-    $body.='<p>You have a new follower on DailySong  :<b>'.$follower_username.'</b>!</p>';	
+    $body.='<p>You have a new follower on DailySong: <b>'.$follower_username.'</b>!</p>';	
     $body.='<p>Date & Time: '.date("Y-m-d H:i:s");	
     $body.='<p>-------------------------------------------------------------</p>';
     $body.='<p>We send this email when people follow you on DailySong, you can disable this email in your account settings.</p>'; 
