@@ -55,7 +55,7 @@ if (isUserLoggedIn()) {
         }else if(count($result) <= 0 && $today === 1){
             $result["no_post"] = "No posts from selected geners";
         }else if(count($result) <= 0 && $today === 2){
-            $result["no_post"] = "No post today";
+            $result["no_post"] = "No posts today";
         }else{
             $i = 0;
             foreach($result as $post){
