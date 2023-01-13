@@ -1,5 +1,10 @@
 const main = document.querySelector("main");
+/*Const after many post show a go top button */
 const $afterPostGoTopButton = 3;
+
+/**
+ * Create selector for geners and date. Add go top button
+ */
 main.innerHTML = `
 <details id="track_genres" role="list">
     <summary aria-haspopup="listbox">Select music genres</summary>
@@ -25,6 +30,9 @@ function goTop(){
     document.documentElement.scrollTop = 0;
 }
 
+/**
+ * Fill div_posts with list of required posts
+ */
 function addPost(post) {
     let article1 = `
     <article id="article${post["postID"]}" class="post_body">
@@ -82,6 +90,9 @@ function genreList(genres){
     return genre.toString();
 }
 
+/**
+ * Check how div_posts should be rendered
+ */
 function listPost(data){
     let div_post = document.getElementById("div_posts");
     div_post.innerHTML = ``;
@@ -106,10 +117,16 @@ function listPost(data){
     }
 }
 
+/**
+ * Get today's posts
+ */
 axios.get('api-home.php').then(response => {
     listPost(response.data);
 });
 
+/**
+ * Selector for date
+ */
 function selectDate() {
     let formData = new FormData();
     let day = '';
@@ -124,6 +141,9 @@ function selectDate() {
     });
 }
 
+/**
+ * Selector for geners
+ */
 function getGenre(){
     let formData = new FormData();
     let genresID = getGenresID();

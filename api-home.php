@@ -5,6 +5,9 @@ secure_session_start();
 if (isUserLoggedIn()) {
 
     if(isset($_POST["comment"],$_POST["post_id"])){
+        /**
+         * Add a comment and send the notification
+         */
         $username = $_SESSION["username"];
         $text = Input::filter_string($_POST["comment"]);
         $text = strlen($text > 250) ? substr($text,0,250) : $text;
@@ -23,12 +26,19 @@ if (isUserLoggedIn()) {
             $result["comments"][$j]["profilePicture"] = UPLOAD_DIR . $result["comments"][$j]["profilePicture"];
         }
     }else if(isset($_POST["idComment"])){
+        /**
+         * Remove a comment
+         */
         $dbh->deletePostComment($_POST["idComment"]);
         $result["comments"] = $dbh->getPostComments($_POST["idPost"]);
         for ($j = 0; $j < count($result["comments"]);$j++){
             $result["comments"][$j]["profilePicture"] = UPLOAD_DIR . $result["comments"][$j]["profilePicture"];
         }
     }else{
+        /**
+         * Return the list of selected posts or, failing that, a string of no posts
+         * If you don't select date or genres, return today's posts
+         */
         if(isset($_POST["day"])){
             $result = $dbh->getPostOfDay($_SESSION["username"],$_POST["day"]);
             $today = 0;
@@ -41,11 +51,11 @@ if (isUserLoggedIn()) {
         }
         
         if(count($result) <= 0 && $today === 0){
-            $result["no_post"] = "Any post in " . $_POST["day"];
+            $result["no_post"] = "No posts on " . $_POST["day"];
         }else if(count($result) <= 0 && $today === 1){
-            $result["no_post"] = "Any post of this genres";
+            $result["no_post"] = "No posts from selected geners";
         }else if(count($result) <= 0 && $today === 2){
-            $result["no_post"] = "Any post today ";
+            $result["no_post"] = "No post today";
         }else{
             $i = 0;
             foreach($result as $post){

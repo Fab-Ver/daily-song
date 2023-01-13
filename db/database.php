@@ -231,9 +231,6 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    /**
-     * Get all the user post even the archived ones.
-     */
     public function getAllUserPosts(string $username){
         $query = "SELECT  postID, description, activeComments, DATE(dateTime) AS `date`, urlImage, title, artists, albumName,archived FROM post JOIN track ON post.trackID = track.trackID WHERE username = ? ORDER BY `date` DESC";
         $stmt = $this->db->prepare($query);
@@ -569,7 +566,7 @@ class DatabaseHelper{
     }
 
     public function getNotification(string $username){
-        $query = "SELECT * FROM notification WHERE usernameRec = ? AND usernameRec != usernameSed";
+        $query = "SELECT * FROM notification WHERE usernameRec = ? AND usernameRec != usernameSed ORDER BY dateTime DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();

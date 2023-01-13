@@ -1,3 +1,6 @@
+/**
+ * Add the notification to notification_list with the releted text
+ */
 function addNotification(not){
     let time = not["dateTime"].substr(11,5);
 
@@ -28,6 +31,9 @@ function addNotification(not){
     return notify;
 }
 
+/**
+ * Check if there are any notifications
+ */
 function printNotification(data){
     if(data.length === 0){
         document.getElementById("notification").hidden = true;
@@ -45,6 +51,10 @@ axios.get("api-notification.php").then(response =>{
     printNotification(response.data);
 });
 
+
+/**
+ * Delete a notification
+ */
 function clearNot(idNot){
     let id = idNot.replace("not", "");
     let form_data = new FormData();

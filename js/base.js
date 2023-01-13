@@ -32,6 +32,9 @@ const datiMenu = [{
 
 const menu = document.getElementById("menu");
 
+/**
+ * Adds menu buttons with information from datiMenu
+ */
 for(let i=0; i<datiMenu.length; i++) {
     const button = `
     <button onclick = "window.location.href='${datiMenu[i].Link}';">
