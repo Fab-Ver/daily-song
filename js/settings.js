@@ -1,4 +1,6 @@
-
+/**
+ * Create all form when page loads
+ */
 window.addEventListener('load', function(){
     const main = document.querySelector('main');
     main.innerHTML = createAccountForm();
@@ -16,6 +18,9 @@ window.addEventListener('load', function(){
     });
 });
 
+/**
+ * Make a request to retrieve user data to display 
+ */
 function showUserSettings(){
     axios.get('api-settings.php?settings=get').then(response => {
         if(response.data.settings !== undefined && response.data.favoriteGenres !== undefined && response.data.accountData !== undefined){
@@ -29,6 +34,10 @@ function showUserSettings(){
     });
 }
 
+/**
+ * Create a form containing favorite music genres selector and post manager button
+ * @returns profile settings
+ */
 function createProfileForm(){
     let genres_form = `
         <article id ="profile_settings">
@@ -56,6 +65,10 @@ function createProfileForm(){
     return genres_form;
 }
 
+/**
+ * Create notification settings form containing a checkbox for each type of notification
+ * @returns notification settings
+ */
 function createNotificationsForm(){
     let notification = `
         <article>
@@ -89,6 +102,10 @@ function createNotificationsForm(){
     return notification;
 }
 
+/**
+ * Create logout and delete account buttons
+ * @returns logout and delete account buttons
+ */
 function createLogoutDelete(){
     let result = `
         <article class="grid">
@@ -109,6 +126,10 @@ function createLogoutDelete(){
     return result;
 }
 
+/**
+ * Create account settings form including username, name, surname, telephone and profile picture input.
+ * @returns account settings
+ */
 function createAccountForm(){
     let result = `
         <article>
@@ -148,6 +169,9 @@ function createAccountForm(){
     return result;
 }
 
+/**
+ * Make a post request to change notifications settings.
+ */
 function submitNotificationForm(){
     let formData = new FormData();
     formData.append('posts',document.getElementById('post_notification').checked);
@@ -169,6 +193,9 @@ function submitNotificationForm(){
     });
 }
 
+/**
+ * Make a post request to update favorite music genres
+ */
 function updateFavoriteGenres(){
     let error_div = document.getElementById('error_profile');
     if(!checkGenres(0,5)){
@@ -194,14 +221,24 @@ function updateFavoriteGenres(){
     }
 }
 
+/**
+ * Function called when the deselect all button is pressed in notification settings
+ */
 function deselectAllNotification(){
     document.querySelectorAll('#notifications_form input[type="checkbox"]').forEach(element => element.checked = false);
 }
 
+/**
+ * Redirect to the logout page.
+ */
 function logout(){
     window.location.replace("logout.php");
 }
 
+/**
+ * Displays the current favorite music genres of the user in a ul
+ * @param {Array} genres the current favorite genres
+ */
 function showFavoriteGenres(genres){
     let genres_list = document.getElementById('current_favorite_genres');
     genres_list.innerHTML = '';
@@ -212,6 +249,10 @@ function showFavoriteGenres(genres){
     });
 }
 
+/**
+ * Display che account data in the account form fields 
+ * @param {array} accountData the current user data 
+ */
 function showAccountData(accountData){
     document.getElementById('username').value = accountData['username'];
     document.getElementById('first_name').value = accountData['firstName'];
@@ -220,6 +261,9 @@ function showAccountData(accountData){
     document.getElementById('current_profile_picture').src = accountData['profilePicture']
 }
 
+/**
+ * If all form fields are valid make a post request to update account data.
+ */
 function updateAccountSettings(){
     let first_name = document.getElementById('first_name');
     let last_name = document.getElementById('last_name');
@@ -290,6 +334,9 @@ function updateAccountSettings(){
     }
 }
 
+/**
+ * Check if the entered username in the account settings is valid.
+ */
 function checkSettingsUsername(){
     let username = document.getElementById('username');
     if(!username.validity.valueMissing){

@@ -1,9 +1,19 @@
+/**
+ * Report an error under input element
+ * @param {HTMLElement} element the element where to show the massage
+ * @param {string} msg the massage to be shown 
+ */
 function showError(element,msg){
     element.setCustomValidity(msg);
     element.reportValidity();
     element.focus();
 }
 
+/**
+ * Set invalid property in element
+ * @param {HTMLElement} element the element to which we set the property
+ * @param {boolean} value the value of the attribute
+ */
 function setValid(element,value){
     if(value){
         element.setCustomValidity("");
@@ -13,6 +23,9 @@ function setValid(element,value){
     }
 }
 
+/**
+ * Filter the genres list according to the text in the search box.
+ */
 function filterGenre(){
     let list_item = document.querySelectorAll("#genres_list label");
     list_item.forEach(element => {
@@ -28,6 +41,10 @@ function filterGenre(){
     });
 }
 
+/**
+ * Get all the id of the genres currently selected in genres list.
+ * @returns genres id
+ */
 function getGenresID(){
     let ids = new Array();
     let checkboxes = document.querySelectorAll('#genres_list input[type="checkbox"]');
@@ -39,6 +56,12 @@ function getGenresID(){
     return ids;
 }
 
+/**
+ * Count the number of selected genres
+ * @param {number} min minimum required genres
+ * @param {number} max maximum genres
+ * @returns true if number of genres between min-max included, false otherwise
+ */
 function checkGenres(min,max){
     let checkboxes = document.querySelectorAll('#genres_list input[type="checkbox"]');
     let count = 0;
@@ -50,6 +73,12 @@ function checkGenres(min,max){
     return count > min && count<=max
 }
 
+/**
+ * Create the genres list
+ * @param {Array} genres array of genres id and tag
+ * @param {boolean} onclick determine if event listener has to be attached 
+ * @returns list of genres
+ */
 function createGenres(genres,onclick){
     let result = ``;
     genres.forEach(element =>{
@@ -65,6 +94,9 @@ function createGenres(genres,onclick){
     return result;
 }
 
+/**
+ * Clear all the element currently selected
+ */
 function clearAllGenres(){
     let checkboxes = document.querySelectorAll('#genres_list input[type="checkbox"]');
     let search = document.getElementById('search');
@@ -73,6 +105,11 @@ function clearAllGenres(){
     checkboxes.forEach(element => element.checked = false);
 }
 
+/**
+ * Show a list of errors
+ * @param {Array} errors the errors to be displayed
+ * @returns list of errors
+ */
 function createError(errors){
     let result = ``;
     errors.forEach(e => {
@@ -83,6 +120,10 @@ function createError(errors){
     return result;
  }
 
+ /**
+  * Retrieve the authentication token from Spotify API
+  * @returns the token, or an error messages if an errors occurred
+  */
  const getToken = () => {
     let client_id = config.ClientID;
     let client_secret = config.ClientSecret;
@@ -122,6 +163,11 @@ function createError(errors){
       });
  };
 
+ /**
+  * Request track info to Spotify API
+  * @param {string} track_id the id of the track to request
+  * @returns track infos or error message if an error occurred
+  */
  const retrieveData = (track_id) => {
     let request_url = 'https://api.spotify.com/v1/tracks/' + track_id;
     return getToken().then(token => {
@@ -278,7 +324,6 @@ function checkImage(){
  */
 let user;
 function getComment(post){
-    console.log(post);
     user = post["user"];
     let ret = ``;
     if(post["activeComments"] === 1){

@@ -1,6 +1,6 @@
 function showGenres(genresArray){
 	let result = `
-		Favourite genres: <br>
+		Favorite genres: <br>
 	`;
 	let genres = "";
 	for(let i=0; i < genresArray.length; i++){

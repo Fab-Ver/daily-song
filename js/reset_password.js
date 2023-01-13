@@ -1,6 +1,10 @@
 const main = document.querySelector('main');
 main.innerHTML = createResetPasswordForm();
 
+/**
+ * Create the reset password form, includes password, confirm password and submit button
+ * @returns the reset password form
+ */
 function createResetPasswordForm(){
     let reset = `
     <article class="grid">
@@ -27,6 +31,9 @@ function createResetPasswordForm(){
     return reset;
 }
 
+/**
+ * Check if all form fields are valid, if so submit the form
+ */
 function checkResetPassword(){
     let password = document.getElementById('password');
     let confirm_password = document.getElementById('confirm_password');
@@ -57,6 +64,11 @@ function checkResetPassword(){
     }
 }
 
+/**
+ * Make a post request to reset the password
+ * @param {string} password selected password
+ * @param {string} confirm_password selected confirm password
+ */
 function resetPassword(password,confirm_password){
     let formData = new FormData();
     formData.append('password',password);

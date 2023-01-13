@@ -19,19 +19,18 @@ if(isUserLoggedIn()) {
             $result["isMyReaction"] = true;
         }
         if($result["updateLike"]){
-            $userToNotificate = $dbh->getUserByPost($_POST["postID"]);
-            $check = $dbh->checkCommentNotification($userToNotificate[0]["username"]);
+            $userToNotify = $dbh->getUserByPost($_POST["postID"]);
+            $check = $dbh->checkCommentNotification($userToNotify[0]["username"]);
             if(count($check) != 0){
-                $dbh->insertNotification(date('Y-m-d H-i-s'), 1, $_SESSION["username"], $userToNotificate[0]["username"]);
+                $dbh->insertNotification(date('Y-m-d H-i-s'), 1, $_SESSION["username"], $userToNotify[0]["username"]);
             }
         }
-        //aggiorno il numero dei like e dislike del post
+        /**Update post number of like and dislike */
         $result["reactions"] = $dbh->getReactions($_POST["postID"]);
         $result["numLike"] = count(array_filter($result["reactions"], function($p) { return $p["likes"]; }));
         $result["numDislike"] = count(array_filter($result["reactions"], function($p) { return !$p["likes"]; }));
     }
 }
-
 
 header("Content-Type: application/json");
 echo json_encode($result);

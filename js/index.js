@@ -1,3 +1,7 @@
+/**
+ * Create a new login form containing email and password field, remember me checkbox and forgot password link.
+ * @returns the new login form.
+ */
 function createLoginForm() {
   let form = `
         <article class="grid">
@@ -36,6 +40,9 @@ function createLoginForm() {
   return form;
 }
 
+/**
+ * Remove the invalid attributes from the form.
+ */
 function clearForm(){
   let email = document.getElementById('login_email');
   let password = document.getElementById('login_password');
@@ -43,6 +50,9 @@ function clearForm(){
   password.removeAttribute("aria-invalid");
 }
 
+/**
+ * Check for email validity
+ */
 function checkLoginEmail() {
   let email = document.getElementById('login_email');
   if(!email.validity.valueMissing){
@@ -66,12 +76,18 @@ function checkLoginEmail() {
   }
 }
 
+/**
+ * Check password validity
+ */
 function checkPassword(){
   let password = document.getElementById('login_password');
   password.removeAttribute("aria-invalid");
   password.setCustomValidity("");
 }
 
+/**
+ * Check if login form fields are all valid, if so submit the form.
+ */
 function checkLoginForm() {
   let email = document.getElementById('login_email');
   let password = document.getElementById('login_password');
@@ -86,6 +102,11 @@ function checkLoginForm() {
   }
 }
 
+/**
+ * Send a post request to verify the login status of the user.
+ * @param {HTMLElement} email the email field of the form
+ * @param {HTMLElement} password the password field of the form
+ */
 function login(email,password) {
   let remember_me = document.getElementById('remember_me');
   let formData = new FormData();
@@ -108,9 +129,14 @@ function login(email,password) {
   });
 }
 
-const main = document.querySelector('main');
-axios.get('authenticate.php').then(response => {
-    main.innerHTML = createLoginForm();
-    let email = document.getElementById('login_email');
-    email.focus();
+/**
+ * Create the login form when the page loads
+ */
+window.addEventListener('load',function(){
+  const main = document.querySelector('main');
+  main.innerHTML = createLoginForm();
+  let email = document.getElementById('login_email');
+  email.focus();
 });
+
+

@@ -9,6 +9,10 @@ axios.get('genre.php').then(response => {
     dropdown.innerHTML += createGenres(response.data,false);
 });
 
+/**
+ * Create form to insert new post, includes url field, description textarea, genres selector and comments checkbox
+ * @returns the new post form
+ */
 function createNewPostForm(){
     let form = `
     <article class="grid">
@@ -48,6 +52,9 @@ function createNewPostForm(){
     return form;
 }
 
+/**
+ * Check for URL validity
+ */
 function checkURL(){
     if(!url_box.validity.valueMissing){
         let url = url_box.value;
@@ -63,6 +70,9 @@ function checkURL(){
     }
 }
 
+/**
+ * Check if all new post form fields are valid.
+ */
 function checkNewPostForm(){
     let button = document.getElementById('publish_post');
     button.setAttribute('disabled','true');
@@ -92,6 +102,9 @@ function checkNewPostForm(){
     }
 }
 
+/**
+ * Make a post request to verify track data, then if no available it make a get request to Spotify API.
+ */
 function submitNewPostForm(){
     let button = document.getElementById('publish_post');
     let formID = new FormData();
@@ -143,6 +156,10 @@ function submitNewPostForm(){
     });
 }
 
+/**
+ * Make a post request to insert a new post
+ * @param {string} track_id 
+ */
 function createPost(track_id){
     let formPost = new FormData();
     let button = document.getElementById('publish_post');

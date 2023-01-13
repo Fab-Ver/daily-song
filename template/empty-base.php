@@ -6,8 +6,6 @@
     <title><?php echo $templateParams["title"]; ?></title>
     <link rel="icon" href="<?php echo UPLOAD_DIR.'logo.png'?>">
     <link rel="stylesheet" type="text/css" href="./css/form_style.css" />
-    
-    <!--Pico.css-->
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
     <link rel="stylesheet" type="text/css" href="./css/default_style.css" />
 </head>

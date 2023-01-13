@@ -10,6 +10,9 @@ require 'vendor/autoload.php';
     class MailHelper{
         private $mail;
 
+        /**
+         * Create a new PHPMailer object, if USERNAME and PASSWORD == null an exception is thrown.
+         */
         public function __construct(){
             if(USERNAME !== null && PASSWORD !== null){
                 $this->mail = new PHPMailer(true);
@@ -28,6 +31,9 @@ require 'vendor/autoload.php';
             }
         }
 
+        /**
+         * Send email to reset password
+         */
         public function sendResetPasswordEmail(string $recipient, string $token) : bool {
             $this->mail->Subject = 'Reset Password';
             $body='<p>Please click on the following link to reset your password.</p>';
@@ -48,6 +54,9 @@ require 'vendor/autoload.php';
             }
         }
 
+        /**
+         * Send a new email containing a new notification
+         */
         public function sendEmailNotification(string $recipient, string $message, string $subject) : bool{
             $this->mail->Subject = $subject;
             $this->mail->addAddress($recipient);
@@ -61,6 +70,9 @@ require 'vendor/autoload.php';
             }
         }
 
+        /**
+         * Send notification when account blocked due to too many failed login attempts 
+         */
         public function sendBlockedAccountEmail(string $recipient){
             $this->mail->Subject = 'Blocked Account';
             $body='<p>Your account has been blocked due to too many failed login attempts.</p>';

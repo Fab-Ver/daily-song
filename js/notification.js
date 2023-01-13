@@ -32,7 +32,7 @@ function printNotification(data){
     if(data.length === 0){
         document.getElementById("notification").hidden = true;
     }else{
-        document.getElementById('notification_summury').innerText = data.length + " Notification";
+        document.getElementById('notification_summary').innerText = data.length + " Notification";
         let not_list = document.getElementById('notification_list');
         not_list.innerHTML = ``;
         data.forEach(element =>{

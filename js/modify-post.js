@@ -1,7 +1,13 @@
+/**
+ * Create the modify post form when the page loads
+ */
 window.addEventListener('load', function(){
     createModifyForm();
 });
 
+/**
+ * Create the modify post form, all track infos are readonly fields, while description and post music genres can be modified.
+ */
 function createModifyForm(){
     let error_div = document.getElementById('error_modify_post');
     let main = document.querySelector('main');
@@ -81,20 +87,34 @@ function createModifyForm(){
     });
 }
 
+/**
+ * Function associated with cancel button
+ */
 function back(){
     window.location.replace("post_manager.php");
 }
 
+/**
+ * Select the current post music genres in the genres selector
+ * @param {Array} genres the list of current music genres
+ */
 function showPostGenres(genres){
     genres.forEach(element => {
         document.getElementById(element['genreID']).checked = true;
     });
 }
 
+/**
+ * Get the id of the current post that needs to bee modified
+ * @returns the id of the post
+ */
 function getPostID(){
     return window.location.search.replace("?postID=","");
 }
 
+/**
+ * Check form, if valid make post request to update post data.
+ */
 function updatePost(){
     let error_div = document.getElementById('error_modify_post');
     if(!checkGenres(0,3)){

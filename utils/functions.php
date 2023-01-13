@@ -8,6 +8,9 @@ function isActive($pagename){
     }
 }
 
+/**
+ * Start a secure PHP session
+ */
 function secure_session_start(){
     $session_name = 'secure_session_id';
     $secure = true; /** Set to true to use HTTPS protocol */
@@ -20,6 +23,9 @@ function secure_session_start(){
     session_regenerate_id();
 }
 
+/**
+ * Check if the user is logged in using both session variables and remember me cookies
+ */
 function isUserLoggedIn() : bool{
     global $dbh;
     if(isset($_SESSION['username'], $_SESSION['email'], $_SESSION['login_string'])){
@@ -51,6 +57,9 @@ function isUserLoggedIn() : bool{
     return false;
 }
 
+/**
+ * Register a logged user
+ */
 function registerLoggedUser(string $username, string $email, string $passwordHash) : bool{
     if(session_regenerate_id()){
         $user_browser = $_SERVER['HTTP_USER_AGENT'];
@@ -62,6 +71,9 @@ function registerLoggedUser(string $username, string $email, string $passwordHas
     return false;
 }
 
+/**
+ * Check for image format validity and if valid upload the image to the server UPLOAD_DIR
+ */
 function uploadImage($path, $image){
     $imageName = basename($image['name']);
     $fullPath = $path.$imageName;
@@ -186,6 +198,9 @@ function remember_me(string $username, int $day = 30){
     }
 }
 
+/**
+ * Create email for new access notification 
+ */
 function createNewAccessEmail(string $username) : string{
    
     $body='<p><h1>New access to DailySong </h1></p>';
@@ -198,6 +213,9 @@ function createNewAccessEmail(string $username) : string{
     return $body;
 }
 
+/**
+ * Create email for new post notification
+ */
 function createNewPostEmail(string $my_username, string $post_username) : string{
     $body='<p>Hey there, '.$my_username.'</p>';
     $body.='<p><b>'.$post_username.'</b> just shared a new post.</p>';	
@@ -208,6 +226,9 @@ function createNewPostEmail(string $my_username, string $post_username) : string
     return $body;
 }
 
+/**
+ * Create email for new follower notifications
+ */
 function createNewFollowerEmail(string $my_username, string $follower_username) : string{
     $body='<p>Hey there, '.$my_username.'</p>';
     $body.='<p>You have a new follower on DailySong  :<b>'.$follower_username.'</b>!</p>';	

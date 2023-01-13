@@ -3,6 +3,9 @@ window.addEventListener('load',function(){
     createPostManager().then(response => main.innerHTML = response );
 });
 
+/**
+ * Create post manager interface
+ */
 function createPostManager(){
     let manager = `<article id="post_manager"><hgroup>
                     <h2>Post Manager</h2>
@@ -32,6 +35,11 @@ function createPostManager(){
     
 }
 
+/**
+ * Create a single post inside the post manager interface
+ * @param {Array} post 
+ * @returns the single post to insert in the post manager
+ */
 function createSinglePost(post){
     let result = `<article class="single_post">
         <div class="info_post">
@@ -65,6 +73,10 @@ function createSinglePost(post){
     return result;
 }
 
+/**
+ * Make a post request to delete a post.
+ * @param {*} event 
+ */
 function deletePost(event){
     event.preventDefault();
     let postID = event.currentTarget.getAttribute('data-target').replace("delete_post_modal","");
@@ -83,6 +95,11 @@ function deletePost(event){
     });
 }
 
+/**
+ * Get a status string for the post. 
+ * @param {number} archived 
+ * @returns string containing status
+ */
 function getStatus(archived){
     if(archived == 1){
         return 'archived';
@@ -90,6 +107,11 @@ function getStatus(archived){
     return 'visible';
 }
 
+/**
+ * Make a request to archive a post
+ * @param {string} id the button id
+ * @param {boolean} archived the archive status
+ */
 function archivePost(id,archived){
     let postID = id.replace("archive","");
     let formData = new FormData();
@@ -97,7 +119,6 @@ function archivePost(id,archived){
     formData.append('archived',archived);
     formData.append('action','archive');
     axios.post('post_manager.php',formData).then(response => {
-        console.log(response.data);
         let error_div = document.getElementById('error_manager');
         if(response.data.errorMsg !== "" && response.data.errorMsg !== undefined){
             error_div.innerHTML = response.data.errorMsg;
@@ -109,11 +130,21 @@ function archivePost(id,archived){
     });
 }
 
+/**
+ * Redirect to modify post page
+ * @param {string} id the button id
+ */
 function modifyPost(id){
     let postID = id.replace("modify","");
     window.location.href = `./modify-post.php?postID=${postID}`;
 }
 
+/**
+ * Get different button depending on post archive status 
+ * @param {number} postID the current postID
+ * @param {number} archived the current archive status
+ * @returns a new button
+ */
 function setButton(postID,archived){
     if(archived == 0){
         return `<button id="archive${postID}" class="secondary outline" onclick="archivePost(this.id,true)">Archive</button>`;

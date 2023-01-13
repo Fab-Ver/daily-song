@@ -49,7 +49,6 @@ if(isUserLoggedIn()){
                 $followers = $dbh->selectPostNotification($username);
                 if(count($followers) != 0){
                     foreach($followers as $follower){
-                        /**Aggiungi notifiche al database */
                         $dbh->insertNotification(date('Y-m-d H-i-s'),3,$_SESSION['username'],$follower['username']);
                         try {
                             $mail = new MailHelper();

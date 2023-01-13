@@ -1,6 +1,10 @@
 const main = document.querySelector('main');
 main.innerHTML = createForgotPasswordForm();
 
+/**
+ * Create form to request password reset.
+ * @returns form containing email field
+ */
 function createForgotPasswordForm(){
     let form = `
     <article class="grid">
@@ -25,6 +29,9 @@ function createForgotPasswordForm(){
     return form;
 }
 
+/**
+ * Check for email validity
+ */
 function checkEmail() {
     let email = document.getElementById('email');
     if(!email.validity.valueMissing){
@@ -39,6 +46,9 @@ function checkEmail() {
     }
 }
 
+/**
+ * Check if form fields are valid
+ */
 function checkForm(){
     let email = document.getElementById('email');
     if(email.validity.valueMissing || email.getAttribute("aria-invalid") === 'true'){
@@ -49,6 +59,9 @@ function checkForm(){
     }
 }   
 
+/**
+ * Send a post request to generate a new reset password email
+ */
 function submitForgotPassword(){
     let email = document.getElementById('email');
     let formData = new FormData();

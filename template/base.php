@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="./css/default_style.css" />
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="decription" content="is a digital music social that gives you the possibility to share a day song with your friends"/>
+    <meta name="description" content="is a digital music social that gives you the possibility to share a day song with your friends"/>
 </head>
 <body>
     <aside class="menu_bar">
@@ -18,7 +18,7 @@
         <section class="grid">
             <h1>DailySong</h1>
             <details id="notification" role="list">
-                <summary id="notification_summury" aria-haspopup="listbox"></summary>
+                <summary id="notification_summary" aria-haspopup="listbox"></summary>
                 <ul id="notification_list" role="group" title="notification list"></ul>
             </details>
         </section>

@@ -147,7 +147,7 @@ class DatabaseHelper{
     }
 
     public function getUserPostsDate(string $username){
-        $query="SELECT DATE(dateTime) as postDate FROM post WHERE username = ? AND archived = 0";
+        $query="SELECT DATE(dateTime) as postDate FROM post WHERE username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();

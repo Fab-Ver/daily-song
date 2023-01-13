@@ -1,3 +1,8 @@
+/**
+ * Create sign up form including email, name, surname, birth date, password,  confirm password, telephone, username,
+ * favorite music genres and profile picture input
+ * @returns sing up form
+ */
 function createSignUpForm(){
     let form = `
         <article class="grid">
@@ -69,6 +74,9 @@ function createSignUpForm(){
     return form;
 }
 
+/**
+ * Check for email validity
+ */
 function checkSignUpEmail(){
     if(!email.validity.valueMissing){
         if(email.validity.typeMismatch){
@@ -91,6 +99,9 @@ function checkSignUpEmail(){
     }
 }
 
+/**
+ * Check for username validity
+ */
 function checkUsername(){
     let username = document.getElementById('username');
     if(!username.validity.valueMissing){
@@ -109,6 +120,9 @@ function checkUsername(){
     }   
 }
 
+/**
+ * Check for birth date validity
+ */
 function checkBirthDate(){
     let today = new Date();
     let current_value = new Date(birth_date.valueAsDate);
@@ -125,6 +139,9 @@ function checkBirthDate(){
     }
 }
 
+/**
+ * Check if all form fields are valid, if so submit the form
+ */
 function checkSignUpForm(){
     let first_name = document.getElementById('first_name');
     let last_name = document.getElementById('last_name');
@@ -198,6 +215,15 @@ function checkSignUpForm(){
     }
 }
 
+/**
+ * Make a post request to register a new user
+ * @param {HTMLElement} first_name name field
+ * @param {HTMLElement} last_name surname field
+ * @param {HTMLElement} telephone telephone field
+ * @param {HTMLElement} username username field
+ * @param {HTMLElement} password password field 
+ * @param {HTMLElement} confirm_password confirm password field
+ */
 function submitForm(first_name,last_name,telephone,username,password,confirm_password){
     let formData = new FormData();
     let SQL_date = birth_date.valueAsDate.toISOString().slice(0,10);

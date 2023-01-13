@@ -74,9 +74,9 @@ function addPost(post) {
     return article1 + songPreview + likes + article2;
 }
 
-function genreList(geners){
+function genreList(genres){
     let genre = Array();
-    for(let j of geners){
+    for(let j of genres){
         genre.push(j["tag"]);
     }
     return genre.toString();
