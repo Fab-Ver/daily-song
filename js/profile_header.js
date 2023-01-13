@@ -1,3 +1,8 @@
+/**
+ * Create the initial part of a user profile with image, username, full name, follower, followed, posts, favourite genres 
+ * and a follow button if its not me.
+ * @returns div containing the user profile infos
+ */
 function showProfileHeader(result){
     return `
         <div class="main-header">
@@ -27,6 +32,10 @@ function showProfileHeader(result){
     `;
 }  
 
+/**
+ * Create the button to follow or unfollow a user.
+ * @returns button containing follow or unfollow
+ */
 function generateFollowButton(canFollow) {
     if (canFollow) {
         return '<button id="followButton" class="followButton" name="follow" onclick="updateFollowed(true)">Follow</button>';
@@ -35,6 +44,11 @@ function generateFollowButton(canFollow) {
     }
 }
 
+/**
+ * Send a post request with username of who I want to follow or unfollow to update the database,
+ * then change the followButton.
+ * @returns buttons containing like or dislike
+ */
 function updateFollowed(canFollow){
     let button = document.getElementById("followButton");
     button.disabled = true;
@@ -49,6 +63,9 @@ function updateFollowed(canFollow){
     });
 }
 
+/**
+ * Select the main and insert the divisions of profile page.
+ */
 const main = document.querySelector("main");
 main.innerHTML = `
                     <div id="header"></div>
@@ -56,6 +73,9 @@ main.innerHTML = `
                     <div id="content"></div>
                 `;
 
+/**
+ * Send a get request with location.search to know who's profile I have to show.
+ */
 axios.get('api-profile.php'+location.search).then(response => {
     const profileHeader = showProfileHeader(response.data);
     const header = document.querySelector('#header');

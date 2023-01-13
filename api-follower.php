@@ -6,9 +6,18 @@ secure_session_start();
 if (isUserLoggedIn()){
     $result["username"] = isset($_GET["user"]) ? $_GET["user"] : $_SESSION["username"];
     $result["sessionUser"] = $_SESSION["username"];
+    /**
+    * Check if I have to update the database with post request data
+    */
     if(isset($_POST["username"]) && isset($_POST["value"])){
+        /**
+         * Check if I have to add or remove a follow
+         */
         if($_POST["value"] == "add"){
             $result["followButton"] = $dbh->insertFollowed($_POST["username"], $result["username"]);
+            /**
+            * Check if all went good and send notification and email
+            */
             if($result["followButton"]){     
                 $check = $dbh->checkFollowerNotification($_POST["username"]);
                 if(count($check) != 0){
@@ -24,6 +33,9 @@ if (isUserLoggedIn()){
         } else if($_POST["value"] == "remove"){
             $result["followButton"] = $dbh->removeFollowed($_POST["username"], $result["username"]);
         }
+    /**
+    * Check if I have to show the list of follower of followed
+    */
     } else if (isset($_GET["kind"])) {
         $data = $_GET["kind"];
         if($data=="follower"){

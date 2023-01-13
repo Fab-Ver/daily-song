@@ -3,6 +3,9 @@ require("bootstrap.php");
 secure_session_start();
 
 if(isUserLoggedIn()) {
+    /**
+     * Filter all the users based on the searchBar value sent by get request
+     */
     if(isset($_GET["searchValue"])) {
         $allUsers = $dbh->getAllUsers();
         $result = [];
