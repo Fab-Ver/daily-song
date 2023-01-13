@@ -1,5 +1,8 @@
 let users;
-
+/**
+ * Create the search bar.
+ * @returns searchbar
+ */
 function generateSearchBar(){
     return `
         <input type="search" id="searchBar" name="searchBar" placeholder="Search by username" oninput="filterProfile()">
@@ -7,6 +10,9 @@ function generateSearchBar(){
     `;
 }  
 
+/**
+ * Send a get request with the searchBar value to filter user's profiles and generate the searchResult list.
+ */
 function filterProfile(){
     axios.get('api-search.php?searchValue=' + searchBar.value).then(response => {
         const list = document.getElementById('profileList');
@@ -16,6 +22,11 @@ function filterProfile(){
 
 }
 
+/**
+ * Create the list of user's profile that matched the searchBar value.
+ * @returns li to put inside the ul if there is users matching the searchValue
+ * small if there is non match found
+ */
 function generateSearchResult(searchValue){
     let searchResult = '';
     if(searchValue.length > 0){
@@ -35,25 +46,6 @@ function generateSearchResult(searchValue){
     }
     return searchResult;
 }  
-
-function generateFollowButton(canFollow) {
-    if (canFollow) {
-        return `<button id="followButton" class="followButton" name="follow" onclick="updateFollowed(true, ${profileUser})">Follow</button>`;
-    } else {
-        return `<button id="followButton" class="secondary followButton" name="unfollow" onclick="updateFollowed(false, ${profileUser})">Unfollow</button>`;
-    }
-}
-
-function updateFollowed(wantToFollow, profileUser){
-    let formData = new FormData();
-    formData.append('username', profileUser);
-    formData.append('value', wantToFollow ? "add" : "remove");
-    axios.post('api-follower.php', formData).then(response => {
-        if(response.data["followButton"]){
-            document.getElementById("followButton").outerHTML = generateFollowButton(!wantToFollow);
-        }
-    });
-}
 
 const main = document.querySelector('main');
 main.innerHTML = generateSearchBar();

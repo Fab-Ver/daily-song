@@ -1,3 +1,7 @@
+/**
+ * Create a div with the list of all the user follower/d and a button to follow them.
+ * @returns div containing users
+ */
 function showSearchResult(data){
     let result = "";
     for (let user of data["searchResult"]) {
@@ -24,6 +28,10 @@ function showSearchResult(data){
     return result;
 }
 
+/**
+ * Generate a button to follow or unfollow a user.
+ * @returns button
+ */
 function generateFollowerButton(canFollow, profileUser) {
     if (canFollow) {
         return `<button class="followerButton" id="followerButton_${profileUser}" name="follow" onclick="updateFollower(true, this.id)"> Follow </button>`;
@@ -32,6 +40,9 @@ function generateFollowerButton(canFollow, profileUser) {
     }
 }
 
+/**
+ * Send a post request with the username that I want to follow or unfollow.
+ */
 function updateFollower(wantToFollow, id){
     let button = document.getElementById(id);
     button.disabled = true;
@@ -46,6 +57,9 @@ function updateFollower(wantToFollow, id){
     });
 }
 
+/**
+ * Send a get request with the location.search to create the follower user section.
+ */
 axios.get('api-follower.php'+location.search).then(response => {
     const searchResult = showSearchResult(response.data);
     const content = document.querySelector("#content");

@@ -3,6 +3,9 @@ require("bootstrap.php");
 secure_session_start();
 
 if(isUserLoggedIn()){
+    /**
+     * Insert all the profile data
+     */
     $result["username"] = isset($_GET["user"]) ? $_GET["user"] : $_SESSION["username"];
     $result["sessionUsername"] = $_SESSION["username"];
     $result["isMyProfile"] = $_SESSION["username"] == $result["username"];

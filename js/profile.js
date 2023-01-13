@@ -1,3 +1,7 @@
+/**
+ * Create the list of user's favourite genres.
+ * @returns user's favourite genres
+ */
 function showGenres(genresArray){
 	let result = `
 		Favorite genres: <br>
@@ -13,6 +17,10 @@ function showGenres(genresArray){
 	return result + genres;
 }
 
+/**
+ * Create the list of user's posts, all with a modal to open them individually.
+ * @returns post img and dialog containing post's infos
+ */
 function showPosts(posts, sessionUsername){
     let result = "";
     tabIndex = 0;
@@ -75,6 +83,9 @@ function showPosts(posts, sessionUsername){
     return result;
 }
 
+/**
+ * Send a get request with location.search to know who's posts I have to show.
+ */
 axios.get('api-profile.php'+location.search).then(response => {
     const posts = showPosts(response.data["posts"], response.data["sessionUsername"]);
     const genres = showGenres(response.data["preferredGenres"]);

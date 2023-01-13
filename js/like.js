@@ -1,3 +1,7 @@
+/**
+ * Create the button to like or dislike a post.
+ * @returns buttons containing like or dislike
+ */
 function showLikes(postID, numLike, numDislike, isMyReaction, myReaction){
 	let likeImg = "";
 	let dislikeImg = "";
@@ -28,6 +32,9 @@ function showLikes(postID, numLike, numDislike, isMyReaction, myReaction){
 	return result;
 }
   
+/**
+ * Send a post request with postId and likeValue to update the database, then change the button image.
+ */
 function updateLike(likeValue, postID){
 	let formData = new FormData();
 	formData.append('postID', postID);
@@ -41,6 +48,9 @@ function updateLike(likeValue, postID){
 	});
 }
 
+/**
+ * Change the image in the button based on my reaction to the post.
+ */
 function updateLikeImg(isMyReaction, likeValue, postID){
 	if(isMyReaction){
 		if(likeValue == 1){
