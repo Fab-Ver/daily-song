@@ -112,7 +112,12 @@ axios.get('api-home.php').then(response => {
 
 function selectDate() {
     let formData = new FormData();
-    let day = date.valueAsDate.toISOString().slice(0,10);
+    let day = '';
+    if(date.valueAsDate !== null){
+        day = date.valueAsDate.toISOString().slice(0,10);
+    } else {
+        day = new Date().toJSON().slice(0, 10);
+    }
     formData.append("day",day);
     axios.post("api-home.php",formData).then(response => {
         listPost(response.data);
