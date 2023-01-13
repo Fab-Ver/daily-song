@@ -42,7 +42,7 @@ Each profile contains the list of follower/followed profiles. In each list there
 
 ## Home
 
-Home contains followed users posts. By default it display the current day post, but the user can select posts by music genres OR date. At the end of the page there is a button that brings you back to the top of the page.
+Home contains followed users posts. By default it display the current day posts, but the user can select posts by music genres OR date. At the end of the page there is a button that brings you back to the top of the page.
 
 ## Posts
 
