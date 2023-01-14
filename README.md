@@ -117,8 +117,10 @@ The following security feature were implemented:
 
 ## Other
 
+- [`Pico.css`](https://picocss.com/): a minimal CSS framework, used as base style for our website.
 - `AJAX` ([Axios](https://axios-http.com/)): used to request data to the server.
-- 'PHPMailer' library: used to send email notification. 
+- [`PHPMailer`](https://github.com/PHPMailer/PHPMailer) library: used to send email notification. 
+
 
 
 ## How to use
